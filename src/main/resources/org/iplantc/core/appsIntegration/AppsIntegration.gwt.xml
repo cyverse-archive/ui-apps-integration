@@ -18,6 +18,11 @@
   <!-- iPlant Modules -->
   <inherits name="org.iplantc.core.ui-commons" />
   <inherits name="org.iplantc.core.Widgets"/>
+  
+  <!-- Deferred-Binding Rules -->
+  <replace-with class="org.iplantc.core.appsIntegration.client.presenter.AppsIntegrationPresenterImpl">
+    <when-type-is class="org.iplantc.core.appsIntegration.client.view.AppsIntegrationView.Presenter" />
+  </replace-with>
 
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>
