@@ -166,6 +166,8 @@
         <configuration>
             <downloadSources>true</downloadSources>
             <downloadJavadocs>false</downloadJavadocs>
+            <buildcommands>
+            </buildcommands>
             <additionalBuildcommands>
                 <buildCommand>
                     <name>com.google.gdt.eclipse.core.webAppProjectValidator</name>
@@ -176,6 +178,9 @@
                     <arguments></arguments>
                 </buildCommand>
             </additionalBuildcommands>
+            <additionalProjectnatures>
+                    <projectnature>com.google.gwt.eclipse.core.gwtNature</projectnature>
+            </additionalProjectnatures>
         </configuration>
        </plugin>
     </plugins>
