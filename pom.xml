@@ -1,0 +1,165 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.iplantc.core</groupId>
+  <artifactId>apps-integration</artifactId>
+  <version>gxt3Sandbox-SNAPSHOT</version>
+<!--   <version>dev-SNAPSHOT</version> -->
+  <name>The iPlant Collaborative Discovery Environment Apps Integration module</name>
+  <properties>
+        <gwt.module>org.iplantc.core.appsIntegration.AppsIntegration</gwt.module>
+        <!-- Target Java Version -->
+        <jdk.version>1.6</jdk.version>
+        <!-- Current GXT Version -->
+        <gxt.version>3.0.1</gxt.version>
+        <!-- Current GWT Version -->
+        <gwt.version>2.5.0</gwt.version>
+        <!-- Current Google Guava Version -->
+        <googleGuava.version>13.0.1</googleGuava.version>
+        <!-- Define OS/Platform Independent Character Encoding -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <dependencies>
+        <!-- GWT Dependencies -->
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-servlet</artifactId>
+            <version>${gwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>${gwt.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+           <groupId>com.google.guava</groupId>
+           <artifactId>guava-gwt</artifactId>
+           <version>${googleGuava.version}</version>
+        </dependency>
+        
+        <!-- Testing -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+           <groupId>org.jmock</groupId>
+           <artifactId>jmock</artifactId>
+           <version>2.5.1</version>
+           <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jmock</groupId>
+            <artifactId>jmock-junit4</artifactId>
+            <version>2.5.1</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <!-- GXT -->
+        <dependency>
+            <groupId>com.sencha.gxt</groupId>
+            <artifactId>gxt</artifactId>
+            <version>${gxt.version}</version>
+        </dependency>
+        
+        <!-- iPlant Dependencies -->
+        <dependency>
+            <groupId>org.iplantc.core</groupId>
+            <artifactId>jsonutil</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.iplantc.core</groupId>
+            <artifactId>ui-commons</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.iplantc.core</groupId>
+            <artifactId>widgets</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+  <build>
+    <finalName>ui-apps-integration</finalName>
+    <outputDirectory>${basedir}/war/WEB-INF/classes</outputDirectory>
+    <resources>
+      <resource>
+        <directory>src/main/java</directory>
+            <includes>
+                <include>**/client/**</include>
+            </includes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+            <includes>
+                <include>**</include>
+                <include>**/*.gwt.xml</include>
+            </includes>
+      </resource>
+      <resource>
+        <directory>target/generated-sources/gwt</directory>
+      </resource>
+    </resources>
+    <plugins>
+       <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>gwt-maven-plugin</artifactId>
+          <version>2.5.0</version>
+          <dependencies>
+            <dependency>
+                <groupId>com.google.gwt</groupId>
+                <artifactId>gwt-user</artifactId>
+                <version>${gwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.gwt</groupId>
+                <artifactId>gwt-dev</artifactId>
+                <version>${gwt.version}</version>
+            </dependency>
+            
+          </dependencies>
+          <executions>
+              <execution>
+                  <goals>
+                      <!-- <goal>i18n</goal> -->
+                      <goal>compile</goal>
+                  </goals>
+                  <configuration>
+                      <module>${gwt.module}</module>
+                      <!-- These config options are only relevan if the i18n goal is executed. -->
+                      <i18nMessagesBundles>
+                        <i18nMessagesBundle>org.iplantc.core.appsIntegration.client.AppIntDisplayMessages</i18nMessagesBundle>
+                        <i18nMessagesBundle>org.iplantc.core.appsIntegration.client.AppIntErrorMessages</i18nMessagesBundle>
+                      </i18nMessagesBundles>
+                  </configuration>
+              </execution>
+          </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+            <archive>
+                <manifest>
+                    <addClasspath>true</addClasspath>
+                </manifest>
+            </archive>
+            <configuration>
+                <useDefaultManifestFile>true</useDefaultManifestFile>
+            </configuration>
+          </configuration>
+       </plugin>
+    </plugins>
+  </build>
+</project>
