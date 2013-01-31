@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  When updating your version of GWT, you should also update this DTD reference,
+  so that your app can take advantage of the latest GWT module capabilities.
+-->
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.5.0//EN"
+  "http://google-web-toolkit.googlecode.com/svn/tags/2.5.0/distro-source/core/src/gwt-module.dtd">
+<module>
+  <!-- Inherit the core Web Toolkit stuff.                        -->
+  <inherits name='com.google.gwt.user.User'/>
+  <inherits name="com.google.common.collect.Collect"/>
+  <inherits name="com.google.web.bindery.autobean.AutoBean"/>
+  <inherits name="com.google.gwt.uibinder.UiBinder" />
+  
+  <!-- GXT -->
+  <inherits name='com.sencha.gxt.ui.GXT' />
+  
+  <!-- iPlant Modules -->
+  <inherits name="org.iplantc.core.ui-commons" />
+  <inherits name="org.iplantc.core.widgets.Widgets"/>
+  
+  <!-- Deferred-Binding Rules -->
+  <replace-with class="org.iplantc.core.appsIntegration.client.presenter.AppsIntegrationPresenterImpl">
+    <when-type-is class="org.iplantc.core.appsIntegration.client.view.AppsIntegrationView.Presenter" />
+  </replace-with>
+
+  <!-- Specify the paths for translatable code                    -->
+  <source path='client'/>
+
+</module>
