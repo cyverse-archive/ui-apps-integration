@@ -67,17 +67,7 @@
         
         <!-- iPlant Dependencies -->
         <dependency>
-            <groupId>org.iplantc.core</groupId>
-            <artifactId>jsonutil</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.iplantc.core</groupId>
-            <artifactId>ui-commons</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.iplantc.core</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>widgets</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -128,7 +118,7 @@
                   </goals>
                   <configuration>
                       <module>${gwt.module}</module>
-                      <!-- These config options are only relevan if the i18n goal is executed. -->
+                      <!-- These config options are only relevant if the i18n goal is executed. -->
                       <i18nMessagesBundles>
                         <i18nMessagesBundle>org.iplantc.core.appsIntegration.client.AppIntDisplayMessages</i18nMessagesBundle>
                         <i18nMessagesBundle>org.iplantc.core.appsIntegration.client.AppIntErrorMessages</i18nMessagesBundle>
@@ -148,6 +138,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
+        <version>2.3.2</version>
         <configuration>
             <archive>
                 <manifest>
@@ -160,5 +151,34 @@
           </configuration>
        </plugin>
     </plugins>
+    <pluginManagement>
+        <plugins>
+            <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+            <plugin>
+                <groupId>org.eclipse.m2e</groupId>
+                <artifactId>lifecycle-mapping</artifactId>
+                <version>1.0.0</version>
+                <configuration>
+                    <lifecycleMappingMetadata>
+                        <pluginExecutions>
+                            <pluginExecution>
+                                <pluginExecutionFilter>
+                                    <groupId>org.codehaus.mojo</groupId>
+                                    <artifactId>gwt-maven-plugin</artifactId>
+                                    <versionRange>[2.5.0,)</versionRange>
+                                    <goals>
+                                        <goal>i18n</goal>
+                                    </goals>
+                                </pluginExecutionFilter>
+                                <action>
+                                    <ignore></ignore>
+                                </action>
+                            </pluginExecution>
+                        </pluginExecutions>
+                    </lifecycleMappingMetadata>
+                </configuration>
+            </plugin>
+        </plugins>
+    </pluginManagement>
   </build>
 </project>

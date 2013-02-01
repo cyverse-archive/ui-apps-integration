@@ -2,25 +2,26 @@ package org.iplantc.core.appsIntegration.client.view;
 
 import org.iplantc.core.widgets.client.appWizard.models.AppTemplate;
 import org.iplantc.core.widgets.client.appWizard.models.AppTemplateAutoBeanFactory;
-import org.iplantc.core.widgets.client.appWizard.view.AppWizardView;
+import org.iplantc.core.widgets.client.appWizard.view.AppWizardPanel;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.editor.client.Editor;
+import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
-import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.container.CardLayoutContainer;
 
-public class AppsIntegrationViewImpl extends Composite {
+public class AppsIntegrationViewImpl extends Composite implements AppsIntegrationView {
 
     private static AppsIntegrationViewImplUiBinder BINDER = GWT.create(AppsIntegrationViewImplUiBinder.class);
+    interface AppsIntegrationViewImplUiBinder extends UiBinder<Widget, AppsIntegrationViewImpl> {}
 
-    interface AppsIntegrationViewImplUiBinder extends UiBinder<Widget, AppsIntegrationViewImpl> {
-    }
+    interface Driver extends SimpleBeanEditorDriver<AppTemplate, AppsIntegrationViewImpl> {}
 
-    @UiField
-    ContentPanel centerPanel;
+    private final Driver driver = GWT.create(Driver.class);
+    
     /**
      * This panel is a card layout so that 'cards' can be created which are bound to
      * and individual property.
@@ -28,15 +29,29 @@ public class AppsIntegrationViewImpl extends Composite {
     @UiField
     CardLayoutContainer eastPanel;
 
+    private AppsIntegrationView.Presenter presenter;
+
+    @Path("")
+    @UiField
+    AppWizardPanel centerPanel;
+
     /**
      * @param appWizardPresenter
      * @param appTemplate the app for the center panel. If this is a blank appTemplate, it must be
      *            created with {@link AppTemplateAutoBeanFactory}.
      */
-    public AppsIntegrationViewImpl(AppWizardView.Presenter appWizardPresenter, AppTemplate appTemplate) {
+    public AppsIntegrationViewImpl() {
         initWidget(BINDER.createAndBindUi(this));
+    }
 
-        appWizardPresenter.go(centerPanel, appTemplate);
+    @Override
+    public void setPresenter(AppsIntegrationView.Presenter presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public SimpleBeanEditorDriver<AppTemplate, ? extends Editor<AppTemplate>> getEditorDriver() {
+        return driver;
     }
 
 }
