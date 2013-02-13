@@ -4,7 +4,6 @@ import org.iplantc.core.widgets.client.appWizard.models.AppTemplate;
 
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
-import com.google.gwt.user.client.ui.HasOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
 
 /**
@@ -13,12 +12,7 @@ import com.google.gwt.user.client.ui.IsWidget;
  */
 public interface AppsIntegrationView extends IsWidget, Editor<AppTemplate> {
     
-    /**
-     * @author jstroot
-     *
-     */
-    public interface Presenter extends org.iplantc.core.uicommons.client.presenter.Presenter{
-        void go(HasOneWidget container, AppTemplate appTemplate);
+    public interface Presenter extends org.iplantc.core.widgets.client.appWizard.view.AppWizardView.Presenter {
     }
 
     void setPresenter(Presenter presenter);

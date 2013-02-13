@@ -52,21 +52,23 @@
     <con:BorderLayoutContainer>
         <!-- Toolbar -->
         <con:north layoutData="{northData}">
-            <gxt:ContentPanel>
+            <gxt:ContentPanel headerVisible="false">
                 <g:HTML text="Toolbar"/>
             </gxt:ContentPanel>
         </con:north>
         
         <!-- Palette -->
         <con:west layoutData="{westData}">
-            <gxt:ContentPanel>
+            <gxt:ContentPanel headingText="Palette">
                 <g:HTML text="Palette"/>
             </gxt:ContentPanel>
         </con:west>
         
         <!-- App Builder -->
         <con:center layoutData="{centerData}">
-            <appWizardView:AppWizardPanel ui:field="centerPanel" />
+            <gxt:ContentPanel>
+	            <appWizardView:AppWizardPanel ui:field="centerPanel" />
+            </gxt:ContentPanel>
         </con:center>
         
         <!-- Selected Widget Properties -->

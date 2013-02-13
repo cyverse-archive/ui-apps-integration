@@ -42,6 +42,7 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
      */
     public AppsIntegrationViewImpl() {
         initWidget(BINDER.createAndBindUi(this));
+        driver.initialize(this);
     }
 
     @Override
