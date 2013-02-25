@@ -25,6 +25,7 @@ import com.google.web.bindery.autobean.shared.AutoBeanCodex;
 public class DeployedComponentPresenterImpl implements DeployedComponentsListingView.Presenter {
 
     DeployedComponentsListingView view;
+    DeployedComponentAutoBeanFactory factory = GWT.create(DeployedComponentAutoBeanFactory.class);
 
     public DeployedComponentPresenterImpl(DeployedComponentsListingView view) {
         this.view = view;
@@ -53,8 +54,29 @@ public class DeployedComponentPresenterImpl implements DeployedComponentsListing
      * @see org.iplantc.core.appsIntegration.client.view.DeployedComponentsListingView.Presenter#searchDC(java.lang.String)
      */
     @Override
-    public void searchDC(String searchTerm) {
-        // TODO Auto-generated method stub
+    public void searchDC(String filter) {
+        if (filter != null && !filter.isEmpty()) {
+            if (filter.length() >= 3) {
+                view.mask();
+                EnumerationServices services = new EnumerationServices();
+                services.searchDeployedComponents(filter, new AsyncCallback<String>() {
+
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        ErrorHandler.post(caught);
+                        view.unmask();
+                    }
+
+                    @Override
+                    public void onSuccess(String result) {
+                        view.loadDC(parseResult(result));
+                        view.unmask();
+                    }
+                });
+            }
+        } else {
+            getDeployedComponents();
+        }
 
     }
 
@@ -66,32 +88,31 @@ public class DeployedComponentPresenterImpl implements DeployedComponentsListing
     
     private void getDeployedComponents() {
         EnumerationServices services = new EnumerationServices();
+        view.mask();
         services.getDeployedComponents(new AsyncCallback<String>() {
             @Override
             public void onSuccess(String result) {
-              //  grid.getStore().removeAll();
-                // ArrayList<DeployedComponent> components =
-                // DeployedComponentSearchUtil.parseJson(result);
-            //    grid.getStore().add(components);
-             //   grid.getStore().sort(DeployedComponent.NAME, SortDir.ASC);
              //   setCurrentCompSelection(currentSelection);
-            //    grid.unmask();
 
-                
-                DeployedComponentAutoBeanFactory factory = GWT.create(DeployedComponentAutoBeanFactory.class);
-                AutoBean<DeployedComponentList> autoBean = AutoBeanCodex.decode(factory,
-                        DeployedComponentList.class, result);
-                List<DeployedComponent> items = autoBean.as().getDCList();
-                view.loadDC(items);
+                view.loadDC(parseResult(result));
+                view.unmask();
 
             }
 
             @Override
             public void onFailure(Throwable caught) {
+                view.unmask();
                 ErrorHandler.post(caught);
-          //      grid.unmask();
             }
         });
+    }
+
+    private List<DeployedComponent> parseResult(String result) {
+        AutoBean<DeployedComponentList> autoBean = AutoBeanCodex.decode(factory,
+                DeployedComponentList.class, result);
+        List<DeployedComponent> items = autoBean.as().getDCList();
+        return items;
+
     }
     
 }

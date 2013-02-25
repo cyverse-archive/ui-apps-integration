@@ -28,5 +28,10 @@ public interface DeployedComponentsListingView extends IsWidget {
 
     public void loadDC(List<DeployedComponent> list);
 
+    public void showInfo(DeployedComponent dc);
+
+    public void mask();
+
+    public void unmask();
 
 }

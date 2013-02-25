@@ -38,7 +38,8 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     @Path("")
     @UiField
     AppWizardPanel centerPanel;
-    
+
+    @Ignore
     @UiField
     TextButton toolSelector;
     /**

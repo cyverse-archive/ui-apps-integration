@@ -6,12 +6,13 @@ package org.iplantc.core.appsIntegration.client.services;
 import org.iplantc.core.uicommons.client.DEServiceFacade;
 import org.iplantc.core.uicommons.client.models.DEProperties;
 import org.iplantc.de.shared.SharedAuthenticationValidatingServiceFacade;
+import org.iplantc.de.shared.SharedServiceFacade;
 import org.iplantc.de.shared.services.BaseServiceCallWrapper.Type;
 import org.iplantc.de.shared.services.ServiceCallWrapper;
 
+import com.google.gwt.http.client.URL;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import org.iplantc.de.shared.SharedServiceFacade;
 /**
  * @author sriram
  *
@@ -69,6 +70,13 @@ public class EnumerationServices {
         DEServiceFacade.getInstance().getServiceData(wrapper, callback);
     }
 
+    public void searchDeployedComponents(String searchTerm, AsyncCallback<String> callback) {
+        String address = DEProperties.getInstance().getUnproctedMuleServiceBaseUrl()
+                + "search-deployed-components/" + URL.encodeQueryString(searchTerm);
+        ServiceCallWrapper wrapper = new ServiceCallWrapper(address);
+        DEServiceFacade.getInstance().getServiceData(wrapper, callback);
+    }
+
     private void callService(AsyncCallback<String> callback, ServiceCallWrapper wrapper) {
         SharedAuthenticationValidatingServiceFacade.getInstance().getServiceData(wrapper, callback);
     }
@@ -76,4 +84,5 @@ public class EnumerationServices {
     private void callSecuredService(AsyncCallback<String> callback, ServiceCallWrapper wrapper) {
         SharedServiceFacade.getInstance().getServiceData(wrapper, callback);
     }
+
 }

@@ -6,7 +6,9 @@
     xmlns:tb="urn:import:com.sencha.gxt.widget.core.client.toolbar" 
      xmlns:grid="urn:import:com.sencha.gxt.widget.core.client.grid"
      xmlns:row="urn:import:com.sencha.gxt.widget.core.client.container"
-    xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form" xmlns:gwt="urn:import:com.google.gwt.widget.client">
+    xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form" 
+    xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button"
+    xmlns:gwt="urn:import:com.google.gwt.widget.client">
 
     <ui:with
         field="cm"
@@ -48,15 +50,15 @@
 
     <gxt:FramedPanel
         pixelSize="600, 300"
-        ui:field="panel" >
+        ui:field="panel" headerVisible="false" >
 
-        <row:VerticalLayoutContainer borders="true" >
+        <row:VerticalLayoutContainer borders="true" ui:field="container">
             <row:child layoutData="{topData}" >
                 <tb:ToolBar
-                    ui:field="toolBar" >
-                    <form:TextField ui:field="searchField" width="150"></form:TextField>
-                    <gwt:TextButton text="Search" ui:field="searchBtn"></gwt:TextButton>
-                    <gwt:TextButton text="Request New Tool" ui:field="newToolBtn"></gwt:TextButton>
+                    ui:field="toolBar" height="30" spacing="3">
+                    <form:TextField ui:field="searchField" width="250"></form:TextField>
+                    <button:TextButton text="Search"  ui:field="searchBtn"></button:TextButton>
+                    <button:TextButton text="Request New Tool" ui:field="newToolBtn"></button:TextButton>
                 </tb:ToolBar>
             </row:child>
 

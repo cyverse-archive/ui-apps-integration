@@ -15,7 +15,7 @@ public interface DeployedComponent extends HasId, HasDescription, HasName {
     void setHid(String hid);
 
     @PropertyName("location")
-    String location();
+    String getLocation();
 
     @PropertyName("location")
     void setLocation(String location);
