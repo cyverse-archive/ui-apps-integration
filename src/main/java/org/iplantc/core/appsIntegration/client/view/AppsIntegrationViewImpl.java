@@ -1,5 +1,6 @@
 package org.iplantc.core.appsIntegration.client.view;
 
+import org.iplantc.core.appsIntegration.client.dialogs.DCListingDialog;
 import org.iplantc.core.widgets.client.appWizard.models.AppTemplate;
 import org.iplantc.core.widgets.client.appWizard.models.AppTemplateAutoBeanFactory;
 import org.iplantc.core.widgets.client.appWizard.view.AppWizardPanel;
@@ -7,10 +8,13 @@ import org.iplantc.core.widgets.client.appWizard.view.AppWizardPanel;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.widget.client.TextButton;
 import com.sencha.gxt.widget.core.client.container.CardLayoutContainer;
 
 public class AppsIntegrationViewImpl extends Composite implements AppsIntegrationView {
@@ -34,7 +38,9 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     @Path("")
     @UiField
     AppWizardPanel centerPanel;
-
+    
+    @UiField
+    TextButton toolSelector;
     /**
      * @param appWizardPresenter
      * @param appTemplate the app for the center panel. If this is a blank appTemplate, it must be
@@ -43,6 +49,14 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     public AppsIntegrationViewImpl() {
         initWidget(BINDER.createAndBindUi(this));
         driver.initialize(this);
+        toolSelector.addClickHandler(new ClickHandler() {
+            
+            @Override
+            public void onClick(ClickEvent event) {
+                DCListingDialog dialog = new DCListingDialog();
+                dialog.show();
+            }
+        });
     }
 
     @Override
@@ -54,5 +68,7 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     public SimpleBeanEditorDriver<AppTemplate, ? extends Editor<AppTemplate>> getEditorDriver() {
         return driver;
     }
+    
+   
 
 }
