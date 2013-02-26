@@ -68,7 +68,8 @@
         <!-- App Builder -->
         <con:center layoutData="{centerData}">
             <gxt:ContentPanel>
-	            <appWizardView:AppWizardPanel ui:field="centerPanel" />
+	            <appWizardView:AppWizardPanel ui:field="centerPanel" 
+	                                          launchButtonEnabled="false"/>
             </gxt:ContentPanel>
         </con:center>
         
