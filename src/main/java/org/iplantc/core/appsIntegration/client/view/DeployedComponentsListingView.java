@@ -16,11 +16,11 @@ import com.google.gwt.user.client.ui.IsWidget;
 public interface DeployedComponentsListingView extends IsWidget {
     public interface Presenter extends org.iplantc.core.uicommons.client.presenter.Presenter {
 
-        void onDCSelection(DeployedComponent dc);
-
         DeployedComponent getSelectedDC();
 
         void searchDC(String searchTerm);
+
+        void loadDeployedComponents();
 
     }
 
@@ -33,5 +33,7 @@ public interface DeployedComponentsListingView extends IsWidget {
     public void mask();
 
     public void unmask();
+
+    public DeployedComponent getSelectedDC();
 
 }

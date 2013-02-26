@@ -6,6 +6,7 @@ package org.iplantc.core.appsIntegration.client.view;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.iplantc.core.appsIntegration.client.I18N;
 import org.iplantc.core.appsIntegration.client.models.DCProperties;
 import org.iplantc.core.appsIntegration.client.models.DeployedComponent;
 import org.iplantc.core.appsIntegration.client.view.cells.DCNameHyperlinkCell;
@@ -40,13 +41,13 @@ public class DCColumnModel extends ColumnModel<DeployedComponent> {
 
         ColumnConfig<DeployedComponent, String> version = new ColumnConfig<DeployedComponent, String>(
                 properties.version(), 100);
-        version.setHeader("Version");
+        version.setHeader(I18N.DISPLAY.version());
         configs.add(version);
         version.setMenuDisabled(true);
 
         ColumnConfig<DeployedComponent, String> path = new ColumnConfig<DeployedComponent, String>(
                 properties.location(), 100);
-        path.setHeader("Path");
+        path.setHeader();
         configs.add(path);
         path.setMenuDisabled(true);
 

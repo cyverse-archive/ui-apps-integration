@@ -7,5 +7,7 @@ import org.iplantc.core.uicommons.client.CommonUIErrorStrings;
  * 	/Users/jstroot/git/libraries/ui-apps-integration/src/main/resources/org/iplantc/core/appsIntegration/client/AppIntErrorStrings.properties'.
  */
 public interface AppIntErrorStrings extends CommonUIErrorStrings {
+
+    String dcLoadError();
   
 }

@@ -5,6 +5,7 @@ package org.iplantc.core.appsIntegration.client.presenter;
 
 import java.util.List;
 
+import org.iplantc.core.appsIntegration.client.I18N;
 import org.iplantc.core.appsIntegration.client.models.DeployedComponent;
 import org.iplantc.core.appsIntegration.client.models.DeployedComponentAutoBeanFactory;
 import org.iplantc.core.appsIntegration.client.models.DeployedComponentList;
@@ -24,30 +25,24 @@ import com.google.web.bindery.autobean.shared.AutoBeanCodex;
  */
 public class DeployedComponentPresenterImpl implements DeployedComponentsListingView.Presenter {
 
-    DeployedComponentsListingView view;
+    private DeployedComponentsListingView view;
+    private List<DeployedComponent> depCompList;
+    private
     DeployedComponentAutoBeanFactory factory = GWT.create(DeployedComponentAutoBeanFactory.class);
 
     public DeployedComponentPresenterImpl(DeployedComponentsListingView view) {
         this.view = view;
-        getDeployedComponents();
+        this.view.setPresenter(this);
+        loadDeployedComponents();
     }
 
-    /* (non-Javadoc)
-     * @see org.iplantc.core.appsIntegration.client.view.DeployedComponentsListingView.Presenter#onDCSelection(org.iplantc.core.appsIntegration.client.models.DeployedComponent)
-     */
-    @Override
-    public void onDCSelection(DeployedComponent dc) {
-        // TODO Auto-generated method stub
-
-    }
 
     /* (non-Javadoc)
      * @see org.iplantc.core.appsIntegration.client.view.DeployedComponentsListingView.Presenter#getSelectedDC()
      */
     @Override
     public DeployedComponent getSelectedDC() {
-        // TODO Auto-generated method stub
-        return null;
+        return view.getSelectedDC();
     }
 
     /* (non-Javadoc)
@@ -75,7 +70,7 @@ public class DeployedComponentPresenterImpl implements DeployedComponentsListing
                 });
             }
         } else {
-            getDeployedComponents();
+            loadDeployedComponents();
         }
 
     }
@@ -85,16 +80,18 @@ public class DeployedComponentPresenterImpl implements DeployedComponentsListing
         container.setWidget(view.asWidget());
     }
 
-    
-    private void getDeployedComponents() {
+    @Override
+    public void loadDeployedComponents() {
         EnumerationServices services = new EnumerationServices();
         view.mask();
+        if (depCompList == null) {
         services.getDeployedComponents(new AsyncCallback<String>() {
             @Override
             public void onSuccess(String result) {
              //   setCurrentCompSelection(currentSelection);
-
-                view.loadDC(parseResult(result));
+                    // cache result
+                depCompList = parseResult(result);
+                view.loadDC(depCompList);
                 view.unmask();
 
             }
@@ -102,9 +99,13 @@ public class DeployedComponentPresenterImpl implements DeployedComponentsListing
             @Override
             public void onFailure(Throwable caught) {
                 view.unmask();
-                ErrorHandler.post(caught);
+                    ErrorHandler.post(I18N.ERROR.dcLoadError(), caught);
             }
         });
+        } else {
+            view.loadDC(depCompList);
+            view.unmask();
+        }
     }
 
     private List<DeployedComponent> parseResult(String result) {

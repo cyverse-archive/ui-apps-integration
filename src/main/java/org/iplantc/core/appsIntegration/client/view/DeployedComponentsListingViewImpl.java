@@ -5,10 +5,12 @@ package org.iplantc.core.appsIntegration.client.view;
 
 import java.util.List;
 
+import org.iplantc.core.appsIntegration.client.I18N;
 import org.iplantc.core.appsIntegration.client.models.DeployedComponent;
-import org.iplantc.core.uicommons.client.I18N;
+
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.safehtml.shared.SafeHtml;
@@ -20,6 +22,7 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.core.client.XTemplates;
+import com.sencha.gxt.core.client.util.KeyNav;
 import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.widget.core.client.Dialog;
 import com.sencha.gxt.widget.core.client.button.TextButton;
@@ -30,6 +33,8 @@ import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
+import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent;
+import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent.SelectionChangedHandler;
 
 /**
  * A grid that displays list of available deployed components (bin/tools) in Condor
@@ -73,9 +78,11 @@ public class DeployedComponentsListingViewImpl implements DeployedComponentsList
     @UiField
     VerticalLayoutContainer container;
 
-    public DeployedComponentsListingViewImpl(ListStore<DeployedComponent> listStore) {
+    public DeployedComponentsListingViewImpl(ListStore<DeployedComponent> listStore,
+            SelectionChangedHandler<DeployedComponent> handler) {
         this.store = listStore;
         widget = uiBinder.createAndBindUi(this);
+        grid.getSelectionModel().addSelectionChangedHandler(handler);
         initSearchField();
     }
 
@@ -90,12 +97,17 @@ public class DeployedComponentsListingViewImpl implements DeployedComponentsList
             @Override
             public void onKeyUp(KeyUpEvent event) {
                 String currentValue = searchField.getCurrentValue();
-                if (event.getNativeKeyCode() == 13) {
-                    onSearchBtnClick(null);
+                if(currentValue == null || currentValue.isEmpty()) {
+                    presenter.loadDeployedComponents();
                 }
-                
             }
         });
+        new KeyNav(searchField) {
+            @Override
+            public void onEnter(NativeEvent evt) {
+                onSearchBtnClick(null);
+            }
+        };
     }
 
     @Override
@@ -119,16 +131,22 @@ public class DeployedComponentsListingViewImpl implements DeployedComponentsList
     public void showInfo(DeployedComponent dc) {
         DCDetailsRenderer templates = GWT.create(DCDetailsRenderer.class);
         HtmlLayoutContainer c = new HtmlLayoutContainer(templates.render());
-        c.add(new Label("Attribution" + ": "), new HtmlData(".cell1"));
+        c.add(new Label(I18N.DISPLAY.attribution() + ": "), new HtmlData(".cell1"));
         c.add(new Label(dc.getAttribution()), new HtmlData(".cell3"));
-        c.add(new Label("Description" + ": "), new HtmlData(".cell5"));
+        c.add(new Label(I18N.DISPLAY.description() + ": "), new HtmlData(".cell5"));
         c.add(new Label(dc.getDescription()), new HtmlData(".cell7"));
+        Dialog d = buildDetailsDialog(dc.getName());
+        d.add(c);
+        d.show();
+    }
+
+    private Dialog buildDetailsDialog(String heading) {
         Dialog d = new Dialog();
         d.getButtonBar().clear();
-        d.add(c);
+        d.setModal(true);
         d.setSize("300px", "200px");
-        d.setHeadingText(dc.getName());
-        d.show();
+        d.setHeadingText(heading);
+        return d;
     }
 
     @Override
@@ -146,11 +164,20 @@ public class DeployedComponentsListingViewImpl implements DeployedComponentsList
     @UiHandler({"searchBtn"})
     public void onSearchBtnClick(SelectEvent event) {
         String currentValue = searchField.getCurrentValue();
-        if (currentValue != null && !currentValue.isEmpty() && currentValue.length() >= 3) {
+        if (currentValue == null || currentValue.isEmpty()) {
+            presenter.loadDeployedComponents();
+            return;
+        }
+        if (currentValue.length() >= 3) {
             presenter.searchDC(currentValue);
         } else {
-            searchField.markInvalid("Enter 3 or more characters to begin search");
+            searchField.markInvalid(I18N.DISPLAY.searchEmptyText());
         }
+    }
+
+    @Override
+    public DeployedComponent getSelectedDC() {
+        return grid.getSelectionModel().getSelectedItem();
     }
 
 }
