@@ -47,7 +47,7 @@ public class DCColumnModel extends ColumnModel<DeployedComponent> {
 
         ColumnConfig<DeployedComponent, String> path = new ColumnConfig<DeployedComponent, String>(
                 properties.location(), 100);
-        path.setHeader();
+        path.setHeader(I18N.DISPLAY.path());
         configs.add(path);
         path.setMenuDisabled(true);
 
