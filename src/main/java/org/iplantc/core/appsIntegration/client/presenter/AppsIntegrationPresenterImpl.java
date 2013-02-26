@@ -58,5 +58,4 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         return appTemplate;
     }
 
-
 }

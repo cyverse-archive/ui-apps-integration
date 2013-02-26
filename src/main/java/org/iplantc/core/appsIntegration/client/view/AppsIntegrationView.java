@@ -12,7 +12,7 @@ import com.google.gwt.user.client.ui.IsWidget;
  */
 public interface AppsIntegrationView extends IsWidget, Editor<AppTemplate> {
     
-    public interface Presenter extends org.iplantc.core.widgets.client.appWizard.view.AppWizardView.Presenter {
+    public interface Presenter extends org.iplantc.core.widgets.client.appWizard.view.AppWizardView.BasePresenter {
     }
 
     void setPresenter(Presenter presenter);
