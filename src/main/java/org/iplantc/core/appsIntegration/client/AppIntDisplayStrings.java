@@ -1,10 +1,12 @@
 package org.iplantc.core.appsIntegration.client;
 
+import org.iplantc.core.uicommons.client.CommonUIDisplayStrings;
+
 /**
  * Interface to represent the messages contained in resource bundle:
- * 	/Users/jstroot/git/ui-apps-integration/src/main/resources/org/iplantc/core/appsIntegration/client/AppIntDisplayMessages.properties'.
+ * 	/Users/jstroot/git/libraries/ui-apps-integration/src/main/resources/org/iplantc/core/appsIntegration/client/AppIntDisplayStrings.properties'.
  */
-public interface AppIntDisplayMessages extends com.google.gwt.i18n.client.Messages {
+public interface AppIntDisplayStrings extends CommonUIDisplayStrings {
   
   /**
    * Translated "Apps Integration Module".
@@ -12,6 +14,5 @@ public interface AppIntDisplayMessages extends com.google.gwt.i18n.client.Messag
    * @return translated "Apps Integration Module"
    */
   @DefaultMessage("Apps Integration Module")
-  @Key("appIntegrationModule")
   String appIntegrationModule();
 }

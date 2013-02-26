@@ -120,8 +120,8 @@
                       <module>${gwt.module}</module>
                       <!-- These config options are only relevant if the i18n goal is executed. -->
                       <i18nMessagesBundles>
-                        <i18nMessagesBundle>org.iplantc.core.appsIntegration.client.AppIntDisplayMessages</i18nMessagesBundle>
-                        <i18nMessagesBundle>org.iplantc.core.appsIntegration.client.AppIntErrorMessages</i18nMessagesBundle>
+                        <i18nMessagesBundle>org.iplantc.core.appsIntegration.client.AppIntDisplayStrings</i18nMessagesBundle>
+                        <i18nMessagesBundle>org.iplantc.core.appsIntegration.client.AppIntErrorStrings</i18nMessagesBundle>
                       </i18nMessagesBundles>
                   </configuration>
               </execution>
