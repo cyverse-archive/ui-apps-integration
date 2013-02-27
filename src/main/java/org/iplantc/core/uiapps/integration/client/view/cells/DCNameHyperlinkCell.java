@@ -1,11 +1,11 @@
-package org.iplantc.core.appsIntegration.client.view.cells;
+package org.iplantc.core.uiapps.integration.client.view.cells;
 
 import static com.google.gwt.dom.client.BrowserEvents.CLICK;
 import static com.google.gwt.dom.client.BrowserEvents.MOUSEOUT;
 import static com.google.gwt.dom.client.BrowserEvents.MOUSEOVER;
 
-import org.iplantc.core.appsIntegration.client.models.DeployedComponent;
-import org.iplantc.core.appsIntegration.client.view.DeployedComponentsListingView;
+import org.iplantc.core.uiapps.integration.client.models.DeployedComponent;
+import org.iplantc.core.uiapps.integration.client.view.DeployedComponentsListingView;
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.cell.client.Cell;

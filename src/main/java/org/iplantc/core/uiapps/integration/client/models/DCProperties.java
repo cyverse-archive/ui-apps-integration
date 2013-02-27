@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.iplantc.core.appsIntegration.client.models;
+package org.iplantc.core.uiapps.integration.client.models;
 
 import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.data.shared.PropertyAccess;

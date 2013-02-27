@@ -1,9 +1,9 @@
-package org.iplantc.core.appsIntegration.client.presenter;
+package org.iplantc.core.uiapps.integration.client.presenter;
 
-import org.iplantc.core.appsIntegration.client.view.AppsIntegrationView;
-import org.iplantc.core.widgets.client.appWizard.models.AppTemplate;
-import org.iplantc.core.widgets.client.appWizard.models.AppTemplateAutoBeanFactory;
-import org.iplantc.core.widgets.client.appWizard.presenter.AppWizardPresenterJsonAdapter;
+import org.iplantc.core.uiapps.integration.client.view.AppsIntegrationView;
+import org.iplantc.core.uiapps.widgets.client.appWizard.models.AppTemplate;
+import org.iplantc.core.uiapps.widgets.client.appWizard.models.AppTemplateAutoBeanFactory;
+import org.iplantc.core.uiapps.widgets.client.appWizard.presenter.AppWizardPresenterJsonAdapter;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.client.ui.HasOneWidget;

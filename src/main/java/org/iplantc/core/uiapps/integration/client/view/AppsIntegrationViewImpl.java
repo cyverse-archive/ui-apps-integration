@@ -1,9 +1,9 @@
-package org.iplantc.core.appsIntegration.client.view;
+package org.iplantc.core.uiapps.integration.client.view;
 
-import org.iplantc.core.appsIntegration.client.dialogs.DCListingDialog;
-import org.iplantc.core.widgets.client.appWizard.models.AppTemplate;
-import org.iplantc.core.widgets.client.appWizard.models.AppTemplateAutoBeanFactory;
-import org.iplantc.core.widgets.client.appWizard.view.AppWizardPanel;
+import org.iplantc.core.uiapps.integration.client.dialogs.DCListingDialog;
+import org.iplantc.core.uiapps.widgets.client.appWizard.models.AppTemplate;
+import org.iplantc.core.uiapps.widgets.client.appWizard.models.AppTemplateAutoBeanFactory;
+import org.iplantc.core.uiapps.widgets.client.appWizard.view.AppWizardPanel;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;
