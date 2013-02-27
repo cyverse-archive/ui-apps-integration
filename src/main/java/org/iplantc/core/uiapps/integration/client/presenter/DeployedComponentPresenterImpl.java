@@ -1,16 +1,15 @@
 /**
  * 
  */
-package org.iplantc.core.appsIntegration.client.presenter;
+package org.iplantc.core.uiapps.integration.client.presenter;
 
 import java.util.List;
 
-import org.iplantc.core.appsIntegration.client.I18N;
-import org.iplantc.core.appsIntegration.client.models.DeployedComponent;
-import org.iplantc.core.appsIntegration.client.models.DeployedComponentAutoBeanFactory;
-import org.iplantc.core.appsIntegration.client.models.DeployedComponentList;
-import org.iplantc.core.appsIntegration.client.services.EnumerationServices;
-import org.iplantc.core.appsIntegration.client.view.DeployedComponentsListingView;
+import org.iplantc.core.uiapps.integration.client.models.DeployedComponent;
+import org.iplantc.core.uiapps.integration.client.models.DeployedComponentAutoBeanFactory;
+import org.iplantc.core.uiapps.integration.client.models.DeployedComponentList;
+import org.iplantc.core.uiapps.integration.client.services.EnumerationServices;
+import org.iplantc.core.uiapps.integration.client.view.DeployedComponentsListingView;
 import org.iplantc.core.uicommons.client.ErrorHandler;
 
 import com.google.gwt.core.shared.GWT;

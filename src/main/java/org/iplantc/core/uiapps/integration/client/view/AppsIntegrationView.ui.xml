@@ -4,7 +4,7 @@
              xmlns:gwt="urn:import:com.google.gwt.widget.client"
              xmlns:con="urn:import:com.sencha.gxt.widget.core.client.container"
              xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client"
-             xmlns:appWizardView="urn:import:org.iplantc.core.widgets.client.appWizard.view">
+             xmlns:appWizardView="urn:import:org.iplantc.core.uiapps.widgets.client.appWizard.view">
 
     <!-- Border Layout Data -->
    <ui:with field="westMargins"
@@ -68,8 +68,7 @@
         <!-- App Builder -->
         <con:center layoutData="{centerData}">
             <gxt:ContentPanel>
-	            <appWizardView:AppWizardPanel ui:field="centerPanel" 
-	                                          launchButtonEnabled="false"/>
+	            <appWizardView:AppWizardPanel ui:field="centerPanel"/>
             </gxt:ContentPanel>
         </con:center>
         

@@ -1,13 +1,12 @@
 /**
  * 
  */
-package org.iplantc.core.appsIntegration.client.view;
+package org.iplantc.core.uiapps.integration.client.view;
 
 import java.util.List;
 
-import org.iplantc.core.appsIntegration.client.I18N;
-import org.iplantc.core.appsIntegration.client.models.DeployedComponent;
-
+import org.iplantc.core.uiapps.integration.client.models.DeployedComponent;
+import org.iplantc.core.uicommons.client.I18N;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.NativeEvent;

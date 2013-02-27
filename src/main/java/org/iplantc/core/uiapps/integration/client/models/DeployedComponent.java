@@ -1,10 +1,10 @@
-package org.iplantc.core.appsIntegration.client.models;
-
-import com.google.gwt.user.client.ui.HasName;
-import com.google.web.bindery.autobean.shared.AutoBean.PropertyName;
+package org.iplantc.core.uiapps.integration.client.models;
 
 import org.iplantc.core.uicommons.client.models.HasDescription;
 import org.iplantc.core.uicommons.client.models.HasId;
+
+import com.google.gwt.user.client.ui.HasName;
+import com.google.web.bindery.autobean.shared.AutoBean.PropertyName;
 
 public interface DeployedComponent extends HasId, HasDescription, HasName {
 

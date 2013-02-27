@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.iplantc.core.appsIntegration.client.services;
+package org.iplantc.core.uiapps.integration.client.services;
 
 import org.iplantc.core.uicommons.client.DEServiceFacade;
 import org.iplantc.core.uicommons.client.models.DEProperties;
