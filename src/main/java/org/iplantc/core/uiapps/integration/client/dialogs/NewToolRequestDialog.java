@@ -5,8 +5,8 @@ package org.iplantc.core.uiapps.integration.client.dialogs;
 
 import org.iplantc.core.uiapps.integration.client.I18N;
 import org.iplantc.core.uiapps.integration.client.presenter.NewToolRequestFormPresenterImpl;
-import org.iplantc.core.uiapps.integration.client.view.AppsIntegrationView.Presenter;
 import org.iplantc.core.uiapps.integration.client.view.NewToolRequestFormView;
+import org.iplantc.core.uiapps.integration.client.view.NewToolRequestFormView.Presenter;
 import org.iplantc.core.uiapps.integration.client.view.NewToolRequestFormViewImpl;
 
 import com.sencha.gxt.widget.core.client.Dialog;
