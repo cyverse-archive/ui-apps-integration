@@ -10,9 +10,9 @@
 
 
 	<ui:with field="icons"
-		type="org.iplantc.core.appsIntegration.client.images.Icons" />
+		type="org.iplantc.core.uiapps.integration.client.images.Icons" />
 	<ui:with field="strings"
-		type="org.iplantc.core.appsIntegration.client.AppIntDisplayStrings" />
+		type="org.iplantc.core.uiapps.integration.client.AppIntDisplayStrings" />
 
 	<ui:with field="cm"
 		type="com.sencha.gxt.widget.core.client.grid.ColumnModel">

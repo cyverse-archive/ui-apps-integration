@@ -9,7 +9,7 @@
 	xmlns:gwt="urn:import:com.google.gwt.widget.client">
 
 	<ui:with field="strings"
-		type="org.iplantc.core.appsIntegration.client.AppIntDisplayStrings" />
+		type="org.iplantc.core.uiapps.integration.client.AppIntDisplayStrings" />
 
 
 	<ui:with field="margins" type="com.sencha.gxt.core.client.util.Margins">

@@ -1,4 +1,4 @@
-package org.iplantc.core.appsIntegration.client.view;
+package org.iplantc.core.uiapps.integration.client.view;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;

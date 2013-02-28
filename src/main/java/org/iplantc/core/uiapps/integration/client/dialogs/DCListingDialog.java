@@ -3,6 +3,8 @@
  */
 package org.iplantc.core.uiapps.integration.client.dialogs;
 
+import java.util.List;
+
 import org.iplantc.core.uiapps.integration.client.models.DeployedComponent;
 import org.iplantc.core.uiapps.integration.client.presenter.DeployedComponentPresenterImpl;
 import org.iplantc.core.uiapps.integration.client.view.DeployedComponentsListingView;
@@ -12,6 +14,8 @@ import org.iplantc.core.uiapps.integration.client.view.DeployedComponentsListing
 import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.widget.core.client.Dialog;
+import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent;
+import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent.SelectionChangedHandler;
 
 /**
  * @author sriram

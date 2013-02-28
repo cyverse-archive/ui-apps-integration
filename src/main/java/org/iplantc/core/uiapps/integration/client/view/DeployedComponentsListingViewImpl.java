@@ -5,8 +5,8 @@ package org.iplantc.core.uiapps.integration.client.view;
 
 import java.util.List;
 
+import org.iplantc.core.uiapps.integration.client.I18N;
 import org.iplantc.core.uiapps.integration.client.models.DeployedComponent;
-import org.iplantc.core.uicommons.client.I18N;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.NativeEvent;
@@ -32,7 +32,6 @@ import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
-import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent;
 import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent.SelectionChangedHandler;
 
 /**

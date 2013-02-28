@@ -5,6 +5,7 @@ package org.iplantc.core.uiapps.integration.client.presenter;
 
 import java.util.List;
 
+import org.iplantc.core.uiapps.integration.client.I18N;
 import org.iplantc.core.uiapps.integration.client.models.DeployedComponent;
 import org.iplantc.core.uiapps.integration.client.models.DeployedComponentAutoBeanFactory;
 import org.iplantc.core.uiapps.integration.client.models.DeployedComponentList;
@@ -24,9 +25,9 @@ import com.google.web.bindery.autobean.shared.AutoBeanCodex;
  */
 public class DeployedComponentPresenterImpl implements DeployedComponentsListingView.Presenter {
 
-    private DeployedComponentsListingView view;
+    private final DeployedComponentsListingView view;
     private List<DeployedComponent> depCompList;
-    private
+    private final
     DeployedComponentAutoBeanFactory factory = GWT.create(DeployedComponentAutoBeanFactory.class);
 
     public DeployedComponentPresenterImpl(DeployedComponentsListingView view) {

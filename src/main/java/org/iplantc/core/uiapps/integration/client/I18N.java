@@ -1,4 +1,4 @@
-package org.iplantc.core.appsIntegration.client;
+package org.iplantc.core.uiapps.integration.client;
 
 import com.google.gwt.core.client.GWT;
 
