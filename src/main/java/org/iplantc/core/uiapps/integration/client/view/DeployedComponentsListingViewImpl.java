@@ -6,6 +6,7 @@ package org.iplantc.core.uiapps.integration.client.view;
 import java.util.List;
 
 import org.iplantc.core.uiapps.integration.client.I18N;
+import org.iplantc.core.uiapps.integration.client.dialogs.NewToolRequestDialog;
 import org.iplantc.core.uiapps.integration.client.models.DeployedComponent;
 
 import com.google.gwt.core.client.GWT;
@@ -23,6 +24,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.core.client.XTemplates;
 import com.sencha.gxt.core.client.util.KeyNav;
 import com.sencha.gxt.data.shared.ListStore;
+import com.sencha.gxt.widget.core.client.Composite;
 import com.sencha.gxt.widget.core.client.Dialog;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.AbstractHtmlLayoutContainer.HtmlData;
@@ -40,7 +42,8 @@ import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent.Selecti
  * @author sriram
  * 
  */
-public class DeployedComponentsListingViewImpl implements DeployedComponentsListingView {
+public class DeployedComponentsListingViewImpl extends Composite implements
+        DeployedComponentsListingView {
 
     private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 
@@ -69,6 +72,9 @@ public class DeployedComponentsListingViewImpl implements DeployedComponentsList
 
     @UiField
     TextButton searchBtn;
+
+    @UiField
+    TextButton newToolBtn;
 
     @UiField
     Grid<DeployedComponent> grid;
@@ -171,6 +177,12 @@ public class DeployedComponentsListingViewImpl implements DeployedComponentsList
         } else {
             searchField.markInvalid(I18N.DISPLAY.searchEmptyText());
         }
+    }
+
+    @UiHandler({"newToolBtn"})
+    public void onNewToolRequestBtnClick(SelectEvent event) {
+        NewToolRequestDialog dialog = new NewToolRequestDialog();
+        dialog.show();
     }
 
     @Override

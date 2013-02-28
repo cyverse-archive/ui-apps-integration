@@ -1,20 +1,13 @@
 package org.iplantc.core.uiapps.integration.client.view;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.IsWidget;
 
-public class NewToolRequestFormView extends Composite {
+public interface NewToolRequestFormView extends IsWidget {
 
-    private static NewToolRequestFormViewUiBinder uiBinder = GWT
-            .create(NewToolRequestFormViewUiBinder.class);
+    public interface Presenter extends org.iplantc.core.uicommons.client.presenter.Presenter {
 
-    interface NewToolRequestFormViewUiBinder extends UiBinder<Widget, NewToolRequestFormView> {
     }
 
-    public NewToolRequestFormView() {
-        initWidget(uiBinder.createAndBindUi(this));
-    }
+    void setPresenter(Presenter p);
 
 }

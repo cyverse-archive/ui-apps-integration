@@ -71,4 +71,6 @@ public interface AppIntDisplayStrings extends CommonUIDisplayStrings {
      */
     String path();
 
+    String requestNewTool();
+
 }
