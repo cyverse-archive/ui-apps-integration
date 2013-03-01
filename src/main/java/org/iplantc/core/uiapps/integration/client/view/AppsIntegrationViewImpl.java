@@ -1,9 +1,9 @@
 package org.iplantc.core.uiapps.integration.client.view;
 
 import org.iplantc.core.uiapps.integration.client.dialogs.DCListingDialog;
-import org.iplantc.core.uiapps.widgets.client.appWizard.models.AppTemplate;
-import org.iplantc.core.uiapps.widgets.client.appWizard.models.AppTemplateAutoBeanFactory;
-import org.iplantc.core.uiapps.widgets.client.appWizard.view.AppWizardPanel;
+import org.iplantc.core.uiapps.widgets.client.models.AppTemplate;
+import org.iplantc.core.uiapps.widgets.client.models.AppTemplateAutoBeanFactory;
+import org.iplantc.core.uiapps.widgets.client.view.editors.ArgumentGroupListEditor;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;
@@ -38,9 +38,8 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
 
     private AppsIntegrationView.Presenter presenter;
 
-    @Path("")
     @UiField
-    AppWizardPanel centerPanel;
+    ArgumentGroupListEditor argumentGroupsEditor;
 
     @Ignore
     @UiField
