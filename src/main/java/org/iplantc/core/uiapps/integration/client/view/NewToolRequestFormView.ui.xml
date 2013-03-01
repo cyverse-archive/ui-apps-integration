@@ -1,42 +1,52 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:con="urn:import:com.sencha.gxt.widget.core.client.container"
-	xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client" xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form"
-	xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button"
-	xmlns:gwt="urn:import:com.google.gwt.widget.client">
+	xmlns:c="urn:import:com.sencha.gxt.widget.core.client.button"
+	xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form"
+	xmlns:gwt="urn:import:com.google.gwt.widget.client" xmlns:t="urn:import:com.google.gwt.i18n.server.testing">
 
 	<ui:with field="strings"
 		type="org.iplantc.core.uiapps.integration.client.AppIntDisplayStrings" />
 
 	<ui:with field="layoutData"
 		type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData">
-		<ui:attributes height="-1" width="1" />
+		<ui:attributes height="-1" width=".90" />
 	</ui:with>
-	<con:VerticalLayoutContainer ui:field="container" >
-			<form:FieldSet headingText="Contact Information" collapsible="true">
+	<form:FormPanel ui:field="formPanel" encoding="MULTIPART"
+		method="POST" width="420" action="appsIntegration/new_tool_request">
+		<con:VerticalLayoutContainer ui:field="container">
+			<form:FieldSet ui:field="contactSet" headingText="Contact Information"
+				collapsible="true">
 				<con:VerticalLayoutContainer ui:field="toolInfoContainer">
 					<con:child layoutData="{layoutData}">
-						<form:FieldLabel text="{strings.name}">
+								<form:TextField ui:field="user" name="user" allowBlank="false" visible="false">
+								</form:TextField>
+					</con:child>
+				
+					<con:child layoutData="{layoutData}">
+						<form:FieldLabel text="{strings.name}" labelAlign="TOP">
 							<form:widget>
-								<form:TextField ui:field="name" allowBlank="false">
+								<form:TextField ui:field="name" name="name" allowBlank="false">
 								</form:TextField>
 							</form:widget>
 						</form:FieldLabel>
 					</con:child>
 
 					<con:child layoutData="{layoutData}">
-						<form:FieldLabel text="{strings.email}">
+						<form:FieldLabel text="{strings.email}"
+							labelAlign="TOP">
 							<form:widget>
-								<form:TextField ui:field="email" allowBlank="false">
+								<form:TextField ui:field="email" name="email" allowBlank="false">
 								</form:TextField>
 							</form:widget>
 						</form:FieldLabel>
 					</con:child>
 
 					<con:child layoutData="{layoutData}">
-						<form:FieldLabel text="{strings.phone}">
+						<form:FieldLabel text="{strings.phone}"
+							labelAlign="TOP">
 							<form:widget>
-								<form:TextField ui:field="phone" allowBlank="true">
+								<form:TextField ui:field="phone" name="phone" allowBlank="true">
 								</form:TextField>
 							</form:widget>
 						</form:FieldLabel>
@@ -44,79 +54,97 @@
 				</con:VerticalLayoutContainer>
 			</form:FieldSet>
 
-			<form:FieldSet headingText="Tool Information" collapsible="true">
+			<form:FieldSet ui:field="toolSet" headingText="Tool Information"
+				collapsible="true">
 				<con:VerticalLayoutContainer>
 					<con:child layoutData="{layoutData}">
-						<form:FieldLabel text="{strings.toolNameLabel}">
+						<form:FieldLabel text="{strings.toolNameLabel}"
+							labelAlign="TOP">
 							<form:widget>
-								<form:TextField ui:field="toolName" allowBlank="false">
+								<form:TextField name="toolName" ui:field="toolName" allowBlank="false">
 								</form:TextField>
 							</form:widget>
 						</form:FieldLabel>
 					</con:child>
 
 					<con:child layoutData="{layoutData}">
-						<form:FieldLabel text="{strings.toolDesc}">
+						<form:FieldLabel text="{strings.toolDesc}"
+							labelAlign="TOP">
 							<form:widget>
-								<form:TextArea ui:field="toolDesc" allowBlank="false">
+								<form:TextArea name="tool_description" ui:field="toolDesc" allowBlank="false" height="150">
 								</form:TextArea>
 							</form:widget>
 						</form:FieldLabel>
 					</con:child>
 
 					<con:child layoutData="{layoutData}">
-						<form:FieldLabel text="{strings.srcLinkPrompt}">
+						<form:FieldLabel text="{strings.srcLinkPrompt}"
+							labelAlign="TOP">
 							<form:widget>
-								<g:HorizontalPanel>
-									<form:Radio ui:field="toolLink" value="true" name="toollinkUpld"
-										boxLabel="Link"></form:Radio>
-									<form:Radio ui:field="toolUpld" value="false" name="toollinkUpld"
+								<g:HorizontalPanel spacing="3">
+									<form:Radio  ui:field="toolLink" name="toollinkUpld"
+										boxLabel="Link" value="true"></form:Radio>
+									<form:Radio  ui:field="toolUpld" name="toollinkUpld"
 										boxLabel="Upload"></form:Radio>
 								</g:HorizontalPanel>
 							</form:widget>
 						</form:FieldLabel>
 					</con:child>
 					<con:child layoutData="{layoutData}">
-							<g:VerticalPanel>
+						<form:FieldLabel text="" labelSeparator=""
+							labelAlign="TOP">
+							<form:widget>
 								<form:FileUploadField ui:field="binUpld"
 									visible="false" name="binUpload" allowBlank="true"></form:FileUploadField>
-								<form:TextField ui:field="binLink" visible="false"
-									allowBlank="true"></form:TextField>
-							</g:VerticalPanel>
+							</form:widget>
+						</form:FieldLabel>
 					</con:child>
 					<con:child layoutData="{layoutData}">
-						<form:FieldLabel text="{strings.docLink}">
+						<form:FieldLabel text="" labelSeparator=""
+							labelAlign="TOP">
 							<form:widget>
-								<form:TextField ui:field="toolDoc" allowBlank="false">
+								<form:TextField name="src_url" ui:field="binLink" visible="true"
+									allowBlank="true"></form:TextField>
+							</form:widget>
+						</form:FieldLabel>
+					</con:child>
+					<con:child layoutData="{layoutData}">
+						<form:FieldLabel text="{strings.docLink}"
+							labelAlign="TOP">
+							<form:widget>
+								<form:TextField name="documentation_url" ui:field="toolDoc" allowBlank="false">
 								</form:TextField>
 							</form:widget>
 						</form:FieldLabel>
 					</con:child>
 
 					<con:child layoutData="{layoutData}">
-						<form:FieldLabel text="{strings.version}">
+						<form:FieldLabel text="{strings.version}"
+							labelAlign="TOP">
 							<form:widget>
-								<form:TextField ui:field="toolVersion"
+								<form:TextField name="version" ui:field="toolVersion"
 									allowBlank="false">
 								</form:TextField>
 							</form:widget>
 						</form:FieldLabel>
 					</con:child>
 					<con:child layoutData="{layoutData}">
-						<form:FieldLabel text="{strings.version}">
+						<form:FieldLabel text="{strings.isMultiThreaded}"
+							labelAlign="TOP">
 							<form:widget>
-								<form:SimpleComboBox ui:field="multiThreadCbo"
-									allowBlank="true" forceSelection="true" triggerAction="ALL">
+								<form:SimpleComboBox name="multi-threaded" ui:field="multiThreadCbo"
+									allowBlank="true" forceSelection="true" triggerAction="ALL" editable="false">
 								</form:SimpleComboBox>
 							</form:widget>
 						</form:FieldLabel>
 					</con:child>
 				</con:VerticalLayoutContainer>
 			</form:FieldSet>
-			<form:FieldSet headingText="Other Information" collapsible="true">
+			<form:FieldSet ui:field="otherSet" headingText="Other Information"
+				collapsible="true">
 				<con:VerticalLayoutContainer>
 					<con:child layoutData="{layoutData}">
-						<form:FieldLabel text="Test Data">
+						<form:FieldLabel text="Test Data" labelAlign="TOP">
 							<form:widget>
 								<form:FileUploadField name="testDataUplad"
 									ui:field="testDataUpld" allowBlank="false"></form:FileUploadField>
@@ -126,9 +154,10 @@
 
 
 					<con:child layoutData="{layoutData}">
-						<form:FieldLabel text="{strings.cmdLineRun}">
+						<form:FieldLabel text="{strings.cmdLineRun}"
+							labelAlign="TOP">
 							<form:widget>
-								<form:TextArea ui:field="runInfo" allowBlank="false">
+								<form:TextArea name="cmd_line" ui:field="runInfo" allowBlank="false" height="150">
 								</form:TextArea>
 							</form:widget>
 						</form:FieldLabel>
@@ -136,23 +165,29 @@
 
 
 					<con:child layoutData="{layoutData}">
-						<form:FieldLabel text="Other Data">
+						<form:FieldLabel text="Other Data" labelAlign="TOP">
 							<form:widget>
-								<form:FileUploadField name="otherDataUplad"
-									ui:field="otherDataUpld" allowBlank="false"></form:FileUploadField>
+								<form:FileUploadField  name="otherDataUplad"
+									ui:field="otherDataUpld" allowBlank="true"></form:FileUploadField>
 							</form:widget>
 						</form:FieldLabel>
 					</con:child>
 
 					<con:child layoutData="{layoutData}">
-						<form:FieldLabel text="Other Info">
+						<form:FieldLabel text="Other Info" labelAlign="TOP">
 							<form:widget>
-								<form:TextArea ui:field="otherInfo" allowBlank="true">
+								<form:TextArea name="additional_info" ui:field="otherInfo" allowBlank="true" height="150">
 								</form:TextArea>
 							</form:widget>
 						</form:FieldLabel>
 					</con:child>
 				</con:VerticalLayoutContainer>
 			</form:FieldSet>
-	</con:VerticalLayoutContainer>
+			<c:ButtonBar height="30" pack="CENTER">
+				<c:TextButton ui:field="submitBtn" text="Submit"></c:TextButton>
+				<c:TextButton ui:field="cancelBtn" text="Cancel"></c:TextButton>
+			</c:ButtonBar>
+		</con:VerticalLayoutContainer>
+
+	</form:FormPanel>
 </ui:UiBinder> 

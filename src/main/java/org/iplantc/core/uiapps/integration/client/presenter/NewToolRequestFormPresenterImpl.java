@@ -8,6 +8,7 @@ package org.iplantc.core.uiapps.integration.client.presenter;
 import org.iplantc.core.uiapps.integration.client.view.NewToolRequestFormView;
 import org.iplantc.core.uiapps.integration.client.view.NewToolRequestFormView.Presenter;
 
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.HasOneWidget;
 
 /**
@@ -17,9 +18,11 @@ import com.google.gwt.user.client.ui.HasOneWidget;
 public class NewToolRequestFormPresenterImpl implements Presenter {
 
     private NewToolRequestFormView view;
+    private Command callback;
 
-    public NewToolRequestFormPresenterImpl(NewToolRequestFormView view) {
+    public NewToolRequestFormPresenterImpl(NewToolRequestFormView view, Command callbackCmd) {
         this.view = view;
+        this.callback = callbackCmd;
         view.setPresenter(this);
     }
 
@@ -29,6 +32,22 @@ public class NewToolRequestFormPresenterImpl implements Presenter {
     @Override
     public void go(HasOneWidget container) {
         container.setWidget(view);
+    }
+
+    @Override
+    public void onRequestComplete() {
+        if (callback != null) {
+            callback.execute();
+        }
+        
+    }
+
+    @Override
+    public void onRequestError() {
+        if (callback != null) {
+            callback.execute();
+        }
+
     }
 
 }
