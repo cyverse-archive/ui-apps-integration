@@ -19,14 +19,14 @@
 				collapsible="true">
 				<con:VerticalLayoutContainer ui:field="toolInfoContainer">
 					<con:child layoutData="{layoutData}">
-								<form:TextField ui:field="user" name="user" allowBlank="false" visible="false">
+								<form:TextField debugId="hidUser" ui:field="user" name="user" allowBlank="false" visible="false">
 								</form:TextField>
 					</con:child>
 				
 					<con:child layoutData="{layoutData}">
 						<form:FieldLabel text="{strings.name}" labelAlign="TOP">
 							<form:widget>
-								<form:TextField ui:field="name" name="name" allowBlank="false">
+								<form:TextField debugId="idTxtName" ui:field="name" name="name" allowBlank="false">
 								</form:TextField>
 							</form:widget>
 						</form:FieldLabel>
@@ -36,7 +36,7 @@
 						<form:FieldLabel text="{strings.email}"
 							labelAlign="TOP">
 							<form:widget>
-								<form:TextField ui:field="email" name="email" allowBlank="false">
+								<form:TextField debugId="idTxtemail" ui:field="email" name="email" allowBlank="false">
 								</form:TextField>
 							</form:widget>
 						</form:FieldLabel>
@@ -46,7 +46,7 @@
 						<form:FieldLabel text="{strings.phone}"
 							labelAlign="TOP">
 							<form:widget>
-								<form:TextField ui:field="phone" name="phone" allowBlank="true">
+								<form:TextField debugId="idTxtPhone" ui:field="phone" name="phone" allowBlank="true">
 								</form:TextField>
 							</form:widget>
 						</form:FieldLabel>
@@ -61,7 +61,7 @@
 						<form:FieldLabel text="{strings.toolNameLabel}"
 							labelAlign="TOP">
 							<form:widget>
-								<form:TextField name="toolName" ui:field="toolName" allowBlank="false">
+								<form:TextField debugId="idTxtToolName" name="toolName" ui:field="toolName" allowBlank="false">
 								</form:TextField>
 							</form:widget>
 						</form:FieldLabel>
@@ -71,7 +71,7 @@
 						<form:FieldLabel text="{strings.toolDesc}"
 							labelAlign="TOP">
 							<form:widget>
-								<form:TextArea name="tool_description" ui:field="toolDesc" allowBlank="false" height="150">
+								<form:TextArea debugId="idTxtToolDesc" name="tool_description" ui:field="toolDesc" allowBlank="false" height="150">
 								</form:TextArea>
 							</form:widget>
 						</form:FieldLabel>
@@ -82,9 +82,9 @@
 							labelAlign="TOP">
 							<form:widget>
 								<g:HorizontalPanel spacing="3">
-									<form:Radio  ui:field="toolLink" name="toollinkUpld"
+									<form:Radio  debugId="idRdoTooLink" ui:field="toolLink" name="toollinkUpld"
 										boxLabel="Link" value="true"></form:Radio>
-									<form:Radio  ui:field="toolUpld" name="toollinkUpld"
+									<form:Radio  debugId="idRdoToolUpld" ui:field="toolUpld" name="toollinkUpld"
 										boxLabel="Upload"></form:Radio>
 								</g:HorizontalPanel>
 							</form:widget>
@@ -94,7 +94,7 @@
 						<form:FieldLabel text="" labelSeparator=""
 							labelAlign="TOP">
 							<form:widget>
-								<form:FileUploadField ui:field="binUpld"
+								<form:FileUploadField debugId="idFileUpldTool" ui:field="binUpld"
 									visible="false" name="binUpload" allowBlank="true"></form:FileUploadField>
 							</form:widget>
 						</form:FieldLabel>
@@ -103,7 +103,7 @@
 						<form:FieldLabel text="" labelSeparator=""
 							labelAlign="TOP">
 							<form:widget>
-								<form:TextField name="src_url" ui:field="binLink" visible="true"
+								<form:TextField debugId="idTxtToolUrl" name="src_url" ui:field="binLink" visible="true"
 									allowBlank="true"></form:TextField>
 							</form:widget>
 						</form:FieldLabel>
@@ -112,7 +112,7 @@
 						<form:FieldLabel text="{strings.docLink}"
 							labelAlign="TOP">
 							<form:widget>
-								<form:TextField name="documentation_url" ui:field="toolDoc" allowBlank="false">
+								<form:TextField debugId="idTxToolDocUrl" name="documentation_url" ui:field="toolDoc" allowBlank="false">
 								</form:TextField>
 							</form:widget>
 						</form:FieldLabel>
@@ -122,7 +122,7 @@
 						<form:FieldLabel text="{strings.version}"
 							labelAlign="TOP">
 							<form:widget>
-								<form:TextField name="version" ui:field="toolVersion"
+								<form:TextField debugId="idTxtVersion" name="version" ui:field="toolVersion"
 									allowBlank="false">
 								</form:TextField>
 							</form:widget>
@@ -132,7 +132,7 @@
 						<form:FieldLabel text="{strings.isMultiThreaded}"
 							labelAlign="TOP">
 							<form:widget>
-								<form:SimpleComboBox name="multi-threaded" ui:field="multiThreadCbo"
+								<form:SimpleComboBox debugId="idCboMultiThreaded" name="multi-threaded" ui:field="multiThreadCbo"
 									allowBlank="true" forceSelection="true" triggerAction="ALL" editable="false">
 								</form:SimpleComboBox>
 							</form:widget>
@@ -146,7 +146,7 @@
 					<con:child layoutData="{layoutData}">
 						<form:FieldLabel text="Test Data" labelAlign="TOP">
 							<form:widget>
-								<form:FileUploadField name="testDataUplad"
+								<form:FileUploadField name="idTestDataUplad" debugId="fileUpldTest"
 									ui:field="testDataUpld" allowBlank="false"></form:FileUploadField>
 							</form:widget>
 						</form:FieldLabel>
@@ -157,7 +157,7 @@
 						<form:FieldLabel text="{strings.cmdLineRun}"
 							labelAlign="TOP">
 							<form:widget>
-								<form:TextArea name="cmd_line" ui:field="runInfo" allowBlank="false" height="150">
+								<form:TextArea debugId="idTxtCmdLine" name="cmd_line" ui:field="runInfo" allowBlank="false" height="150">
 								</form:TextArea>
 							</form:widget>
 						</form:FieldLabel>
@@ -167,7 +167,7 @@
 					<con:child layoutData="{layoutData}">
 						<form:FieldLabel text="Other Data" labelAlign="TOP">
 							<form:widget>
-								<form:FileUploadField  name="otherDataUplad"
+								<form:FileUploadField  debugId="idFileUpldOtherData" name="otherDataUplad"
 									ui:field="otherDataUpld" allowBlank="true"></form:FileUploadField>
 							</form:widget>
 						</form:FieldLabel>
@@ -176,7 +176,7 @@
 					<con:child layoutData="{layoutData}">
 						<form:FieldLabel text="Other Info" labelAlign="TOP">
 							<form:widget>
-								<form:TextArea name="additional_info" ui:field="otherInfo" allowBlank="true" height="150">
+								<form:TextArea debugId="idTxtAddnlInfo" name="additional_info" ui:field="otherInfo" allowBlank="true" height="150">
 								</form:TextArea>
 							</form:widget>
 						</form:FieldLabel>
@@ -184,8 +184,8 @@
 				</con:VerticalLayoutContainer>
 			</form:FieldSet>
 			<c:ButtonBar height="30" pack="CENTER">
-				<c:TextButton ui:field="submitBtn" text="Submit"></c:TextButton>
-				<c:TextButton ui:field="cancelBtn" text="Cancel"></c:TextButton>
+				<c:TextButton debugId="idBtnSubmit" ui:field="submitBtn" text="Submit"></c:TextButton>
+				<c:TextButton debugId="idBtnCancel" ui:field="cancelBtn" text="Cancel"></c:TextButton>
 			</c:ButtonBar>
 		</con:VerticalLayoutContainer>
 

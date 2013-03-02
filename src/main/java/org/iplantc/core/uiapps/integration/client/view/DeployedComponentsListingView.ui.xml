@@ -47,9 +47,9 @@
 			ui:field="container">
 			<row:child layoutData="{topData}">
 				<tb:ToolBar ui:field="toolBar" height="30" spacing="3">
-					<form:TextField ui:field="searchField" emptyText="{strings.searchEmptyText}" width="250"></form:TextField>
-					<button:TextButton icon="{icons.search}" ui:field="searchBtn"></button:TextButton>
-					<button:TextButton text="{strings.newToolReq}" icon="{icons.add}"
+					<form:TextField debugId="idTxtSearch" ui:field="searchField" emptyText="{strings.searchEmptyText}" width="250"></form:TextField>
+					<button:TextButton debugId="idBtnSearch" icon="{icons.search}" ui:field="searchBtn"></button:TextButton>
+					<button:TextButton debugId="idBtnNewToolReq" text="{strings.newToolReq}" icon="{icons.add}"
 						ui:field="newToolBtn"></button:TextButton>
 				</tb:ToolBar>
 			</row:child>
