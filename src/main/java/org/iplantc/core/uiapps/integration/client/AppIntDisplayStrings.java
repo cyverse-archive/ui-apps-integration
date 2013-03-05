@@ -18,51 +18,9 @@ public interface AppIntDisplayStrings extends CommonUIDisplayStrings {
 
     String attribution();
 
-    String newToolReq();
-
-    String searchEmptyText();
-
-    String requestConfirmMsg();
-
-    String newToolRequestError();
-
-    String toolNameLabel();
-
-    String srcBin();
-
-    String srcLinkPrompt();
-
-    String toolDesc();
-
     String version();
 
-    String docLink();
-
-    String upldTestData();
-
-    String cmdLineRun();
-
-    String addnlData();
-
-    String comments();
-
-    String contactTab();
-
-    String toolTab();
-
-    String otherTab();
-    
-    String submitRequest();
-
-    String submitting();
-
-    String inValidUrl();
-
-    String isMultiThreaded();
-
-    String toolAttributionLabel();
-
-    String toolAttributionEmptyText();
+    String searchEmptyText();
 
     /**
      * Location of the bin
@@ -71,6 +29,6 @@ public interface AppIntDisplayStrings extends CommonUIDisplayStrings {
      */
     String path();
 
-    String requestNewTool();
+    String newToolReq();
 
 }

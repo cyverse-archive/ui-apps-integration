@@ -5,8 +5,8 @@ package org.iplantc.core.uiapps.integration.client.view;
 
 import java.util.List;
 
+import org.iplantc.core.uiapps.client.views.dialogs.NewToolRequestDialog;
 import org.iplantc.core.uiapps.integration.client.I18N;
-import org.iplantc.core.uiapps.integration.client.dialogs.NewToolRequestDialog;
 import org.iplantc.core.uiapps.integration.client.models.DeployedComponent;
 
 import com.google.gwt.core.client.GWT;
