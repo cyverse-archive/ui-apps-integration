@@ -21,6 +21,7 @@
                      bottom="0"
                      left="0" />
    </ui:with>
+   
    <ui:with field="northData"
             type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData">
       <ui:attributes size="30"
@@ -41,7 +42,8 @@
    </ui:with>
    <ui:with field="eastData"
             type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData">
-      <ui:attributes size="175"
+      <ui:attributes size="200"
+                     split="true"
                      hidden="false"/>
    </ui:with>
    <ui:with field="southData"
@@ -50,7 +52,7 @@
                      hidden="true"/>
    </ui:with>
                 
-    <con:BorderLayoutContainer>
+    <con:BorderLayoutContainer ui:field="borderLayoutContainer">
         <!-- Toolbar -->
         <con:north layoutData="{northData}">
             <gxt:ContentPanel headerVisible="false">

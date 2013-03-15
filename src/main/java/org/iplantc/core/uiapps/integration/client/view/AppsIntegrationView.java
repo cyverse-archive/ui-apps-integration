@@ -15,8 +15,11 @@ public interface AppsIntegrationView extends IsWidget, Editor<AppTemplate> {
     public interface Presenter extends org.iplantc.core.uiapps.widgets.client.view.AppWizardView.BasePresenter {
     }
 
+    SimpleBeanEditorDriver<AppTemplate, ? extends Editor<AppTemplate>> getEditorDriver();
+
     void setPresenter(Presenter presenter);
 
-    SimpleBeanEditorDriver<AppTemplate, ? extends Editor<AppTemplate>> getEditorDriver();
+    void setEastWidget(IsWidget widget);
+
 
 }
