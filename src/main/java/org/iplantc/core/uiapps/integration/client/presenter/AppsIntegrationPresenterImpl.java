@@ -55,7 +55,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
 
     @Override
     public void go(HasOneWidget container) {
-        view.getEditorDriver().edit(appTemplate);
+        view.edit(appTemplate);
         container.setWidget(view);
     }
 
