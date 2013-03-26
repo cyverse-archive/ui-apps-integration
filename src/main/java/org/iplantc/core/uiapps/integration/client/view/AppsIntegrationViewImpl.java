@@ -2,12 +2,10 @@ package org.iplantc.core.uiapps.integration.client.view;
 
 import org.iplantc.core.uiapps.integration.client.dialogs.DCListingDialog;
 import org.iplantc.core.uiapps.widgets.client.models.AppTemplate;
-import org.iplantc.core.uiapps.widgets.client.view.editors.ArgumentGroupListEditor;
+import org.iplantc.core.uiapps.widgets.client.view.editors.AppTemplateWizard;
 import org.iplantc.core.uicommons.client.events.EventBus;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.editor.client.Editor;
-import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -28,10 +26,6 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     @UiTemplate("AppsIntegrationView.ui.xml")
     interface AppsIntegrationViewImplUiBinder extends UiBinder<Widget, AppsIntegrationViewImpl> {}
 
-    interface Driver extends SimpleBeanEditorDriver<AppTemplate, AppsIntegrationViewImpl> {}
-
-    private final Driver driver = GWT.create(Driver.class);
-    
     @UiField
     BorderLayoutContainer borderLayoutContainer;
 
@@ -42,8 +36,9 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     @UiField
     CardLayoutContainer eastPanel;
 
+    @Path("")
     @UiField
-    ArgumentGroupListEditor argumentGroupsEditor;
+    AppTemplateWizard wizard;
 
     @Ignore
     @UiField
@@ -55,7 +50,6 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     public AppsIntegrationViewImpl(final EventBus eventBus) {
         this.eventBus = eventBus;
         initWidget(BINDER.createAndBindUi(this));
-        driver.initialize(this);
         toolSelector.addClickHandler(new ClickHandler() {
             
             @Override
@@ -68,8 +62,8 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
 
     @Ignore
     @UiFactory
-    ArgumentGroupListEditor createArgumentGroupListEditor() {
-        return new ArgumentGroupListEditor(eventBus);
+    AppTemplateWizard createAppTemplateWizard() {
+        return new AppTemplateWizard(eventBus, true);
     }
 
     @Override
@@ -78,13 +72,13 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     }
 
     @Override
-    public SimpleBeanEditorDriver<AppTemplate, ? extends Editor<AppTemplate>> getEditorDriver() {
-        return driver;
+    public void setEastWidget(IsWidget widget) {
+        eastPanel.setActiveWidget(widget);
     }
 
     @Override
-    public void setEastWidget(IsWidget widget) {
-        eastPanel.setActiveWidget(widget);
+    public void edit(AppTemplate appTemplate) {
+        wizard.edit(appTemplate);
     }
 
 }
