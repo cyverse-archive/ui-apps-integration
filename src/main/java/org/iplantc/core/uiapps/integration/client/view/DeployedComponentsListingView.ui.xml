@@ -10,7 +10,7 @@
 
 
 	<ui:with field="icons"
-		type="org.iplantc.core.uiapps.integration.client.images.Icons" />
+		type="org.iplantc.core.resources.client.IplantResources" />
 	<ui:with field="strings"
 		type="org.iplantc.core.uiapps.integration.client.AppIntDisplayStrings" />
 
