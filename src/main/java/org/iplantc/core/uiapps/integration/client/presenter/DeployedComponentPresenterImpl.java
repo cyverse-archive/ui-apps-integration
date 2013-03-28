@@ -1,11 +1,11 @@
 /**
- * 
+ *
  */
 package org.iplantc.core.uiapps.integration.client.presenter;
 
 import java.util.List;
 
-import org.iplantc.core.uiapps.integration.client.I18N;
+import org.iplantc.core.resources.client.messages.I18N;
 import org.iplantc.core.uiapps.integration.client.models.DeployedComponent;
 import org.iplantc.core.uiapps.integration.client.models.DeployedComponentAutoBeanFactory;
 import org.iplantc.core.uiapps.integration.client.models.DeployedComponentList;
@@ -115,5 +115,5 @@ public class DeployedComponentPresenterImpl implements DeployedComponentsListing
         return items;
 
     }
-    
+
 }

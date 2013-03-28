@@ -1,12 +1,12 @@
 /**
- * 
+ *
  */
 package org.iplantc.core.uiapps.integration.client.view;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import org.iplantc.core.uiapps.integration.client.I18N;
+import org.iplantc.core.resources.client.messages.I18N;
 import org.iplantc.core.uiapps.integration.client.models.DCProperties;
 import org.iplantc.core.uiapps.integration.client.models.DeployedComponent;
 import org.iplantc.core.uiapps.integration.client.view.cells.DCNameHyperlinkCell;
@@ -34,7 +34,7 @@ public class DCColumnModel extends ColumnModel<DeployedComponent> {
 
         ColumnConfig<DeployedComponent, DeployedComponent> name = new ColumnConfig<DeployedComponent, DeployedComponent>(
                 provider, 100);
-        name.setHeader(org.iplantc.core.uicommons.client.I18N.DISPLAY.name());
+        name.setHeader(I18N.DISPLAY.name());
         configs.add(name);
         name.setCell(new DCNameHyperlinkCell(view));
         name.setMenuDisabled(true);

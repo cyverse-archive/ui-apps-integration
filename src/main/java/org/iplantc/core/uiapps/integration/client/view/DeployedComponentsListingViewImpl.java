@@ -1,12 +1,12 @@
 /**
- * 
+ *
  */
 package org.iplantc.core.uiapps.integration.client.view;
 
 import java.util.List;
 
+import org.iplantc.core.resources.client.messages.I18N;
 import org.iplantc.core.uiapps.client.views.dialogs.NewToolRequestDialog;
-import org.iplantc.core.uiapps.integration.client.I18N;
 import org.iplantc.core.uiapps.integration.client.models.DeployedComponent;
 
 import com.google.gwt.core.client.GWT;
@@ -38,9 +38,9 @@ import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent.Selecti
 
 /**
  * A grid that displays list of available deployed components (bin/tools) in Condor
- * 
+ *
  * @author sriram
- * 
+ *
  */
 public class DeployedComponentsListingViewImpl extends Composite implements
         DeployedComponentsListingView {
@@ -56,12 +56,12 @@ public class DeployedComponentsListingViewImpl extends Composite implements
         public SafeHtml render();
     }
 
-    
+
     @UiField(provided = true)
     ListStore<DeployedComponent> store;
     @UiField
     ColumnModel<DeployedComponent> cm;
-    
+
     private final Widget widget;
 
 
@@ -97,7 +97,7 @@ public class DeployedComponentsListingViewImpl extends Composite implements
 
     private void initSearchField() {
         searchField.addKeyUpHandler(new KeyUpHandler() {
-            
+
             @Override
             public void onKeyUp(KeyUpEvent event) {
                 String currentValue = searchField.getCurrentValue();
