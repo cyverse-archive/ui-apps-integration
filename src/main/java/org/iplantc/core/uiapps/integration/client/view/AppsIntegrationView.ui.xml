@@ -4,7 +4,8 @@
              xmlns:gwt="urn:import:com.google.gwt.widget.client"
              xmlns:con="urn:import:com.sencha.gxt.widget.core.client.container"
              xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client"
-             xmlns:appWizardView="urn:import:org.iplantc.core.uiapps.widgets.client.view.editors">
+             xmlns:appWizardView="urn:import:org.iplantc.core.uiapps.widgets.client.view.editors"
+             xmlns:appsInt="urn:import:org.iplantc.core.uiapps.integration.client.view">
 
     <!-- Border Layout Data -->
    <ui:with field="westMargins"
@@ -63,7 +64,7 @@
         <!-- Palette -->
         <con:west layoutData="{westData}">
             <gxt:ContentPanel headingText="Palette">
-                <g:HTML text="Palette"/>
+                <appsInt:AppIntegrationPalette/>
             </gxt:ContentPanel>
         </con:west>
         

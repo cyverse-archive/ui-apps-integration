@@ -1,0 +1,20 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	         xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	         xmlns:con="urn:import:com.sencha.gxt.widget.core.client.container">
+    <ui:with field="icons"
+             type="org.iplantc.core.resources.client.IplantResources" />
+	<con:VerticalLayoutContainer>
+		<g:Image resource="{icons.inputCheckBox}" />
+		<g:Image resource="{icons.inputEnvVar}" />
+		<g:Image resource="{icons.inputFileMulti}" />
+		<g:Image resource="{icons.inputFileSingle}" />
+		<g:Image resource="{icons.inputGroup}" />
+		<g:Image resource="{icons.inputNumberInteger}" />
+		<g:Image resource="{icons.inputSelectGrouped}" />
+		<g:Image resource="{icons.inputSelectMulti}" />
+		<g:Image resource="{icons.inputSelectSingle}" />
+		<g:Image resource="{icons.inputTextMulti}" />
+		<g:Image resource="{icons.inputTextSingle}" />
+	</con:VerticalLayoutContainer>
+</ui:UiBinder> 

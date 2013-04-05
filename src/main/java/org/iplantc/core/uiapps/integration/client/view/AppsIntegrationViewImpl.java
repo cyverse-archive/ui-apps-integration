@@ -44,7 +44,6 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     @UiField
     TextButton toolSelector;
 
-    private AppsIntegrationView.Presenter presenter;
     private final EventBus eventBus;
 
     public AppsIntegrationViewImpl(final EventBus eventBus) {
@@ -68,7 +67,7 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
 
     @Override
     public void setPresenter(AppsIntegrationView.Presenter presenter) {
-        this.presenter = presenter;
+        /* Do Nothing */
     }
 
     @Override
