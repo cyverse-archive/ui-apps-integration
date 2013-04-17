@@ -31,9 +31,8 @@
    <ui:with field="westData"
             type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData">
       <ui:attributes margins="{westMargins}"
-                     size="175"
-                     collapsible="true"
-                     split="true" />
+                     size="145"
+                     collapsible="true"/>
    </ui:with>
    <ui:with field="centerData"
             type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData">
