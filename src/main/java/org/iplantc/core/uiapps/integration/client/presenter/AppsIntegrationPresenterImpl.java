@@ -1,17 +1,20 @@
 package org.iplantc.core.uiapps.integration.client.presenter;
 
 import org.iplantc.core.uiapps.integration.client.view.AppsIntegrationView;
+import org.iplantc.core.uiapps.widgets.client.events.ArgumentGroupSelectedEvent;
+import org.iplantc.core.uiapps.widgets.client.events.ArgumentGroupSelectedEvent.ArgumentGroupSelectedEventHandler;
 import org.iplantc.core.uiapps.widgets.client.events.ArgumentSelectedEvent;
 import org.iplantc.core.uiapps.widgets.client.events.ArgumentSelectedEvent.ArgumentSelectedEventHandler;
 import org.iplantc.core.uiapps.widgets.client.models.AppTemplate;
 import org.iplantc.core.uiapps.widgets.client.models.AppTemplateAutoBeanFactory;
 import org.iplantc.core.uiapps.widgets.client.presenter.AppWizardPresenterJsonAdapter;
-import org.iplantc.core.uiapps.widgets.client.view.editors.ArgumentEditor;
-import org.iplantc.core.uiapps.widgets.client.view.editors.ArgumentPropertyEditor;
+import org.iplantc.core.uiapps.widgets.client.view.editors.AppTemplateWizard.IArgumentEditor;
+import org.iplantc.core.uiapps.widgets.client.view.editors.AppTemplateWizard.IArgumentGroupEditor;
 import org.iplantc.core.uicommons.client.events.EventBus;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.client.ui.HasOneWidget;
+import com.google.gwt.user.client.ui.IsWidget;
 import com.google.web.bindery.autobean.shared.AutoBean;
 import com.google.web.bindery.autobean.shared.AutoBeanCodex;
 import com.google.web.bindery.autobean.shared.Splittable;
@@ -32,10 +35,21 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
 
             @Override
             public void onArgumentSelected(ArgumentSelectedEvent event) {
-                if ((event.getSource() instanceof ArgumentEditor) 
-                        && (((ArgumentEditor)event.getSource()).getArgumentPropertyEditor() != null)) {
-                    ArgumentPropertyEditor argumentPropertyEditor = ((ArgumentEditor)event.getSource()).getArgumentPropertyEditor();
+                if ((event.getSource() instanceof IArgumentEditor) 
+                        && (((IArgumentEditor)event.getSource()).getArgumentPropertyEditor() != null)) {
+                    IsWidget argumentPropertyEditor = ((IArgumentEditor)event.getSource()).getArgumentPropertyEditor();
                     view.setEastWidget(argumentPropertyEditor);
+                }
+            }
+        });
+        eventBus.addHandler(ArgumentGroupSelectedEvent.TYPE, new ArgumentGroupSelectedEventHandler() {
+
+            @Override
+            public void onArgumentGroupSelected(ArgumentGroupSelectedEvent event) {
+                if ((event.getSource() instanceof IArgumentGroupEditor) 
+                        && (((IArgumentGroupEditor)event.getSource()).getArgumentGroupPropertyEditor() != null)) {
+                    IsWidget argumentGrpPropertyEditor = ((IArgumentGroupEditor)event.getSource()).getArgumentGroupPropertyEditor();
+                    view.setEastWidget(argumentGrpPropertyEditor);
                 }
             }
         });
