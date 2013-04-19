@@ -43,6 +43,7 @@
    <ui:with field="eastData"
             type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData">
       <ui:attributes size="200"
+                     minSize="200"
                      split="true"
                      hidden="false"/>
    </ui:with>
@@ -63,7 +64,7 @@
         <!-- Palette -->
         <con:west layoutData="{westData}">
             <gxt:ContentPanel headingText="Palette">
-                <appsInt:AppIntegrationPalette/>
+                <appsInt:AppIntegrationPalette ui:field="palette"/>
             </gxt:ContentPanel>
         </con:west>
         

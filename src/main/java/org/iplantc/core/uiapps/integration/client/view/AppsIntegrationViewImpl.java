@@ -15,6 +15,8 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.widget.client.TextButton;
+import com.sencha.gxt.dnd.core.client.DndDragStartEvent;
+import com.sencha.gxt.dnd.core.client.DndDragStartEvent.DndDragStartHandler;
 import com.sencha.gxt.widget.core.client.Composite;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.CardLayoutContainer;
@@ -44,6 +46,10 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     @UiField
     TextButton toolSelector;
 
+    @Ignore
+    @UiField
+    AppIntegrationPalette palette;
+
     private final EventBus eventBus;
 
     public AppsIntegrationViewImpl(final EventBus eventBus) {
@@ -55,6 +61,19 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
             public void onClick(ClickEvent event) {
                 DCListingDialog dialog = new DCListingDialog();
                 dialog.show();
+            }
+        });
+
+        /*
+         * JDS - Add handling to collapse all argument groups on drag start. To understand why, uncomment
+         * the handler below, and drag a new argument group to the app wizard. The behaviour is abrasive
+         * and jarring to the user.
+         */
+        palette.grpDragSource.addDragStartHandler(new DndDragStartHandler() {
+
+            @Override
+            public void onDragStart(DndDragStartEvent event) {
+                wizard.collapseAllArgumentGroups();
             }
         });
     }
