@@ -1,0 +1,38 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui"
+             xmlns:con="urn:import:com.sencha.gxt.widget.core.client.container"
+             xmlns:grid="urn:import:com.sencha.gxt.widget.core.client.grid">
+
+    <ui:with type="com.sencha.gxt.widget.core.client.grid.ColumnModel" 
+             field="cm1"/>
+    <ui:with type="com.sencha.gxt.widget.core.client.grid.ColumnModel" 
+             field="cm2"/>
+    <ui:with type="com.sencha.gxt.data.shared.ListStore" 
+             field="unorderedStore"/>
+    <ui:with type="com.sencha.gxt.data.shared.ListStore" 
+             field="orderedStore"/>
+    <ui:with type="com.sencha.gxt.widget.core.client.grid.GridView" 
+             field="view1">
+        <ui:attributes stripeRows="true" forceFit="true"/>
+    </ui:with> 
+    <ui:with type="com.sencha.gxt.widget.core.client.grid.GridView" 
+             field="view2">
+        <ui:attributes stripeRows="true" forceFit="true"/>
+    </ui:with> 
+    
+    <con:HorizontalLayoutContainer>
+       <con:child>
+            <grid:Grid ui:field="unorderedGrid"
+                       cm="{cm1}"
+                       store="{unorderedStore}"
+                       view="{view1}"/>
+       </con:child> 
+       <con:child>
+            <grid:Grid ui:field="orderedGrid"
+                       cm="{cm2}"
+                       store="{orderedStore}"
+                       view="{view2}"/>
+       </con:child> 
+    </con:HorizontalLayoutContainer>             
+</ui:UiBinder> 
