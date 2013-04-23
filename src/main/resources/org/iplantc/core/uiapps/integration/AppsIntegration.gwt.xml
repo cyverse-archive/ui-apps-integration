@@ -5,7 +5,7 @@
 -->
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.5.0//EN"
   "http://google-web-toolkit.googlecode.com/svn/tags/2.5.0/distro-source/core/src/gwt-module.dtd">
-<module rename-to="appsIntegration">
+<module>
   <!-- iPlant Modules -->
   <inherits name="org.iplantc.core.ui-commons" />
   <inherits name="org.iplantc.core.uiapps.widgets.Widgets"/>
@@ -13,6 +13,18 @@
   <!-- Deferred-Binding Rules -->
   <replace-with class="org.iplantc.core.uiapps.integration.client.presenter.AppsIntegrationPresenterImpl">
     <when-type-is class="org.iplantc.core.uiapps.integration.client.view.AppsIntegrationView.Presenter" />
+  </replace-with>
+  
+  <replace-with class="org.iplantc.core.uiapps.integration.client.view.AppIntegrationToolbarImpl">
+    <when-type-is class="org.iplantc.core.uiapps.integration.client.view.AppIntegrationToolbar" />
+  </replace-with>
+  
+  <replace-with class="org.iplantc.core.uiapps.integration.client.services.EnumerationServices">
+    <when-type-is class="org.iplantc.core.uiapps.integration.client.services.DeployedComponentServices" />
+  </replace-with>
+  
+  <replace-with class="org.iplantc.core.uiapps.integration.client.services.EnumerationServices">
+    <when-type-is class="org.iplantc.core.uiapps.integration.client.services.AppTemplateServices" />
   </replace-with>
 
   <!-- Specify the paths for translatable code                    -->

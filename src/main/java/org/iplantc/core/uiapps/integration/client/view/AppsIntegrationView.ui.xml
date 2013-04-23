@@ -49,16 +49,16 @@
    </ui:with>
    <ui:with field="southData"
             type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData">
-      <ui:attributes size="30"
-                     hidden="true"/>
+      <ui:attributes size="60"/>
    </ui:with>
                 
     <con:BorderLayoutContainer ui:field="borderLayoutContainer">
         <!-- Toolbar -->
         <con:north layoutData="{northData}">
-            <gxt:ContentPanel headerVisible="false">
+            <appsInt:AppIntegrationToolbar ui:field="toolbar"/>
+            <!-- <gxt:ContentPanel headerVisible="false">
             	<gwt:TextButton ui:field="toolSelector" text="Select Tool"></gwt:TextButton>
-            </gxt:ContentPanel>
+            </gxt:ContentPanel> -->
         </con:north>
         
         <!-- Palette -->
@@ -84,8 +84,9 @@
         
         <!-- Command Line Preview -->
         <con:south layoutData="{southData}">
-            <gxt:ContentPanel>
-                <g:HTML text="Command line preview" />
+            <gxt:ContentPanel headingText="Command line view">
+                <!-- <g:HTML text="Command line preview" /> -->
+                <g:TextBox ui:field="cmdLinePreview"/>
             </gxt:ContentPanel>
         </con:south>
     </con:BorderLayoutContainer>             

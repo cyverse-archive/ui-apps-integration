@@ -1,20 +1,17 @@
 package org.iplantc.core.uiapps.integration.client.view;
 
-import org.iplantc.core.uiapps.integration.client.dialogs.DCListingDialog;
 import org.iplantc.core.uiapps.widgets.client.models.AppTemplate;
 import org.iplantc.core.uiapps.widgets.client.view.editors.AppTemplateWizard;
 import org.iplantc.core.uicommons.client.events.EventBus;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.IsWidget;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.widget.client.TextButton;
 import com.sencha.gxt.dnd.core.client.DndDragStartEvent;
 import com.sencha.gxt.dnd.core.client.DndDragStartEvent.DndDragStartHandler;
 import com.sencha.gxt.widget.core.client.Composite;
@@ -38,36 +35,28 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     @UiField
     CardLayoutContainer eastPanel;
 
-    @Path("")
     @UiField
     AppTemplateWizard wizard;
 
-    @Ignore
     @UiField
-    TextButton toolSelector;
+    AppIntegrationToolbar toolbar;
 
-    @Ignore
     @UiField
     AppIntegrationPalette palette;
+
+    @UiField
+    TextBox cmdLinePreview;
 
     private final EventBus eventBus;
 
     public AppsIntegrationViewImpl(final EventBus eventBus) {
         this.eventBus = eventBus;
         initWidget(BINDER.createAndBindUi(this));
-        toolSelector.addClickHandler(new ClickHandler() {
-            
-            @Override
-            public void onClick(ClickEvent event) {
-                DCListingDialog dialog = new DCListingDialog();
-                dialog.show();
-            }
-        });
 
         /*
-         * JDS - Add handling to collapse all argument groups on drag start. To understand why, uncomment
-         * the handler below, and drag a new argument group to the app wizard. The behaviour is abrasive
-         * and jarring to the user.
+         * JDS - Add handling to collapse all argument groups on drag start. To understand why, comment
+         * out the handler below, and drag a new argument group to the app wizard. The behaviour is
+         * abrasive and jarring to the user.
          */
         palette.grpDragSource.addDragStartHandler(new DndDragStartHandler() {
 
@@ -78,7 +67,6 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
         });
     }
 
-    @Ignore
     @UiFactory
     AppTemplateWizard createAppTemplateWizard() {
         return new AppTemplateWizard(eventBus, true);
@@ -86,7 +74,7 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
 
     @Override
     public void setPresenter(AppsIntegrationView.Presenter presenter) {
-        /* Do Nothing */
+        toolbar.setPresenter(presenter);
     }
 
     @Override
@@ -97,6 +85,11 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     @Override
     public void edit(AppTemplate appTemplate) {
         wizard.edit(appTemplate);
+    }
+
+    @Override
+    public AppTemplate flush() {
+        return wizard.flush();
     }
 
 }

@@ -8,8 +8,8 @@ import java.util.List;
 
 import org.iplantc.core.resources.client.messages.I18N;
 import org.iplantc.core.uiapps.integration.client.models.DCProperties;
-import org.iplantc.core.uiapps.integration.client.models.DeployedComponent;
 import org.iplantc.core.uiapps.integration.client.view.cells.DCNameHyperlinkCell;
+import org.iplantc.core.uiapps.widgets.client.models.DeployedComponent;
 
 import com.google.gwt.core.shared.GWT;
 import com.sencha.gxt.core.client.IdentityValueProvider;

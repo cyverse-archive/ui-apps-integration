@@ -3,6 +3,8 @@
  */
 package org.iplantc.core.uiapps.integration.client.models;
 
+import org.iplantc.core.uiapps.widgets.client.models.DeployedComponent;
+
 import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.data.shared.PropertyAccess;
 

@@ -5,7 +5,7 @@ package org.iplantc.core.uiapps.integration.client.view;
 
 import java.util.List;
 
-import org.iplantc.core.uiapps.integration.client.models.DeployedComponent;
+import org.iplantc.core.uiapps.widgets.client.models.DeployedComponent;
 
 import com.google.gwt.user.client.ui.IsWidget;
 

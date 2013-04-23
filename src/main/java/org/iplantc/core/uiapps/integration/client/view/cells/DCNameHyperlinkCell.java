@@ -4,8 +4,8 @@ import static com.google.gwt.dom.client.BrowserEvents.CLICK;
 import static com.google.gwt.dom.client.BrowserEvents.MOUSEOUT;
 import static com.google.gwt.dom.client.BrowserEvents.MOUSEOVER;
 
-import org.iplantc.core.uiapps.integration.client.models.DeployedComponent;
 import org.iplantc.core.uiapps.integration.client.view.DeployedComponentsListingView;
+import org.iplantc.core.uiapps.widgets.client.models.DeployedComponent;
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.cell.client.Cell;

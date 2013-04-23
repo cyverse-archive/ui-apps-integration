@@ -6,11 +6,11 @@ package org.iplantc.core.uiapps.integration.client.presenter;
 import java.util.List;
 
 import org.iplantc.core.resources.client.messages.I18N;
-import org.iplantc.core.uiapps.integration.client.models.DeployedComponent;
 import org.iplantc.core.uiapps.integration.client.models.DeployedComponentAutoBeanFactory;
 import org.iplantc.core.uiapps.integration.client.models.DeployedComponentList;
-import org.iplantc.core.uiapps.integration.client.services.EnumerationServices;
+import org.iplantc.core.uiapps.integration.client.services.DeployedComponentServices;
 import org.iplantc.core.uiapps.integration.client.view.DeployedComponentsListingView;
+import org.iplantc.core.uiapps.widgets.client.models.DeployedComponent;
 import org.iplantc.core.uicommons.client.ErrorHandler;
 
 import com.google.gwt.core.shared.GWT;
@@ -29,9 +29,11 @@ public class DeployedComponentPresenterImpl implements DeployedComponentsListing
     private List<DeployedComponent> depCompList;
     private final
     DeployedComponentAutoBeanFactory factory = GWT.create(DeployedComponentAutoBeanFactory.class);
+    private final DeployedComponentServices dcService;
 
-    public DeployedComponentPresenterImpl(DeployedComponentsListingView view) {
+    public DeployedComponentPresenterImpl(DeployedComponentsListingView view, final DeployedComponentServices dcService) {
         this.view = view;
+        this.dcService = dcService;
         this.view.setPresenter(this);
         loadDeployedComponents();
     }
@@ -53,8 +55,7 @@ public class DeployedComponentPresenterImpl implements DeployedComponentsListing
         if (filter != null && !filter.isEmpty()) {
             if (filter.length() >= 3) {
                 view.mask();
-                EnumerationServices services = new EnumerationServices();
-                services.searchDeployedComponents(filter, new AsyncCallback<String>() {
+                dcService.searchDeployedComponents(filter, new AsyncCallback<String>() {
 
                     @Override
                     public void onFailure(Throwable caught) {
@@ -82,26 +83,25 @@ public class DeployedComponentPresenterImpl implements DeployedComponentsListing
 
     @Override
     public void loadDeployedComponents() {
-        EnumerationServices services = new EnumerationServices();
         view.mask();
         if (depCompList == null) {
-        services.getDeployedComponents(new AsyncCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-             //   setCurrentCompSelection(currentSelection);
+            dcService.getDeployedComponents(new AsyncCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    // setCurrentCompSelection(currentSelection);
                     // cache result
-                depCompList = parseResult(result);
-                view.loadDC(depCompList);
-                view.unmask();
+                    depCompList = parseResult(result);
+                    view.loadDC(depCompList);
+                    view.unmask();
 
-            }
+                }
 
-            @Override
-            public void onFailure(Throwable caught) {
-                view.unmask();
+                @Override
+                public void onFailure(Throwable caught) {
+                    view.unmask();
                     ErrorHandler.post(I18N.ERROR.dcLoadError(), caught);
-            }
-        });
+                }
+            });
         } else {
             view.loadDC(depCompList);
             view.unmask();
