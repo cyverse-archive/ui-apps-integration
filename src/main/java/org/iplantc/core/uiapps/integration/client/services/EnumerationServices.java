@@ -38,11 +38,6 @@ public class EnumerationServices implements DeployedComponentServices, AppTempla
         callSecuredService(callback, wrapper);
     }
 
-    public void getUUID(AsyncCallback<String> callback) {
-        ServiceCallWrapper wrapper = new ServiceCallWrapper("org.iplantc.services.zoidberg.uuid"); //$NON-NLS-1$
-        callService(callback, wrapper);
-    }
-
     @Override
     public void getDeployedComponents(AsyncCallback<String> callback) {
         ServiceCallWrapper wrapper = new ServiceCallWrapper("org.iplantc.services.zoidberg.components"); //$NON-NLS-1$

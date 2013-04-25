@@ -89,7 +89,12 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
 
     @Override
     public AppTemplate flush() {
-        return wizard.flush();
+        return wizard.flushAppTemplate();
+    }
+
+    @Override
+    public AppIntegrationToolbar getToolbar() {
+        return toolbar;
     }
 
 }

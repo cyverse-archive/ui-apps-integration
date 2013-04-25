@@ -21,4 +21,6 @@ public interface AppsIntegrationView extends IsWidget {
 
     AppTemplate flush();
 
+    AppIntegrationToolbar getToolbar();
+
 }

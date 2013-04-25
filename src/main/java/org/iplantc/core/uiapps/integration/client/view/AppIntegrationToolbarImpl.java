@@ -82,4 +82,10 @@ public class AppIntegrationToolbarImpl implements AppIntegrationToolbar {
         presenter.onDeleteButtonClicked();
     }
 
+    @Override
+    public void setDeleteButtonEnabled(boolean enabled) {
+        // TODO Auto-generated method stub
+
+    }
+
 }

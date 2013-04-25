@@ -70,9 +70,7 @@
         
         <!-- App Builder -->
         <con:center layoutData="{centerData}">
-            <gxt:ContentPanel>
-                <appWizardView:AppTemplateWizard ui:field="wizard"/>
-            </gxt:ContentPanel>
+            <appWizardView:AppTemplateWizard ui:field="wizard"/>
         </con:center>
         
         <!-- Selected Widget Properties -->

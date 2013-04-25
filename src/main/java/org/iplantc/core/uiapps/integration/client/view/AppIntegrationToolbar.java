@@ -25,4 +25,5 @@ public interface AppIntegrationToolbar extends IsWidget {
 
     void setPresenter(AppIntegrationToolbar.Presenter presenter);
 
+    void setDeleteButtonEnabled(boolean enabled);
 }
