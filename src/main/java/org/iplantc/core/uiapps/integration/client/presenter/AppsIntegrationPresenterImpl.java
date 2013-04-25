@@ -6,10 +6,10 @@ import java.util.List;
 import org.iplantc.core.resources.client.uiapps.integration.AppIntegrationErrorMessages;
 import org.iplantc.core.resources.client.uiapps.integration.AppIntegrationMessages;
 import org.iplantc.core.uiapps.client.events.AppGroupCountUpdateEvent;
-import org.iplantc.core.uiapps.integration.client.dialogs.DCListingDialog;
 import org.iplantc.core.uiapps.integration.client.services.AppTemplateServices;
 import org.iplantc.core.uiapps.integration.client.view.AppIntegrationToolbar;
 import org.iplantc.core.uiapps.integration.client.view.AppsIntegrationView;
+import org.iplantc.core.uiapps.widgets.client.dialog.DCListingDialog;
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent;
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent.AppTemplateSelectedEventHandler;
 import org.iplantc.core.uiapps.widgets.client.events.ArgumentGroupSelectedEvent;
@@ -231,6 +231,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
                 // Set the deployed component in the AppTemplate
                 if ((dc != null) && (appTemplate != null)) {
                     appTemplate.setDeployedComponent(dc);
+                    view.onAppTemplateChanged();
                 }
             }
         });

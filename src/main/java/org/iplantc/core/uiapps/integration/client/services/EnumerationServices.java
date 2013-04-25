@@ -11,7 +11,6 @@ import org.iplantc.de.shared.SharedServiceFacade;
 import org.iplantc.de.shared.services.BaseServiceCallWrapper.Type;
 import org.iplantc.de.shared.services.ServiceCallWrapper;
 
-import com.google.gwt.http.client.URL;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.web.bindery.autobean.shared.AutoBeanCodex;
@@ -20,7 +19,7 @@ import com.google.web.bindery.autobean.shared.AutoBeanUtils;
  * @author sriram
  *
  */
-public class EnumerationServices implements DeployedComponentServices, AppTemplateServices {
+public class EnumerationServices implements AppTemplateServices {
     public void getWidgetTypes(AsyncCallback<String> callback) {
         ServiceCallWrapper wrapper = new ServiceCallWrapper(
                 "org.iplantc.services.zoidberg.propertytypes"); //$NON-NLS-1$
@@ -36,12 +35,6 @@ public class EnumerationServices implements DeployedComponentServices, AppTempla
         ServiceCallWrapper wrapper = new ServiceCallWrapper(Type.GET,
                 "org.iplantc.services.zoidberg.inprogress/" + id); //$NON-NLS-1$
         callSecuredService(callback, wrapper);
-    }
-
-    @Override
-    public void getDeployedComponents(AsyncCallback<String> callback) {
-        ServiceCallWrapper wrapper = new ServiceCallWrapper("org.iplantc.services.zoidberg.components"); //$NON-NLS-1$
-        callService(callback, wrapper);
     }
 
     public void getInfoTypes(AsyncCallback<String> callback) {
@@ -65,14 +58,6 @@ public class EnumerationServices implements DeployedComponentServices, AppTempla
         String address = DEProperties.getInstance().getUnproctedMuleServiceBaseUrl()
                 + "get-workflow-elements/data-sources"; //$NON-NLS-1$
 
-        ServiceCallWrapper wrapper = new ServiceCallWrapper(address);
-        DEServiceFacade.getInstance().getServiceData(wrapper, callback);
-    }
-
-    @Override
-    public void searchDeployedComponents(String searchTerm, AsyncCallback<String> callback) {
-        String address = DEProperties.getInstance().getUnproctedMuleServiceBaseUrl()
-                + "search-deployed-components/" + URL.encodeQueryString(searchTerm);
         ServiceCallWrapper wrapper = new ServiceCallWrapper(address);
         DEServiceFacade.getInstance().getServiceData(wrapper, callback);
     }

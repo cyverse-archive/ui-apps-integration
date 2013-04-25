@@ -20,10 +20,6 @@
   </replace-with>
   
   <replace-with class="org.iplantc.core.uiapps.integration.client.services.EnumerationServices">
-    <when-type-is class="org.iplantc.core.uiapps.integration.client.services.DeployedComponentServices" />
-  </replace-with>
-  
-  <replace-with class="org.iplantc.core.uiapps.integration.client.services.EnumerationServices">
     <when-type-is class="org.iplantc.core.uiapps.integration.client.services.AppTemplateServices" />
   </replace-with>
 

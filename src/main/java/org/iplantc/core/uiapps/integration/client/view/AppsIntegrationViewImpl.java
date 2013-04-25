@@ -97,4 +97,9 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
         return toolbar;
     }
 
+    @Override
+    public void onAppTemplateChanged() {
+        wizard.onArgumentPropertyValueChange();
+    }
+
 }

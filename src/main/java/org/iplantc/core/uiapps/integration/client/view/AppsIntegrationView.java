@@ -23,4 +23,6 @@ public interface AppsIntegrationView extends IsWidget {
 
     AppIntegrationToolbar getToolbar();
 
+    void onAppTemplateChanged();
+
 }
