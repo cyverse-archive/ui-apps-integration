@@ -1,11 +1,13 @@
 package org.iplantc.core.uiapps.integration.client.presenter;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.iplantc.core.resources.client.messages.IplantDisplayStrings;
 import org.iplantc.core.resources.client.uiapps.integration.AppIntegrationErrorMessages;
-import org.iplantc.core.resources.client.uiapps.integration.AppIntegrationMessages;
 import org.iplantc.core.uiapps.client.events.AppGroupCountUpdateEvent;
+import org.iplantc.core.uiapps.integration.client.dialogs.CommandLineOrderingPanel;
 import org.iplantc.core.uiapps.integration.client.services.AppTemplateServices;
 import org.iplantc.core.uiapps.integration.client.view.AppIntegrationToolbar;
 import org.iplantc.core.uiapps.integration.client.view.AppsIntegrationView;
@@ -20,6 +22,8 @@ import org.iplantc.core.uiapps.widgets.client.models.AppTemplate;
 import org.iplantc.core.uiapps.widgets.client.models.AppTemplateAutoBeanFactory;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup;
+import org.iplantc.core.uiapps.widgets.client.models.ArgumentType;
+import org.iplantc.core.uiapps.widgets.client.models.DataObject;
 import org.iplantc.core.uiapps.widgets.client.models.DeployedComponent;
 import org.iplantc.core.uiapps.widgets.client.presenter.AppWizardPresenterJsonAdapter;
 import org.iplantc.core.uiapps.widgets.client.view.editors.AppTemplateWizard.IArgumentEditor;
@@ -62,10 +66,10 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     private final AppIntegrationErrorMessages errorMessages;
     private final EventBus eventBus;
     private Object currentSelection;
-    private final AppIntegrationMessages messages;
+    private final IplantDisplayStrings messages;
 
     public AppsIntegrationPresenterImpl(final AppsIntegrationView view, final EventBus eventBus, final AppTemplateServices atService, final AppIntegrationErrorMessages errorMessages,
-            final AppIntegrationMessages messages) {
+            final IplantDisplayStrings messages) {
         this.view = view;
         this.eventBus = eventBus;
         this.atService = atService;
@@ -208,7 +212,40 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
 
     @Override
     public void onArgumentOrderClicked() {
-        // TODO JDS CORE-4192
+        if (appTemplate == null) {
+            // TODO JDS Determine user feedback for this error case.
+            return;
+        }
+
+        IPlantDialog dlg = new IPlantDialog();
+        dlg.setPredefinedButtons(PredefinedButton.OK);
+        dlg.setHeadingText(messages.commandLineOrder());
+        dlg.setModal(true);
+        dlg.setOkButtonText(messages.done());
+        dlg.setAutoHide(false);
+
+        CommandLineOrderingPanel clop = new CommandLineOrderingPanel(getAllTemplateArguments(view.flush()), this, messages);
+        clop.setSize("640", "480");
+        dlg.add(clop);
+        dlg.addHideHandler(new HideHandler() {
+            @Override
+            public void onHide(HideEvent event) {
+                // JDS Tell view to refresh since we may have changed values.
+                view.onAppTemplateChanged();
+            }
+        });
+        dlg.show();
+    }
+
+    private List<Argument> getAllTemplateArguments(AppTemplate at) {
+        if (at == null) {
+            return Collections.emptyList();
+        }
+        List<Argument> args = Lists.newArrayList();
+        for (ArgumentGroup ag : at.getArgumentGroups()) {
+             args.addAll(ag.getArguments());
+        }
+        return args;
     }
 
     @Override
@@ -231,7 +268,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
                 // Set the deployed component in the AppTemplate
                 if ((dc != null) && (appTemplate != null)) {
                     appTemplate.setDeployedComponent(dc);
-                    view.onAppTemplateChanged();
+                    onAppTemplateChanged();
                 }
             }
         });
@@ -240,6 +277,28 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
 
     private void setCurrentSelection(Object currentSelection) {
         this.currentSelection = currentSelection;
+    }
+
+    @Override
+    public boolean orderingRequired(Argument arg) {
+        if (arg == null) {
+            return false;
+        }
+        ArgumentType type = arg.getType();
+        if (type.equals(ArgumentType.Info) || type.equals(ArgumentType.EnvironmentVariable)) {
+            return false;
+        }
+    
+        DataObject dataObject = arg.getDataObject();
+        if ((dataObject != null) && dataObject.isImplicit() && type.equals(ArgumentType.Output)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void onAppTemplateChanged() {
+        view.onAppTemplateChanged();
     }
 
     /**

@@ -4,6 +4,9 @@
              xmlns:con="urn:import:com.sencha.gxt.widget.core.client.container"
              xmlns:grid="urn:import:com.sencha.gxt.widget.core.client.grid">
 
+    <ui:with field="display"
+             type="org.iplantc.core.resources.client.messages.IplantDisplayStrings"/>
+             
     <ui:with type="com.sencha.gxt.widget.core.client.grid.ColumnModel" 
              field="cm1"/>
     <ui:with type="com.sencha.gxt.widget.core.client.grid.ColumnModel" 
@@ -14,25 +17,42 @@
              field="orderedStore"/>
     <ui:with type="com.sencha.gxt.widget.core.client.grid.GridView" 
              field="view1">
-        <ui:attributes stripeRows="true" forceFit="true"/>
+        <ui:attributes stripeRows="true" 
+                       forceFit="true"
+                       emptyText="{display.noArguments}"/>
     </ui:with> 
     <ui:with type="com.sencha.gxt.widget.core.client.grid.GridView" 
              field="view2">
-        <ui:attributes stripeRows="true" forceFit="true"/>
+        <ui:attributes stripeRows="true" 
+                       forceFit="true"
+                       emptyText="{display.noArguments}"/>
     </ui:with> 
     
-    <con:HorizontalLayoutContainer>
-       <con:child>
+    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="margins0">
+        <ui:attributes top="0" right="0" bottom="0" left="0" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.core.client.util.Margins" field="margins0500">
+        <ui:attributes top="0" right="5" bottom="0" left="0" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutData" field="boxLayoutDataMargins0500Flex1">
+        <ui:attributes margins="{margins0500}" flex="1" />
+    </ui:with>
+    <ui:with type="com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutData" field="boxLayoutDataMargins0Flex1">
+        <ui:attributes margins="{margins0}" flex="1" />
+    </ui:with>
+    
+    <con:HBoxLayoutContainer hBoxLayoutAlign="STRETCH">
+        <con:child layoutData="{boxLayoutDataMargins0500Flex1}">
             <grid:Grid ui:field="unorderedGrid"
                        cm="{cm1}"
                        store="{unorderedStore}"
                        view="{view1}"/>
-       </con:child> 
-       <con:child>
+        </con:child>
+        <con:child layoutData="{boxLayoutDataMargins0Flex1}">
             <grid:Grid ui:field="orderedGrid"
                        cm="{cm2}"
                        store="{orderedStore}"
                        view="{view2}"/>
-       </con:child> 
-    </con:HorizontalLayoutContainer>             
+        </con:child>
+    </con:HBoxLayoutContainer>
 </ui:UiBinder> 
