@@ -1,5 +1,6 @@
 package org.iplantc.core.uiapps.integration.client.view;
 
+import org.iplantc.core.uiapps.widgets.client.events.AppTemplateUpdatedEvent.AppTemplateUpdatedEventHandler;
 import org.iplantc.core.uiapps.widgets.client.models.AppTemplate;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 
@@ -11,7 +12,7 @@ import com.google.gwt.user.client.ui.IsWidget;
  */
 public interface AppsIntegrationView extends IsWidget {
     
-    public interface Presenter extends org.iplantc.core.uiapps.widgets.client.view.AppWizardView.BasePresenter, AppIntegrationToolbar.Presenter {
+    public interface Presenter extends org.iplantc.core.uiapps.widgets.client.view.AppWizardView.BasePresenter, AppIntegrationToolbar.Presenter, AppTemplateUpdatedEventHandler {
 
         /**
          * Checks if the given argument should be ordered in order to be used by an App at launch.

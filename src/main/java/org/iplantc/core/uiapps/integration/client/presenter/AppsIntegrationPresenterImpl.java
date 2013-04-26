@@ -14,6 +14,7 @@ import org.iplantc.core.uiapps.integration.client.view.AppsIntegrationView;
 import org.iplantc.core.uiapps.widgets.client.dialog.DCListingDialog;
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent;
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent.AppTemplateSelectedEventHandler;
+import org.iplantc.core.uiapps.widgets.client.events.AppTemplateUpdatedEvent;
 import org.iplantc.core.uiapps.widgets.client.events.ArgumentGroupSelectedEvent;
 import org.iplantc.core.uiapps.widgets.client.events.ArgumentGroupSelectedEvent.ArgumentGroupSelectedEventHandler;
 import org.iplantc.core.uiapps.widgets.client.events.ArgumentSelectedEvent;
@@ -80,6 +81,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         eventBus.addHandler(ArgumentSelectedEvent.TYPE, handler);
         eventBus.addHandler(ArgumentGroupSelectedEvent.TYPE, handler);
         eventBus.addHandler(AppTemplateSelectedEvent.TYPE, handler);
+        eventBus.addHandler(AppTemplateUpdatedEvent.TYPE, this);
     }
 
     @Override
@@ -348,7 +350,16 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
                 setCurrentSelection(appTemplate);
             }
         }
+    }
 
+    @Override
+    public void onAppTemplateUpdate(AppTemplateUpdatedEvent event) {
+        updateCommandLinePreview(view.flush());
+    }
+
+    private void updateCommandLinePreview(AppTemplate flush) {
+        // TODO JDS CORE-4190, Waiting on the creation of an endpoint which would assemble the CLI prev
+        // of the given AppTemplate
     }
 
 }
