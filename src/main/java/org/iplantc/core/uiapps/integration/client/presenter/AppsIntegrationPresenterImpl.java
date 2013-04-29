@@ -26,6 +26,7 @@ import org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentType;
 import org.iplantc.core.uiapps.widgets.client.models.DataObject;
 import org.iplantc.core.uiapps.widgets.client.models.DeployedComponent;
+import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;
 import org.iplantc.core.uiapps.widgets.client.presenter.AppWizardPresenterJsonAdapter;
 import org.iplantc.core.uiapps.widgets.client.view.editors.AppTemplateWizard.IArgumentEditor;
 import org.iplantc.core.uiapps.widgets.client.view.editors.AppTemplateWizard.IArgumentGroupEditor;
@@ -33,12 +34,14 @@ import org.iplantc.core.uiapps.widgets.client.view.editors.IAppTemplateEditor;
 import org.iplantc.core.uicommons.client.ErrorHandler;
 import org.iplantc.core.uicommons.client.events.EventBus;
 import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IPlantDialog;
+import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IplantInfoBox;
 import org.iplantc.de.client.UUIDService;
 import org.iplantc.de.client.UUIDServiceAsync;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -46,7 +49,11 @@ import com.google.web.bindery.autobean.shared.AutoBean;
 import com.google.web.bindery.autobean.shared.AutoBeanCodex;
 import com.google.web.bindery.autobean.shared.AutoBeanUtils;
 import com.google.web.bindery.autobean.shared.Splittable;
+import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
+import com.sencha.gxt.widget.core.client.box.MessageBox;
+import com.sencha.gxt.widget.core.client.button.TextButton;
+import com.sencha.gxt.widget.core.client.event.BeforeHideEvent;
 import com.sencha.gxt.widget.core.client.event.HideEvent;
 import com.sencha.gxt.widget.core.client.event.HideEvent.HideHandler;
 import com.sencha.gxt.widget.core.client.form.TextArea;
@@ -68,6 +75,8 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     private final EventBus eventBus;
     private Object currentSelection;
     private final IplantDisplayStrings messages;
+    private AppTemplate lastSave;
+    private HandlerRegistration beforeHideHandlerRegistration;
 
     public AppsIntegrationPresenterImpl(final AppsIntegrationView view, final EventBus eventBus, final AppTemplateServices atService, final AppIntegrationErrorMessages errorMessages,
             final IplantDisplayStrings messages) {
@@ -99,6 +108,14 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     @Override
     public void go(HasOneWidget container) {
         view.edit(appTemplate);
+        /*
+         * JDS Make a copy so we can check for differences on exit.
+         * Flushing is necessary before copying because some values don't exist in the JSON when the
+         * template is fetched. This will result in a false detection of changes in the BeforeHide
+         * handler method
+         */
+        view.flush();
+        this.lastSave = AppTemplateUtils.copyAppTemplate(appTemplate);
         container.setWidget(view);
     }
 
@@ -129,7 +146,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
 
         UUIDServiceAsync uuidService = GWT.create(UUIDService.class);
 
-        List<Argument> argNeedUuid = Lists.newArrayList();
+        final List<Argument> argNeedUuid = Lists.newArrayList();
         // First loop over AppTemplate and look for UUIDs which need to be applied
         for (ArgumentGroup ag : savedAppTemplate.getArgumentGroups()) {
             for (Argument arg : ag.getArguments()) {
@@ -139,42 +156,12 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
             }
         }
 
-        // Check is we have anything which needs a UUID
+        // Check if we have anything which needs a UUID
         if (argNeedUuid.size() > 0) {
-
-            uuidService.getUUIDs(argNeedUuid.size(), new AsyncCallback<List<String>>() {
-
-                @Override
-                public void onSuccess(List<String> result) {
-                    // TODO Auto-generated method stub
-
-                }
-
-                @Override
-                public void onFailure(Throwable caught) {
-                    // TODO Auto-generated method stub
-
-                }
-            });
+            uuidService.getUUIDs(argNeedUuid.size(), new GetUuidCallback(argNeedUuid));
+        } else {
+            doSave();
         }
-        // TODO JDS Need to apply UUIDs at this time, if needed. This will occur when Sri gets his
-        // changes checked in.
-        atService.saveAndPublishAppTemplate(savedAppTemplate, new AsyncCallback<String>() {
-
-            @Override
-            public void onSuccess(String result) {
-                eventBus.fireEvent(new AppGroupCountUpdateEvent(true, null));
-                // TODO JDS Need to display feedback to user, letting them know that this succeeded.
-                // Waiting on completion of new notification widget (waiting on CORE-4126, CORE-4170)
-            }
-
-            @Override
-            public void onFailure(Throwable caught) {
-                String failureMsg = errorMessages.publishFailureDefaultMessage();
-                // TODO JDS Notify user of failure via new notification widget (waiting on CORE-4126, CORE-4170)
-                ErrorHandler.post(failureMsg, caught);
-            }
-        });
     }
 
     @Override
@@ -198,34 +185,15 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         dlg.show();
     }
 
-    /**
-     * 
-     * A native method that calls java script method to pretty print json.
-     * 
-     * @param json the json to pretty print
-     * @param replacer
-     * @param space the char to used for formatting
-     * @return the pretty print version of json
-     */
-    private native String prettyPrint(String json, String replacer, int space) /*-{
-		return $wnd.JSON.stringify($wnd.JSON.parse(json), replacer, space);
-    }-*/;
-
-
     @Override
     public void onArgumentOrderClicked() {
-        if (appTemplate == null) {
-            // TODO JDS Determine user feedback for this error case.
-            return;
-        }
-
         IPlantDialog dlg = new IPlantDialog();
         dlg.setPredefinedButtons(PredefinedButton.OK);
         dlg.setHeadingText(messages.commandLineOrder());
         dlg.setModal(true);
         dlg.setOkButtonText(messages.done());
         dlg.setAutoHide(false);
-
+    
         CommandLineOrderingPanel clop = new CommandLineOrderingPanel(getAllTemplateArguments(view.flush()), this, messages);
         clop.setSize("640", "480");
         dlg.add(clop);
@@ -239,20 +207,9 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         dlg.show();
     }
 
-    private List<Argument> getAllTemplateArguments(AppTemplate at) {
-        if (at == null) {
-            return Collections.emptyList();
-        }
-        List<Argument> args = Lists.newArrayList();
-        for (ArgumentGroup ag : at.getArgumentGroups()) {
-             args.addAll(ag.getArguments());
-        }
-        return args;
-    }
-
     @Override
     public void onDeleteButtonClicked() {
-
+    
         // When delete is clicked, we might want to have the reference of what we are deleting.
         if (currentSelection != null) {
             // TODO JDS Fire an event to delete current selection.
@@ -277,10 +234,6 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         dialog.show();
     }
 
-    private void setCurrentSelection(Object currentSelection) {
-        this.currentSelection = currentSelection;
-    }
-
     @Override
     public boolean orderingRequired(Argument arg) {
         if (arg == null) {
@@ -303,8 +256,131 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         view.onAppTemplateChanged();
     }
 
+    @Override
+    public void onAppTemplateUpdate(AppTemplateUpdatedEvent event) {
+        updateCommandLinePreview(view.flush());
+    }
+
+    @Override
+    public void onBeforeHide(final BeforeHideEvent event) {
+        // Determine if there are any changes, variables are broken out for readability
+        AutoBean<AppTemplate> lastSaveAb = AutoBeanUtils.getAutoBean(lastSave);
+        AutoBean<AppTemplate> currentAb = AutoBeanUtils.getAutoBean(AppTemplateUtils.copyAppTemplate(view.flush()));
+        String lastSavePayload = AutoBeanCodex.encode(lastSaveAb).getPayload();
+        String currentPayload = AutoBeanCodex.encode(currentAb).getPayload();
+        boolean areEqual = lastSavePayload.equals(currentPayload);
+    
+        if (!areEqual) {
+            event.setCancelled(true);
+            final Component component = event.getSource();
+            // JDS There are differences, so prompt user to save.
+            final IplantInfoBox dlg = new IplantInfoBox(messages.save(), messages.unsavedChanges()) {
+                @Override
+                protected void onButtonPressed(TextButton button) {
+                    if (button == getButtonBar().getItemByItemId(PredefinedButton.YES.name())) {
+                        // JDS Do save and let window close
+                        beforeHideHandlerRegistration.removeHandler();
+                        onSaveClicked();
+                        component.hide();
+                    } else if (button == getButtonBar().getItemByItemId(PredefinedButton.NO.name())) {
+                        // JDS Just let window close
+                        beforeHideHandlerRegistration.removeHandler();
+                        component.hide();
+                    } else if (button == getButtonBar().getItemByItemId(PredefinedButton.CANCEL.name())) {
+                        // JDS Do not hide the window
+
+                    }
+                    hide();
+                }
+            };
+            dlg.setIcon(MessageBox.ICONS.question());
+            dlg.setPredefinedButtons(PredefinedButton.YES, PredefinedButton.NO, PredefinedButton.CANCEL);
+            dlg.show();
+        }
+    }
+
+    private void doSave() {
+        // JDS Make a copy so we can check for differences on exit
+        lastSave = AppTemplateUtils.copyAppTemplate(view.flush());
+        atService.saveAndPublishAppTemplate(lastSave, new AsyncCallback<String>() {
+    
+            @Override
+            public void onSuccess(String result) {
+                eventBus.fireEvent(new AppGroupCountUpdateEvent(true, null));
+                // TODO JDS Need to display feedback to user, letting them know that this succeeded.
+                // Waiting on completion of new notification widget (waiting on CORE-4126, CORE-4170)
+            }
+    
+            @Override
+            public void onFailure(Throwable caught) {
+                String failureMsg = errorMessages.publishFailureDefaultMessage();
+                // TODO JDS Notify user of failure via new notification widget (waiting on CORE-4126, CORE-4170)
+                ErrorHandler.post(failureMsg, caught);
+            }
+        });
+    
+    }
+
     /**
-     * FIXME JDS Need to put some delete button visibility control here.
+     * 
+     * A native method that calls java script method to pretty print json.
+     * 
+     * @param json the json to pretty print
+     * @param replacer
+     * @param space the char to used for formatting
+     * @return the pretty print version of json
+     */
+    private native String prettyPrint(String json, String replacer, int space) /*-{
+		return $wnd.JSON.stringify($wnd.JSON.parse(json), replacer, space);
+    }-*/;
+
+    private List<Argument> getAllTemplateArguments(AppTemplate at) {
+        if (at == null) {
+            return Collections.emptyList();
+        }
+        List<Argument> args = Lists.newArrayList();
+        for (ArgumentGroup ag : at.getArgumentGroups()) {
+             args.addAll(ag.getArguments());
+        }
+        return args;
+    }
+
+    private void setCurrentSelection(Object currentSelection) {
+        this.currentSelection = currentSelection;
+    }
+
+    private void updateCommandLinePreview(AppTemplate flush) {
+        // TODO JDS CORE-4190, Waiting on the creation of an endpoint which would assemble the CLI prev
+        // of the given AppTemplate
+    }
+
+    private final class GetUuidCallback implements AsyncCallback<List<String>> {
+        private final List<Argument> argNeedUuid;
+
+        private GetUuidCallback(List<Argument> argNeedUuid) {
+            this.argNeedUuid = argNeedUuid;
+        }
+
+        @Override
+        public void onSuccess(List<String> result) {
+            if ((result == null) || (result.size() != argNeedUuid.size())) {
+                return;
+            }
+            // JDS Apply UUIDs
+            for (Argument arg : argNeedUuid) {
+                arg.setId(result.remove(0));
+            }
+            doSave();
+        }
+
+        @Override
+        public void onFailure(Throwable caught) {
+            // TODO JDS Notify user of failure via new notification widget (waiting on CORE-4126, CORE-4170)
+            ErrorHandler.post(caught);
+        }
+    }
+
+    /**
      * 
      * @author jstroot
      * 
@@ -353,13 +429,8 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     }
 
     @Override
-    public void onAppTemplateUpdate(AppTemplateUpdatedEvent event) {
-        updateCommandLinePreview(view.flush());
-    }
-
-    private void updateCommandLinePreview(AppTemplate flush) {
-        // TODO JDS CORE-4190, Waiting on the creation of an endpoint which would assemble the CLI prev
-        // of the given AppTemplate
+    public void setBeforeHideHandlerRegistration(HandlerRegistration hr) {
+        this.beforeHideHandlerRegistration = hr;
     }
 
 }

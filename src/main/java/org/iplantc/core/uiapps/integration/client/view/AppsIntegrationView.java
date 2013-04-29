@@ -4,7 +4,9 @@ import org.iplantc.core.uiapps.widgets.client.events.AppTemplateUpdatedEvent.App
 import org.iplantc.core.uiapps.widgets.client.models.AppTemplate;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.IsWidget;
+import com.sencha.gxt.widget.core.client.event.BeforeHideEvent.BeforeHideHandler;
 
 /**
  * @author jstroot
@@ -12,7 +14,7 @@ import com.google.gwt.user.client.ui.IsWidget;
  */
 public interface AppsIntegrationView extends IsWidget {
     
-    public interface Presenter extends org.iplantc.core.uiapps.widgets.client.view.AppWizardView.BasePresenter, AppIntegrationToolbar.Presenter, AppTemplateUpdatedEventHandler {
+    public interface Presenter extends org.iplantc.core.uiapps.widgets.client.view.AppWizardView.BasePresenter, AppIntegrationToolbar.Presenter, AppTemplateUpdatedEventHandler, BeforeHideHandler {
 
         /**
          * Checks if the given argument should be ordered in order to be used by an App at launch.
@@ -23,6 +25,8 @@ public interface AppsIntegrationView extends IsWidget {
         boolean orderingRequired(Argument arg);
 
         void onAppTemplateChanged();
+
+        void setBeforeHideHandlerRegistration(HandlerRegistration hr);
     }
 
     void setPresenter(Presenter presenter);
