@@ -3,7 +3,6 @@
  */
 package org.iplantc.core.uiapps.integration.client.services;
 
-import org.iplantc.core.uiapps.widgets.client.models.AppTemplate;
 import org.iplantc.core.uicommons.client.DEServiceFacade;
 import org.iplantc.core.uicommons.client.models.DEProperties;
 import org.iplantc.de.shared.SharedAuthenticationValidatingServiceFacade;
@@ -13,13 +12,11 @@ import org.iplantc.de.shared.services.ServiceCallWrapper;
 
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.web.bindery.autobean.shared.AutoBeanCodex;
-import com.google.web.bindery.autobean.shared.AutoBeanUtils;
 /**
  * @author sriram
  *
  */
-public class EnumerationServices implements AppTemplateServices {
+public class EnumerationServices {
     public void getWidgetTypes(AsyncCallback<String> callback) {
         ServiceCallWrapper wrapper = new ServiceCallWrapper(
                 "org.iplantc.services.zoidberg.propertytypes"); //$NON-NLS-1$
@@ -68,11 +65,6 @@ public class EnumerationServices implements AppTemplateServices {
 
     private void callSecuredService(AsyncCallback<String> callback, ServiceCallWrapper wrapper) {
         SharedServiceFacade.getInstance().getServiceData(wrapper, callback);
-    }
-
-    @Override
-    public void saveAndPublishAppTemplate(AppTemplate at, AsyncCallback<String> callback) {
-        saveAndPublish(AutoBeanCodex.encode(AutoBeanUtils.getAutoBean(at)).getPayload(), callback);
     }
 
 }

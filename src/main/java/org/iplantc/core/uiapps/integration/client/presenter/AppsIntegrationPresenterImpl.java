@@ -49,6 +49,7 @@ import com.google.web.bindery.autobean.shared.AutoBean;
 import com.google.web.bindery.autobean.shared.AutoBeanCodex;
 import com.google.web.bindery.autobean.shared.AutoBeanUtils;
 import com.google.web.bindery.autobean.shared.Splittable;
+import com.sencha.gxt.core.client.util.Point;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
 import com.sencha.gxt.widget.core.client.box.MessageBox;
@@ -57,6 +58,8 @@ import com.sencha.gxt.widget.core.client.event.BeforeHideEvent;
 import com.sencha.gxt.widget.core.client.event.HideEvent;
 import com.sencha.gxt.widget.core.client.event.HideEvent.HideHandler;
 import com.sencha.gxt.widget.core.client.form.TextArea;
+import com.sencha.gxt.widget.core.client.info.DefaultInfoConfig;
+import com.sencha.gxt.widget.core.client.info.Info;
 
 /**
  * TODO JDS Need to control toolbar button visibility (namely, the delete button)
@@ -307,15 +310,17 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
             @Override
             public void onSuccess(String result) {
                 eventBus.fireEvent(new AppGroupCountUpdateEvent(true, null));
-                // TODO JDS Need to display feedback to user, letting them know that this succeeded.
-                // Waiting on completion of new notification widget (waiting on CORE-4126, CORE-4170)
+                // TODO JDS The user feedback provided by the TempInfoWidget needs to be replaced pending completion of new notification widget (waiting on CORE-4126, CORE-4170)
+                Info infoThing = new TempInfoWidget();
+                infoThing.show(new DefaultInfoConfig("Success", "App Sucessfully Saved"));
             }
     
             @Override
             public void onFailure(Throwable caught) {
                 String failureMsg = errorMessages.publishFailureDefaultMessage();
                 // TODO JDS Notify user of failure via new notification widget (waiting on CORE-4126, CORE-4170)
-                ErrorHandler.post(failureMsg, caught);
+                Info infoThing = new TempInfoWidget();
+                infoThing.show(new DefaultInfoConfig("Oops!", failureMsg));
             }
         });
     
@@ -352,6 +357,17 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     private void updateCommandLinePreview(AppTemplate flush) {
         // TODO JDS CORE-4190, Waiting on the creation of an endpoint which would assemble the CLI prev
         // of the given AppTemplate
+    }
+
+    private final class TempInfoWidget extends Info {
+        @Override
+        protected Point position() {
+            int left = view.asWidget().getAbsoluteLeft() + view.asWidget().getOffsetWidth() - config.getWidth();
+
+            int top = view.asWidget().getAbsoluteTop() + 10;
+
+            return new Point(left, top);
+        }
     }
 
     private final class GetUuidCallback implements AsyncCallback<List<String>> {

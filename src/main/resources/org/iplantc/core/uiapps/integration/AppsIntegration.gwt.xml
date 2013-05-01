@@ -19,10 +19,6 @@
     <when-type-is class="org.iplantc.core.uiapps.integration.client.view.AppIntegrationToolbar" />
   </replace-with>
   
-  <replace-with class="org.iplantc.core.uiapps.integration.client.services.EnumerationServices">
-    <when-type-is class="org.iplantc.core.uiapps.integration.client.services.AppTemplateServices" />
-  </replace-with>
-
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>
 
