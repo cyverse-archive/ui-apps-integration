@@ -28,6 +28,7 @@ import org.iplantc.core.uiapps.widgets.client.models.DataObject;
 import org.iplantc.core.uiapps.widgets.client.models.DeployedComponent;
 import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;
 import org.iplantc.core.uiapps.widgets.client.presenter.AppWizardPresenterJsonAdapter;
+import org.iplantc.core.uiapps.widgets.client.view.AppWizardPreviewView;
 import org.iplantc.core.uiapps.widgets.client.view.editors.AppTemplateWizard.IArgumentEditor;
 import org.iplantc.core.uiapps.widgets.client.view.editors.AppTemplateWizard.IArgumentGroupEditor;
 import org.iplantc.core.uiapps.widgets.client.view.editors.IAppTemplateEditor;
@@ -169,7 +170,8 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
 
     @Override
     public void onPreviewUiClicked() {
-        // TODO JDS Take current AppTemplate and launch a view with the Apps Widget presenter. "Launch" button should only perform validations.
+        AppWizardPreviewView preview = new AppWizardPreviewView(eventBus, view.flush());
+        preview.show();
     }
 
     @Override
