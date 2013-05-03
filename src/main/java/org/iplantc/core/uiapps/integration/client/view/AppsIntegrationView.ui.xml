@@ -84,8 +84,8 @@
         <!-- Command Line Preview -->
         <con:south layoutData="{southData}">
             <gxt:ContentPanel headingText="Command line view">
-                <!-- <g:HTML text="Command line preview" /> -->
-                <g:TextBox ui:field="cmdLinePreview"/>
+                <g:HTML ui:field="cmdLinePreview"
+                        wordWrap="true"/>
             </gxt:ContentPanel>
         </con:south>
     </con:BorderLayoutContainer>             

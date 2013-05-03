@@ -9,8 +9,8 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.IsWidget;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.dnd.core.client.DndDragStartEvent;
 import com.sencha.gxt.dnd.core.client.DndDragStartEvent.DndDragStartHandler;
@@ -45,7 +45,7 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     AppIntegrationPalette palette;
 
     @UiField
-    TextBox cmdLinePreview;
+    HTML cmdLinePreview;
 
     private final EventBus eventBus;
 
@@ -104,7 +104,7 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
 
     @Override
     public void setCmdLinePreview(String preview) {
-        cmdLinePreview.setValue(preview);
+        cmdLinePreview.setText(preview);
     }
 
 }
