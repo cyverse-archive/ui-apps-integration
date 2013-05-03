@@ -42,7 +42,7 @@
    </ui:with>
    <ui:with field="eastData"
             type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData">
-      <ui:attributes size="200"
+      <ui:attributes size="240"
                      minSize="200"
                      split="true"
                      hidden="false"/>

@@ -8,12 +8,20 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public interface AppTemplateServices {
 
     /**
-     * Retrieves an <code>AppTemplate</code> from the database for editing.
+     * Retrieves an <code>AppTemplate</code> from the database for viewing.
      * 
      * @param appId the <code>App</code> id.
      * @param callback
      */
     void getAppTemplate(HasId appId, AsyncCallback<AppTemplate> callback);
+
+    /**
+     * Retrieves an <code>AppTemplate</code> from the database for viewing.
+     * 
+     * @param appId the <code>App</code> id.
+     * @param callback
+     */
+    void getAppTemplateForEdit(HasId appId, AsyncCallback<AppTemplate> callback);
 
     /**
      * Performs an initial publishing of new AppTemplates to the database, or updates of existing ones
@@ -39,4 +47,12 @@ public interface AppTemplateServices {
      * @param callback
      */
     void rerunAnalysis(HasId analysisId, AsyncCallback<AppTemplate> callback);
+
+    /**
+     * Retrieves a command line preview represented by the given <code>AppTemplate</code>.
+     * 
+     * @param at the <code>AppTemplate</code> for which the command line preview will be generated.
+     * @param callback
+     */
+    void cmdLinePreview(AppTemplate at, AsyncCallback<String> callback);
 }

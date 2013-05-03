@@ -102,4 +102,9 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
         wizard.onArgumentPropertyValueChange();
     }
 
+    @Override
+    public void setCmdLinePreview(String preview) {
+        cmdLinePreview.setValue(preview);
+    }
+
 }

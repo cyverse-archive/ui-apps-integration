@@ -11,19 +11,14 @@ import com.google.web.bindery.autobean.shared.AutoBeanCodex;
 
 public class AppTemplateCallbackConverter extends AsyncCallbackConverter<String, AppTemplate> {
 
+    private final AppTemplateAutoBeanFactory factory = GWT.create(AppTemplateAutoBeanFactory.class);
+
     public AppTemplateCallbackConverter(AsyncCallback<AppTemplate> callback) {
         super(callback);
     }
 
     @Override
-    public void onFailure(Throwable caught) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
     protected AppTemplate convertFrom(String object) {
-        AppTemplateAutoBeanFactory factory = GWT.create(AppTemplateAutoBeanFactory.class);
         AutoBean<AppTemplate> atAb = AutoBeanCodex.decode(factory, AppTemplate.class, object);
         return atAb.as();
     }

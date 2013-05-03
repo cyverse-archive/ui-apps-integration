@@ -41,4 +41,6 @@ public interface AppsIntegrationView extends IsWidget {
 
     void onAppTemplateChanged();
 
+    void setCmdLinePreview(String cmdLinePreview);
+
 }

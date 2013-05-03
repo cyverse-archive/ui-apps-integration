@@ -50,6 +50,7 @@ import com.google.web.bindery.autobean.shared.AutoBean;
 import com.google.web.bindery.autobean.shared.AutoBeanCodex;
 import com.google.web.bindery.autobean.shared.AutoBeanUtils;
 import com.google.web.bindery.autobean.shared.Splittable;
+import com.google.web.bindery.autobean.shared.impl.StringQuoter;
 import com.sencha.gxt.core.client.util.Point;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
@@ -120,6 +121,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
          */
         view.flush();
         this.lastSave = AppTemplateUtils.copyAppTemplate(appTemplate);
+        updateCommandLinePreview(lastSave);
         container.setWidget(view);
     }
 
@@ -322,7 +324,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
                 String failureMsg = errorMessages.publishFailureDefaultMessage();
                 // TODO JDS Notify user of failure via new notification widget (waiting on CORE-4126, CORE-4170)
                 Info infoThing = new TempInfoWidget();
-                infoThing.show(new DefaultInfoConfig("Oops!", failureMsg));
+                infoThing.show(new DefaultInfoConfig("Oops!", failureMsg + "\n" + caught.getMessage()));
             }
         });
     
@@ -357,8 +359,20 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     }
 
     private void updateCommandLinePreview(AppTemplate flush) {
-        // TODO JDS CORE-4190, Waiting on the creation of an endpoint which would assemble the CLI prev
-        // of the given AppTemplate
+        atService.cmdLinePreview(flush, new AsyncCallback<String>() {
+
+            @Override
+            public void onSuccess(String result) {
+                Splittable split = StringQuoter.split(result);
+                view.setCmdLinePreview(split.get("params").asString());
+            }
+
+            @Override
+            public void onFailure(Throwable caught) {
+                GWT.log("FAILS!!!!");
+                ErrorHandler.post(caught);
+            }
+        });
     }
 
     private final class TempInfoWidget extends Info {
