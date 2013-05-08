@@ -31,9 +31,6 @@ public class AppIntegrationToolbarImpl implements AppIntegrationToolbar {
     @UiField
     TextButton argumentOrderButton;
 
-    @UiField
-    TextButton deleteButton;
-
     private AppIntegrationToolbar.Presenter presenter;
 
     private final Widget widget;
@@ -75,17 +72,6 @@ public class AppIntegrationToolbarImpl implements AppIntegrationToolbar {
     @UiHandler("argumentOrderButton")
     void onArgumentOrderButtonClicked(SelectEvent event) {
         presenter.onArgumentOrderClicked();
-    }
-
-    @UiHandler("deleteButton")
-    void onDeleteButtonClicked(SelectEvent event) {
-        presenter.onDeleteButtonClicked();
-    }
-
-    @Override
-    public void setDeleteButtonEnabled(boolean enabled) {
-        // TODO Auto-generated method stub
-
     }
 
 }

@@ -47,12 +47,5 @@
                             icon="{res.listItems}"/>
       </toolbar:child>
 
-      <!-- Delete button -->
-      <toolbar:child>
-         <button:TextButton ui:field="deleteButton"
-                            text="{display.delete}"
-                            icon="{res.fileDelete}"/>
-      </toolbar:child>
-
    </toolbar:ToolBar>
 </ui:UiBinder> 

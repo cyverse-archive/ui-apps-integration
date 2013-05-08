@@ -9,7 +9,6 @@ import org.iplantc.core.resources.client.uiapps.integration.AppIntegrationErrorM
 import org.iplantc.core.uiapps.client.events.AppGroupCountUpdateEvent;
 import org.iplantc.core.uiapps.integration.client.dialogs.CommandLineOrderingPanel;
 import org.iplantc.core.uiapps.integration.client.services.AppTemplateServices;
-import org.iplantc.core.uiapps.integration.client.view.AppIntegrationToolbar;
 import org.iplantc.core.uiapps.integration.client.view.AppsIntegrationView;
 import org.iplantc.core.uiapps.widgets.client.dialog.DCListingDialog;
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent;
@@ -91,7 +90,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         this.errorMessages = errorMessages;
         this.messages = messages;
         view.setPresenter(this);
-        SelectionHandler handler = new SelectionHandler(view, view.getToolbar());
+        SelectionHandler handler = new SelectionHandler(view);
         eventBus.addHandler(ArgumentSelectedEvent.TYPE, handler);
         eventBus.addHandler(ArgumentGroupSelectedEvent.TYPE, handler);
         eventBus.addHandler(AppTemplateSelectedEvent.TYPE, handler);
@@ -212,15 +211,6 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
             }
         });
         dlg.show();
-    }
-
-    @Override
-    public void onDeleteButtonClicked() {
-    
-        // When delete is clicked, we might want to have the reference of what we are deleting.
-        if (currentSelection != null) {
-            // TODO JDS Fire an event to delete current selection.
-        }
     }
 
     @Override
@@ -419,11 +409,9 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
      */
     private final class SelectionHandler implements ArgumentSelectedEventHandler, ArgumentGroupSelectedEventHandler, AppTemplateSelectedEventHandler {
         private final AppsIntegrationView view;
-        private final AppIntegrationToolbar toolbar;
     
-        private SelectionHandler(AppsIntegrationView view, AppIntegrationToolbar toolbar) {
+        private SelectionHandler(AppsIntegrationView view) {
             this.view = view;
-            this.toolbar = toolbar;
         }
     
         @Override
@@ -432,7 +420,6 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
                     && (((IArgumentEditor)event.getSource()).getArgumentPropertyEditor() != null)) {
                 IsWidget argumentPropertyEditor = ((IArgumentEditor)event.getSource()).getArgumentPropertyEditor();
                 view.setEastWidget(argumentPropertyEditor);
-                toolbar.setDeleteButtonEnabled(true);
                 setCurrentSelection(((IArgumentEditor)event.getSource()).getCurrentArgument());
             }
         }
@@ -443,7 +430,6 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
                     && (((IArgumentGroupEditor)event.getSource()).getArgumentGroupPropertyEditor() != null)) {
                 IsWidget argumentGrpPropertyEditor = ((IArgumentGroupEditor)event.getSource()).getArgumentGroupPropertyEditor();
                 view.setEastWidget(argumentGrpPropertyEditor);
-                toolbar.setDeleteButtonEnabled(true);
                 setCurrentSelection(((IArgumentGroupEditor)event.getSource()).getCurrentArgumentGroup());
             }
         }
@@ -454,7 +440,6 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
                     && (((IAppTemplateEditor)event.getSource()).getAppTemplatePropertyEditor() != null)) {
                 IsWidget appTemplatePropertyEditor = ((IAppTemplateEditor)event.getSource()).getAppTemplatePropertyEditor();
                 view.setEastWidget(appTemplatePropertyEditor);
-                toolbar.setDeleteButtonEnabled(true);
                 setCurrentSelection(appTemplate);
             }
         }

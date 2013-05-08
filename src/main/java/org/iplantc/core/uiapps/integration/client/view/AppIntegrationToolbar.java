@@ -17,13 +17,10 @@ public interface AppIntegrationToolbar extends IsWidget {
 
         void onArgumentOrderClicked();
 
-        void onDeleteButtonClicked();
-
         void onSelectToolClicked();
 
     }
 
     void setPresenter(AppIntegrationToolbar.Presenter presenter);
 
-    void setDeleteButtonEnabled(boolean enabled);
 }
