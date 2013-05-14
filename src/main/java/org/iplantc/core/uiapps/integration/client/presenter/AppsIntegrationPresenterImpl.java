@@ -4,11 +4,11 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.iplantc.core.jsonutil.JsonUtil;
 import org.iplantc.core.resources.client.messages.IplantDisplayStrings;
 import org.iplantc.core.resources.client.uiapps.integration.AppIntegrationErrorMessages;
 import org.iplantc.core.uiapps.client.events.AppGroupCountUpdateEvent;
 import org.iplantc.core.uiapps.integration.client.dialogs.CommandLineOrderingPanel;
-import org.iplantc.core.uiapps.integration.client.services.AppTemplateServices;
 import org.iplantc.core.uiapps.integration.client.view.AppsIntegrationView;
 import org.iplantc.core.uiapps.widgets.client.dialog.DCListingDialog;
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent;
@@ -27,6 +27,7 @@ import org.iplantc.core.uiapps.widgets.client.models.DataObject;
 import org.iplantc.core.uiapps.widgets.client.models.DeployedComponent;
 import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;
 import org.iplantc.core.uiapps.widgets.client.presenter.AppWizardPresenterJsonAdapter;
+import org.iplantc.core.uiapps.widgets.client.services.AppTemplateServices;
 import org.iplantc.core.uiapps.widgets.client.view.AppWizardPreviewView;
 import org.iplantc.core.uiapps.widgets.client.view.editors.AppTemplateWizard.IArgumentEditor;
 import org.iplantc.core.uiapps.widgets.client.view.editors.AppTemplateWizard.IArgumentGroupEditor;
@@ -180,7 +181,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         Splittable split = AutoBeanCodex.encode(AutoBeanUtils.getAutoBean(appTemplate));
         TextArea ta = new TextArea();
         ta.setReadOnly(true);
-        ta.setValue(prettyPrint(split.getPayload(), null, 4));
+        ta.setValue(JsonUtil.prettyPrint(split.getPayload(), null, 4));
         IPlantDialog dlg = new IPlantDialog();
         dlg.setHeadingText(messages.previewJSON());
         dlg.setPredefinedButtons(PredefinedButton.OK);
@@ -319,19 +320,6 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         });
     
     }
-
-    /**
-     * 
-     * A native method that calls java script method to pretty print json.
-     * 
-     * @param json the json to pretty print
-     * @param replacer
-     * @param space the char to used for formatting
-     * @return the pretty print version of json
-     */
-    private native String prettyPrint(String json, String replacer, int space) /*-{
-		return $wnd.JSON.stringify($wnd.JSON.parse(json), replacer, space);
-    }-*/;
 
     private List<Argument> getAllTemplateArguments(AppTemplate at) {
         if (at == null) {
