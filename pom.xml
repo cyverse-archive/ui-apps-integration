@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.iplantc.core</groupId>
   <artifactId>ui-apps-integration</artifactId>
-  <version>gxt3Sandbox-SNAPSHOT</version>
+  <version>dev-SNAPSHOT</version>
 <!--   <version>dev-SNAPSHOT</version> -->
   <name>The iPlant Collaborative Discovery Environment Apps Integration module</name>
   <properties>
