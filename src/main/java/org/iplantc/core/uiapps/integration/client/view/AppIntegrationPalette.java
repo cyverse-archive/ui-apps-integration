@@ -4,6 +4,8 @@ import org.iplantc.core.uiapps.widgets.client.models.AppTemplateAutoBeanFactory;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentType;
+import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItem;
+import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItemGroup;
 
 import com.google.common.collect.Lists;
 import com.google.gwt.core.client.GWT;
@@ -13,6 +15,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.dnd.core.client.DragSource;
 import com.sencha.gxt.widget.core.client.Composite;
+import com.sencha.gxt.widget.core.client.tree.Tree.CheckCascade;
 
 /**
  * This is a ui component which contains draggable images of the different supported argument types in
@@ -85,6 +88,21 @@ class AppIntegrationPalette extends Composite {
         argument.setLabel("DEFAULT");
         argument.setDescription("DEFAULT");
         argument.setType(type);
+
+        // Special handling to initialize new arguments, for specific ArgumentTypes.
+        switch (type) {
+            case TreeSelection:
+                SelectionItemGroup sig = factory.selectionItemGroup().as();
+                sig.setSingleSelect(false);
+                sig.setSelectionCascade(CheckCascade.CHILDREN);
+                sig.setArguments(Lists.<SelectionItem> newArrayList());
+                sig.setGroups(Lists.<SelectionItemGroup> newArrayList());
+                argument.setSelectionItems(Lists.<SelectionItem> newArrayList(sig));
+                break;
+
+            default:
+                break;
+        }
         return argument;
     }
 
