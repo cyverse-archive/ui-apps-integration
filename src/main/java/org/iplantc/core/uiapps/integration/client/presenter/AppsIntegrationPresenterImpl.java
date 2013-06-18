@@ -256,7 +256,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
 
     @Override
     public void onAppTemplateUpdate(AppTemplateUpdatedEvent event) {
-        updateCommandLinePreview(view.flush());
+        updateCommandLinePreview(event.getUpdatedAppTemplate());
     }
 
     @Override
