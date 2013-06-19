@@ -1,6 +1,9 @@
 package org.iplantc.core.uiapps.integration.client.view;
 
+import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent.AppTemplateSelectedEventHandler;
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateUpdatedEvent.AppTemplateUpdatedEventHandler;
+import org.iplantc.core.uiapps.widgets.client.events.ArgumentGroupSelectedEvent.ArgumentGroupSelectedEventHandler;
+import org.iplantc.core.uiapps.widgets.client.events.ArgumentSelectedEvent.ArgumentSelectedEventHandler;
 import org.iplantc.core.uiapps.widgets.client.models.AppTemplate;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 
@@ -42,5 +45,13 @@ public interface AppsIntegrationView extends IsWidget {
     void onAppTemplateChanged();
 
     void setCmdLinePreview(String cmdLinePreview);
+
+    void addAppTemplateSelectedEventHandler(AppTemplateSelectedEventHandler handler);
+
+    void addAppTemplateUpdatedEventHandler(AppTemplateUpdatedEventHandler handler);
+
+    void addArgumentSelectedEventHandler(ArgumentSelectedEventHandler handler);
+
+    void addArgumentGroupSelectedEventHandler(ArgumentGroupSelectedEventHandler handler);
 
 }

@@ -28,9 +28,6 @@ import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;
 import org.iplantc.core.uiapps.widgets.client.presenter.AppWizardPresenterJsonAdapter;
 import org.iplantc.core.uiapps.widgets.client.services.AppTemplateServices;
 import org.iplantc.core.uiapps.widgets.client.view.AppWizardPreviewView;
-import org.iplantc.core.uiapps.widgets.client.view.editors.AppTemplateWizard.IArgumentEditor;
-import org.iplantc.core.uiapps.widgets.client.view.editors.AppTemplateWizard.IArgumentGroupEditor;
-import org.iplantc.core.uiapps.widgets.client.view.editors.IAppTemplateEditor;
 import org.iplantc.core.uicommons.client.ErrorHandler;
 import org.iplantc.core.uicommons.client.events.EventBus;
 import org.iplantc.core.uicommons.client.models.deployedcomps.DeployedComponent;
@@ -78,7 +75,6 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     private final AppTemplateServices atService;
     private final AppIntegrationErrorMessages errorMessages;
     private final EventBus eventBus;
-    private Object currentSelection;
     private final IplantDisplayStrings messages;
     private AppTemplate lastSave;
     private HandlerRegistration beforeHideHandlerRegistration;
@@ -92,10 +88,10 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         this.messages = messages;
         view.setPresenter(this);
         SelectionHandler handler = new SelectionHandler(view);
-        eventBus.addHandler(ArgumentSelectedEvent.TYPE, handler);
-        eventBus.addHandler(ArgumentGroupSelectedEvent.TYPE, handler);
-        eventBus.addHandler(AppTemplateSelectedEvent.TYPE, handler);
-        eventBus.addHandler(AppTemplateUpdatedEvent.TYPE, this);
+        view.addArgumentSelectedEventHandler(handler);
+        view.addArgumentGroupSelectedEventHandler(handler);
+        view.addAppTemplateSelectedEventHandler(handler);
+        view.addAppTemplateUpdatedEventHandler(this);
     }
 
     @Override
@@ -172,7 +168,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
 
     @Override
     public void onPreviewUiClicked() {
-        AppWizardPreviewView preview = new AppWizardPreviewView(eventBus, view.flush());
+        AppWizardPreviewView preview = new AppWizardPreviewView(view.flush());
         preview.show();
     }
 
@@ -332,10 +328,6 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         return args;
     }
 
-    private void setCurrentSelection(Object currentSelection) {
-        this.currentSelection = currentSelection;
-    }
-
     private void updateCommandLinePreview(AppTemplate flush) {
         atService.cmdLinePreview(flush, new AsyncCallback<String>() {
 
@@ -404,31 +396,25 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     
         @Override
         public void onArgumentSelected(ArgumentSelectedEvent event) {
-            if ((event.getSource() instanceof IArgumentEditor) 
-                    && (((IArgumentEditor)event.getSource()).getArgumentPropertyEditor() != null)) {
-                IsWidget argumentPropertyEditor = ((IArgumentEditor)event.getSource()).getArgumentPropertyEditor();
+            IsWidget argumentPropertyEditor = event.getArgumentPropertyEditor();
+            if (argumentPropertyEditor != null) {
                 view.setEastWidget(argumentPropertyEditor);
-                setCurrentSelection(((IArgumentEditor)event.getSource()).getCurrentArgument());
             }
         }
     
         @Override
         public void onArgumentGroupSelected(ArgumentGroupSelectedEvent event) {
-            if ((event.getSource() instanceof IArgumentGroupEditor) 
-                    && (((IArgumentGroupEditor)event.getSource()).getArgumentGroupPropertyEditor() != null)) {
-                IsWidget argumentGrpPropertyEditor = ((IArgumentGroupEditor)event.getSource()).getArgumentGroupPropertyEditor();
+            IsWidget argumentGrpPropertyEditor = event.getArgumentGroupPropertyEditor();
+            if (argumentGrpPropertyEditor != null) {
                 view.setEastWidget(argumentGrpPropertyEditor);
-                setCurrentSelection(((IArgumentGroupEditor)event.getSource()).getCurrentArgumentGroup());
             }
         }
     
         @Override
         public void onAppTemplateSelected(AppTemplateSelectedEvent event) {
-            if ((event.getSource() instanceof IAppTemplateEditor) 
-                    && (((IAppTemplateEditor)event.getSource()).getAppTemplatePropertyEditor() != null)) {
-                IsWidget appTemplatePropertyEditor = ((IAppTemplateEditor)event.getSource()).getAppTemplatePropertyEditor();
+            IsWidget appTemplatePropertyEditor = event.getAppTemplatePropertyEditor();
+            if (appTemplatePropertyEditor != null) {
                 view.setEastWidget(appTemplatePropertyEditor);
-                setCurrentSelection(appTemplate);
             }
         }
     }
