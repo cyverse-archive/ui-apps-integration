@@ -139,18 +139,18 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     @Override
     public void onSaveClicked() {
         // The flushed AppTemplate is the same object when editing was first started.
-        AppTemplate savedAppTemplate = view.flush();
+        AppTemplate toBeSaved = view.flush();
 
         // Update the AppTemplate's edited and published date.
         Date currentTime = new Date();
-        savedAppTemplate.setEditedDate(currentTime);
-        savedAppTemplate.setPublishedDate(currentTime);
+        toBeSaved.setEditedDate(currentTime);
+        toBeSaved.setPublishedDate(currentTime);
 
         UUIDServiceAsync uuidService = GWT.create(UUIDService.class);
 
         final List<Argument> argNeedUuid = Lists.newArrayList();
         // First loop over AppTemplate and look for UUIDs which need to be applied
-        for (ArgumentGroup ag : savedAppTemplate.getArgumentGroups()) {
+        for (ArgumentGroup ag : toBeSaved.getArgumentGroups()) {
             for (Argument arg : ag.getArguments()) {
                 if (Strings.isNullOrEmpty(arg.getId())) {
                     argNeedUuid.add(arg);
@@ -160,9 +160,9 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
 
         // Check if we have anything which needs a UUID
         if (argNeedUuid.size() > 0) {
-            uuidService.getUUIDs(argNeedUuid.size(), new GetUuidCallback(argNeedUuid));
+            uuidService.getUUIDs(argNeedUuid.size(), new GetUuidCallback(argNeedUuid, toBeSaved));
         } else {
-            doSave();
+            doSave(toBeSaved);
         }
     }
 
@@ -293,9 +293,9 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         }
     }
 
-    private void doSave() {
+    private void doSave(AppTemplate toBeSaved) {
         // JDS Make a copy so we can check for differences on exit
-        lastSave = AppTemplateUtils.copyAppTemplate(view.flush());
+        lastSave = AppTemplateUtils.copyAppTemplate(toBeSaved);
         atService.saveAndPublishAppTemplate(lastSave, new AsyncCallback<String>() {
     
             @Override
@@ -358,9 +358,11 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
 
     private final class GetUuidCallback implements AsyncCallback<List<String>> {
         private final List<Argument> argNeedUuid;
+        private final AppTemplate toBeSaved;
 
-        private GetUuidCallback(List<Argument> argNeedUuid) {
+        private GetUuidCallback(List<Argument> argNeedUuid, AppTemplate toBeSaved) {
             this.argNeedUuid = argNeedUuid;
+            this.toBeSaved = toBeSaved;
         }
 
         @Override
@@ -372,7 +374,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
             for (Argument arg : argNeedUuid) {
                 arg.setId(result.remove(0));
             }
-            doSave();
+            doSave(toBeSaved);
         }
 
         @Override

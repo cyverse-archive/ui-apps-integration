@@ -4,6 +4,8 @@ import org.iplantc.core.uiapps.widgets.client.models.AppTemplateAutoBeanFactory;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentType;
+import org.iplantc.core.uiapps.widgets.client.models.DataObject;
+import org.iplantc.core.uiapps.widgets.client.models.FileInfoType;
 import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItem;
 import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItemGroup;
 
@@ -88,9 +90,18 @@ class AppIntegrationPalette extends Composite {
         argument.setLabel("DEFAULT");
         argument.setDescription("DEFAULT");
         argument.setType(type);
+        argument.setName("");
 
         // Special handling to initialize new arguments, for specific ArgumentTypes.
         switch (type) {
+            case TextSelection:
+            case IntegerSelection:
+            case DoubleSelection:
+            case Selection:
+            case ValueSelection:
+                argument.setSelectionItems(Lists.<SelectionItem> newArrayList());
+                break;
+
             case TreeSelection:
                 SelectionItemGroup sig = factory.selectionItemGroup().as();
                 sig.setSingleSelect(false);
@@ -98,6 +109,22 @@ class AppIntegrationPalette extends Composite {
                 sig.setArguments(Lists.<SelectionItem> newArrayList());
                 sig.setGroups(Lists.<SelectionItemGroup> newArrayList());
                 argument.setSelectionItems(Lists.<SelectionItem> newArrayList(sig));
+                break;
+
+            case FileInput:
+                DataObject dataObj = factory.dataObject().as();
+                dataObj.setFormat("Unspecified");
+                dataObj.setDataSource("file");
+                dataObj.setCmdSwitch("");
+                // argument.setDataObject(dataObj);
+                break;
+
+            case MultiFileSelector:
+                DataObject multiDataObj = factory.dataObject().as();
+                multiDataObj.setFormat("Unspecified");
+                multiDataObj.setDataSource("file");
+                multiDataObj.setFileInfoType(FileInfoType.File);
+                // argument.setDataObject(multiDataObj);
                 break;
 
             default:
