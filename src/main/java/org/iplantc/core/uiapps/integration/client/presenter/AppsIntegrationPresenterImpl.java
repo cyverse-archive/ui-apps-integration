@@ -301,6 +301,8 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
             @Override
             public void onSuccess(String result) {
                 eventBus.fireEvent(new AppGroupCountUpdateEvent(true, null));
+                view.updateAppTemplateId(result);
+
                 // TODO JDS The user feedback provided by the TempInfoWidget needs to be replaced pending completion of new notification widget (waiting on CORE-4126, CORE-4170)
                 Info infoThing = new TempInfoWidget();
                 infoThing.show(new DefaultInfoConfig("Success", "App Sucessfully Saved"));
@@ -328,13 +330,22 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         return args;
     }
 
-    private void updateCommandLinePreview(AppTemplate flush) {
-        atService.cmdLinePreview(flush, new AsyncCallback<String>() {
+    private void updateCommandLinePreview(final AppTemplate at) {
+        atService.cmdLinePreview(at, new AsyncCallback<String>() {
 
             @Override
             public void onSuccess(String result) {
                 Splittable split = StringQuoter.split(result);
-                view.setCmdLinePreview(split.get("params").asString());
+                String cmdLinePrev = split.get("params").asString();
+
+                /*
+                 * JDS If the given AppTemplate has a valid DeployedComponent, prepend the
+                 * DeployedComponent name to the command line preview
+                 */
+                if ((at.getDeployedComponent() != null) && !Strings.isNullOrEmpty(at.getDeployedComponent().getName())) {
+                    cmdLinePrev = at.getDeployedComponent().getName() + " " + cmdLinePrev;
+                }
+                view.setCmdLinePreview(cmdLinePrev);
             }
 
             @Override

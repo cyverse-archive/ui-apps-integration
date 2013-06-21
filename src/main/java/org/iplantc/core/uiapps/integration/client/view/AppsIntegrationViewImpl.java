@@ -127,4 +127,9 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
         wizard.addArgumentGroupSelectedEventHandler(handler);
     }
 
+    @Override
+    public void updateAppTemplateId(String id) {
+        wizard.updateAppTemplateId(id);
+    }
+
 }

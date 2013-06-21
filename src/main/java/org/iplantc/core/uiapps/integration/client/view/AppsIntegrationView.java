@@ -54,4 +54,11 @@ public interface AppsIntegrationView extends IsWidget {
 
     void addArgumentGroupSelectedEventHandler(ArgumentGroupSelectedEventHandler handler);
 
+    /**
+     * Used to update the AppTemplate with a new ID, usually after a new app has been successfully saved.
+     * 
+     * @param id
+     */
+    void updateAppTemplateId(String id);
+
 }

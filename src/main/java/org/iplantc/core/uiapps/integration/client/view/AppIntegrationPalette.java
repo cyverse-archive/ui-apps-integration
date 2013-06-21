@@ -91,6 +91,7 @@ class AppIntegrationPalette extends Composite {
         argument.setDescription("DEFAULT");
         argument.setType(type);
         argument.setName("");
+        argument.setVisible(true);
 
         // Special handling to initialize new arguments, for specific ArgumentTypes.
         switch (type) {
