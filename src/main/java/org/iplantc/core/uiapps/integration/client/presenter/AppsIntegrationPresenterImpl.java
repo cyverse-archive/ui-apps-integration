@@ -296,6 +296,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     private void doSave(AppTemplate toBeSaved) {
         // JDS Make a copy so we can check for differences on exit
         lastSave = AppTemplateUtils.copyAppTemplate(toBeSaved);
+
         atService.saveAndPublishAppTemplate(lastSave, new AsyncCallback<String>() {
     
             @Override
@@ -410,17 +411,13 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         @Override
         public void onArgumentSelected(ArgumentSelectedEvent event) {
             IsWidget argumentPropertyEditor = event.getArgumentPropertyEditor();
-            if (argumentPropertyEditor != null) {
-                view.setEastWidget(argumentPropertyEditor);
-            }
+            view.setEastWidget(argumentPropertyEditor);
         }
     
         @Override
         public void onArgumentGroupSelected(ArgumentGroupSelectedEvent event) {
             IsWidget argumentGrpPropertyEditor = event.getArgumentGroupPropertyEditor();
-            if (argumentGrpPropertyEditor != null) {
-                view.setEastWidget(argumentGrpPropertyEditor);
-            }
+            view.setEastWidget(argumentGrpPropertyEditor);
         }
     
         @Override

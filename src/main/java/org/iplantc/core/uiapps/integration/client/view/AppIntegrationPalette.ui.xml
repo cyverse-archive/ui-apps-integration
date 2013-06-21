@@ -1,7 +1,8 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	         xmlns:g="urn:import:com.google.gwt.user.client.ui"
-	         xmlns:con="urn:import:com.sencha.gxt.widget.core.client.container">
+	         xmlns:con="urn:import:com.sencha.gxt.widget.core.client.container"
+	         xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client">
     <ui:with field="icons"
              type="org.iplantc.core.resources.client.IplantResources" />
     <ui:with field="margins"
@@ -15,49 +16,102 @@
         <ui:attributes margins="{margins}" />
     </ui:with>
 	<con:VerticalLayoutContainer scrollMode="AUTOY">
-		<con:child layoutData="{childData}">
-			<g:Image ui:field="flag" 
-			         resource="{icons.inputCheckBox}" />
-		</con:child>
-		<con:child layoutData="{childData}">
-			<g:Image ui:field="environmentVariable"
-				     resource="{icons.inputEnvVar}" />
-		</con:child>
-		<con:child layoutData="{childData}">
-			<g:Image ui:field="multiFileSelector"
-				     resource="{icons.inputFileMulti}" />
-		</con:child>
-		<con:child layoutData="{childData}">
-			<g:Image ui:field="fileInput"
-				     resource="{icons.inputFileSingle}" />
-		</con:child>
+	   
 		<con:child layoutData="{childData}">
 			<g:Image ui:field="group" 
 			         resource="{icons.inputGroup}" />
 		</con:child>
 		<con:child layoutData="{childData}">
-			<g:Image ui:field="integer"
-				     resource="{icons.inputNumberInteger}" />
-		</con:child>
-		<con:child layoutData="{childData}">
-			<g:Image ui:field="treeSelection"
-				     resource="{icons.inputSelectGrouped}" />
-		</con:child>
-		<con:child layoutData="{childData}">
-			<g:Image ui:field="multiSelect"
-				     resource="{icons.inputSelectMulti}" />
-		</con:child>
-		<con:child layoutData="{childData}">
-			<g:Image ui:field="singleSelect"
-				     resource="{icons.inputSelectSingle}" />
-		</con:child>
-		<con:child layoutData="{childData}">
-			<g:Image ui:field="multiLineText"
-				     resource="{icons.inputTextMulti}" />
-		</con:child>
-		<con:child layoutData="{childData}">
-			<g:Image ui:field="text" 
-			         resource="{icons.inputTextSingle}" />
-		</con:child>
+            <g:Label ui:field="info"
+                     text="Info"/>
+        </con:child>
+
+	   <gxt:ContentPanel headingText="Files/Folders"
+	                     collapsible="true">
+	       <con:VerticalLayoutContainer>
+				<con:child layoutData="{childData}">
+					<g:Image ui:field="multiFileSelector"
+						     resource="{icons.inputFileMulti}" />
+				</con:child>
+				<con:child layoutData="{childData}">
+					<g:Image ui:field="fileInput"
+						     resource="{icons.inputFileSingle}" />
+				</con:child>
+				<con:child layoutData="{childData}">
+		            <g:Label ui:field="folderInput"
+		                     text="Folder Input"/>
+		        </con:child>
+	       </con:VerticalLayoutContainer>
+	   </gxt:ContentPanel>
+	   
+	   <gxt:ContentPanel headingText="Selection"
+                         collapsible="true">
+            <con:VerticalLayoutContainer>
+				<con:child layoutData="{childData}">
+					<g:Image ui:field="singleSelect"
+						     resource="{icons.inputSelectSingle}" />
+				</con:child>
+				<con:child layoutData="{childData}">
+				    <g:Label ui:field="integerSelection"
+				             text="Integer Selection"/>
+				</con:child>
+				<con:child layoutData="{childData}">
+				    <g:Label ui:field="doubleSelection"
+				             text="Double Selection"/>
+				</con:child>
+				<con:child layoutData="{childData}">
+					<g:Image ui:field="treeSelection"
+						     resource="{icons.inputSelectGrouped}" />
+				</con:child>
+				<con:child layoutData="{childData}">
+					<g:Image ui:field="multiSelect"
+						     resource="{icons.inputSelectMulti}" />
+				</con:child>
+            </con:VerticalLayoutContainer>	   
+	   </gxt:ContentPanel>
+	   
+	   <gxt:ContentPanel headingText="Text/Numerical Input"
+                         collapsible="true">
+	       <con:VerticalLayoutContainer>
+				<con:child layoutData="{childData}">
+					<g:Image ui:field="text" 
+					         resource="{icons.inputTextSingle}" />
+				</con:child>
+				<con:child layoutData="{childData}">
+					<g:Image ui:field="multiLineText"
+						     resource="{icons.inputTextMulti}" />
+				</con:child>
+				<con:child layoutData="{childData}">
+					<g:Image ui:field="flag" 
+					         resource="{icons.inputCheckBox}" />
+				</con:child>
+				<con:child layoutData="{childData}">
+					<g:Image ui:field="environmentVariable"
+						     resource="{icons.inputEnvVar}" />
+				</con:child>
+				<con:child layoutData="{childData}">
+					<g:Image ui:field="integerInput"
+						     resource="{icons.inputNumberInteger}" />
+				</con:child>
+				<con:child layoutData="{childData}">
+				    <g:Label ui:field="doubleInput"
+				             text="Double"/>
+				</con:child>
+	       </con:VerticalLayoutContainer>
+	   </gxt:ContentPanel>
+	   
+	   <gxt:ContentPanel headingText="Output"
+                         collapsible="true">
+	       <con:VerticalLayoutContainer>
+				<con:child layoutData="{childData}">
+				    <g:Label ui:field="fileOutput"
+				             text="File Output"/>
+				</con:child>
+				<con:child layoutData="{childData}">
+				    <g:Label ui:field="folderOutput"
+				             text="Folder Output"/>
+				</con:child>
+	       </con:VerticalLayoutContainer>
+	   </gxt:ContentPanel>
 	</con:VerticalLayoutContainer>
 </ui:UiBinder> 
