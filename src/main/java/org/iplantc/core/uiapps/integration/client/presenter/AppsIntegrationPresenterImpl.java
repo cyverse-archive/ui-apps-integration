@@ -33,7 +33,6 @@ import org.iplantc.core.uicommons.client.events.EventBus;
 import org.iplantc.core.uicommons.client.models.deployedcomps.DeployedComponent;
 import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IPlantDialog;
 import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IplantInfoBox;
-import org.iplantc.de.client.UUIDService;
 import org.iplantc.de.client.UUIDServiceAsync;
 
 import com.google.common.base.Strings;
@@ -61,10 +60,6 @@ import com.sencha.gxt.widget.core.client.info.DefaultInfoConfig;
 import com.sencha.gxt.widget.core.client.info.Info;
 
 /**
- * TODO JDS Need to control toolbar button visibility (namely, the delete button)
- * TODO JDS Need to integrate the command line preview service with changes made to the bound AppTemplate via the AppTemplateWizard 
- * Every time the bound AppTemplate is changed, the command line preview will potentially change. Simply stated, these changes
- * need to be coordinated.
  * @author jstroot
  *
  */
@@ -78,14 +73,16 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     private final IplantDisplayStrings messages;
     private AppTemplate lastSave;
     private HandlerRegistration beforeHideHandlerRegistration;
+    private final UUIDServiceAsync uuidService;
 
     public AppsIntegrationPresenterImpl(final AppsIntegrationView view, final EventBus eventBus, final AppTemplateServices atService, final AppIntegrationErrorMessages errorMessages,
-            final IplantDisplayStrings messages) {
+            final IplantDisplayStrings messages, final UUIDServiceAsync uuidService) {
         this.view = view;
         this.eventBus = eventBus;
         this.atService = atService;
         this.errorMessages = errorMessages;
         this.messages = messages;
+        this.uuidService = uuidService;
         view.setPresenter(this);
         SelectionHandler handler = new SelectionHandler(view);
         view.addArgumentSelectedEventHandler(handler);
@@ -115,7 +112,6 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
          * template is fetched. This will result in a false detection of changes in the BeforeHide
          * handler method
          */
-        view.flush();
         this.lastSave = AppTemplateUtils.copyAppTemplate(appTemplate);
         updateCommandLinePreview(lastSave);
         container.setWidget(view);
@@ -145,8 +141,6 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         Date currentTime = new Date();
         toBeSaved.setEditedDate(currentTime);
         toBeSaved.setPublishedDate(currentTime);
-
-        UUIDServiceAsync uuidService = GWT.create(UUIDService.class);
 
         final List<Argument> argNeedUuid = Lists.newArrayList();
         // First loop over AppTemplate and look for UUIDs which need to be applied
@@ -303,6 +297,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
             public void onSuccess(String result) {
                 eventBus.fireEvent(new AppGroupCountUpdateEvent(true, null));
                 view.updateAppTemplateId(result);
+                lastSave = AppTemplateUtils.copyAppTemplate(view.flush());
 
                 // TODO JDS The user feedback provided by the TempInfoWidget needs to be replaced pending completion of new notification widget (waiting on CORE-4126, CORE-4170)
                 Info infoThing = new TempInfoWidget();
