@@ -1,8 +1,11 @@
 package org.iplantc.core.uiapps.integration.client.view;
 
+import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent.AppTemplateSelectedEventHandler;
+import org.iplantc.core.uiapps.widgets.client.events.AppTemplateUpdatedEvent.AppTemplateUpdatedEventHandler;
+import org.iplantc.core.uiapps.widgets.client.events.ArgumentGroupSelectedEvent.ArgumentGroupSelectedEventHandler;
+import org.iplantc.core.uiapps.widgets.client.events.ArgumentSelectedEvent.ArgumentSelectedEventHandler;
 import org.iplantc.core.uiapps.widgets.client.models.AppTemplate;
 import org.iplantc.core.uiapps.widgets.client.view.editors.AppTemplateWizard;
-import org.iplantc.core.uicommons.client.events.EventBus;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -47,10 +50,7 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     @UiField
     HTML cmdLinePreview;
 
-    private final EventBus eventBus;
-
-    public AppsIntegrationViewImpl(final EventBus eventBus) {
-        this.eventBus = eventBus;
+    public AppsIntegrationViewImpl() {
         initWidget(BINDER.createAndBindUi(this));
 
         /*
@@ -69,7 +69,7 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
 
     @UiFactory
     AppTemplateWizard createAppTemplateWizard() {
-        return new AppTemplateWizard(eventBus, true);
+        return new AppTemplateWizard(true);
     }
 
     @Override
@@ -105,6 +105,31 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     @Override
     public void setCmdLinePreview(String preview) {
         cmdLinePreview.setText(preview);
+    }
+
+    @Override
+    public void addAppTemplateSelectedEventHandler(AppTemplateSelectedEventHandler handler) {
+        wizard.addAppTemplateSelectedEventHandler(handler);
+    }
+
+    @Override
+    public void addAppTemplateUpdatedEventHandler(AppTemplateUpdatedEventHandler handler) {
+        wizard.addAppTemplateUpdatedEventHandler(handler);
+    }
+
+    @Override
+    public void addArgumentSelectedEventHandler(ArgumentSelectedEventHandler handler) {
+        wizard.addArgumentSelectedEventHandler(handler);
+    }
+
+    @Override
+    public void addArgumentGroupSelectedEventHandler(ArgumentGroupSelectedEventHandler handler) {
+        wizard.addArgumentGroupSelectedEventHandler(handler);
+    }
+
+    @Override
+    public void updateAppTemplateId(String id) {
+        wizard.updateAppTemplateId(id);
     }
 
 }

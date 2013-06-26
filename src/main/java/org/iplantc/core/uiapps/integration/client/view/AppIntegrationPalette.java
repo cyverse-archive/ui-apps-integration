@@ -4,6 +4,8 @@ import org.iplantc.core.uiapps.widgets.client.models.AppTemplateAutoBeanFactory;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentType;
+import org.iplantc.core.uiapps.widgets.client.models.DataObject;
+import org.iplantc.core.uiapps.widgets.client.models.FileInfoType;
 import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItem;
 import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItemGroup;
 
@@ -12,6 +14,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.dnd.core.client.DragSource;
 import com.sencha.gxt.widget.core.client.Composite;
@@ -32,7 +35,10 @@ class AppIntegrationPalette extends Composite {
     private final AppTemplateAutoBeanFactory factory = GWT.create(AppTemplateAutoBeanFactory.class);
 
     @UiField
-    Image flag, environmentVariable, multiFileSelector, fileInput, group, integer, treeSelection, multiSelect, singleSelect, multiLineText, text;
+    Image flag, environmentVariable, multiFileSelector, fileInput, group, integerInput, treeSelection, multiSelect, singleSelect, multiLineText, text;
+
+    @UiField
+    Label info, folderInput, integerSelection, doubleSelection, doubleInput, fileOutput, folderOutput;
 
     // Expose group drag source for special case handling in AppsIntegrationViewImpl
     DragSource grpDragSource;
@@ -53,7 +59,7 @@ class AppIntegrationPalette extends Composite {
         grpDragSource = new DragSource(group);
         grpDragSource.setData(createNewArgumentGroup());
 
-        DragSource ds5 = new DragSource(integer);
+        DragSource ds5 = new DragSource(integerInput);
         ds5.setData(createNewArgument(ArgumentType.Integer));
 
         DragSource ds6 = new DragSource(multiFileSelector);
@@ -74,6 +80,26 @@ class AppIntegrationPalette extends Composite {
         DragSource ds11 = new DragSource(treeSelection);
         ds11.setData(createNewArgument(ArgumentType.TreeSelection));
 
+        DragSource ds12 = new DragSource(info);
+        ds12.setData(createNewArgument(ArgumentType.Info));
+
+        DragSource ds13 = new DragSource(folderInput);
+        ds13.setData(createNewArgument(ArgumentType.FolderInput));
+
+        DragSource ds14 = new DragSource(integerSelection);
+        ds14.setData(createNewArgument(ArgumentType.IntegerSelection));
+
+        DragSource ds15 = new DragSource(doubleSelection);
+        ds15.setData(createNewArgument(ArgumentType.DoubleSelection));
+
+        DragSource ds16 = new DragSource(doubleInput);
+        ds16.setData(createNewArgument(ArgumentType.Double));
+
+        DragSource ds17 = new DragSource(fileOutput);
+        ds17.setData(createNewArgument(ArgumentType.FileOutput));
+
+        DragSource ds18 = new DragSource(folderOutput);
+        ds18.setData(createNewArgument(ArgumentType.FolderOutput));
     }
 
     private ArgumentGroup createNewArgumentGroup() {
@@ -88,9 +114,19 @@ class AppIntegrationPalette extends Composite {
         argument.setLabel("DEFAULT");
         argument.setDescription("DEFAULT");
         argument.setType(type);
+        argument.setName("");
+        argument.setVisible(true);
 
         // Special handling to initialize new arguments, for specific ArgumentTypes.
         switch (type) {
+            case TextSelection:
+            case IntegerSelection:
+            case DoubleSelection:
+            case Selection:
+            case ValueSelection:
+                argument.setSelectionItems(Lists.<SelectionItem> newArrayList());
+                break;
+
             case TreeSelection:
                 SelectionItemGroup sig = factory.selectionItemGroup().as();
                 sig.setSingleSelect(false);
@@ -98,6 +134,22 @@ class AppIntegrationPalette extends Composite {
                 sig.setArguments(Lists.<SelectionItem> newArrayList());
                 sig.setGroups(Lists.<SelectionItemGroup> newArrayList());
                 argument.setSelectionItems(Lists.<SelectionItem> newArrayList(sig));
+                break;
+
+            case FileInput:
+                DataObject dataObj = factory.dataObject().as();
+                dataObj.setFormat("Unspecified");
+                dataObj.setDataSource("file");
+                dataObj.setCmdSwitch("");
+                // argument.setDataObject(dataObj);
+                break;
+
+            case MultiFileSelector:
+                DataObject multiDataObj = factory.dataObject().as();
+                multiDataObj.setFormat("Unspecified");
+                multiDataObj.setDataSource("file");
+                multiDataObj.setFileInfoType(FileInfoType.File);
+                // argument.setDataObject(multiDataObj);
                 break;
 
             default:

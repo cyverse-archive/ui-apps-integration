@@ -7,7 +7,7 @@ import java.util.List;
 import org.iplantc.core.jsonutil.JsonUtil;
 import org.iplantc.core.resources.client.messages.IplantDisplayStrings;
 import org.iplantc.core.resources.client.uiapps.integration.AppIntegrationErrorMessages;
-import org.iplantc.core.uiapps.client.events.AppGroupCountUpdateEvent;
+import org.iplantc.core.uiapps.client.events.AppUpdatedEvent;
 import org.iplantc.core.uiapps.integration.client.dialogs.CommandLineOrderingPanel;
 import org.iplantc.core.uiapps.integration.client.view.AppsIntegrationView;
 import org.iplantc.core.uiapps.widgets.client.dialog.DCListingDialog;
@@ -28,15 +28,11 @@ import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;
 import org.iplantc.core.uiapps.widgets.client.presenter.AppWizardPresenterJsonAdapter;
 import org.iplantc.core.uiapps.widgets.client.services.AppTemplateServices;
 import org.iplantc.core.uiapps.widgets.client.view.AppWizardPreviewView;
-import org.iplantc.core.uiapps.widgets.client.view.editors.AppTemplateWizard.IArgumentEditor;
-import org.iplantc.core.uiapps.widgets.client.view.editors.AppTemplateWizard.IArgumentGroupEditor;
-import org.iplantc.core.uiapps.widgets.client.view.editors.IAppTemplateEditor;
 import org.iplantc.core.uicommons.client.ErrorHandler;
 import org.iplantc.core.uicommons.client.events.EventBus;
 import org.iplantc.core.uicommons.client.models.deployedcomps.DeployedComponent;
 import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IPlantDialog;
 import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IplantInfoBox;
-import org.iplantc.de.client.UUIDService;
 import org.iplantc.de.client.UUIDServiceAsync;
 
 import com.google.common.base.Strings;
@@ -64,10 +60,6 @@ import com.sencha.gxt.widget.core.client.info.DefaultInfoConfig;
 import com.sencha.gxt.widget.core.client.info.Info;
 
 /**
- * TODO JDS Need to control toolbar button visibility (namely, the delete button)
- * TODO JDS Need to integrate the command line preview service with changes made to the bound AppTemplate via the AppTemplateWizard 
- * Every time the bound AppTemplate is changed, the command line preview will potentially change. Simply stated, these changes
- * need to be coordinated.
  * @author jstroot
  *
  */
@@ -78,24 +70,25 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     private final AppTemplateServices atService;
     private final AppIntegrationErrorMessages errorMessages;
     private final EventBus eventBus;
-    private Object currentSelection;
     private final IplantDisplayStrings messages;
     private AppTemplate lastSave;
     private HandlerRegistration beforeHideHandlerRegistration;
+    private final UUIDServiceAsync uuidService;
 
     public AppsIntegrationPresenterImpl(final AppsIntegrationView view, final EventBus eventBus, final AppTemplateServices atService, final AppIntegrationErrorMessages errorMessages,
-            final IplantDisplayStrings messages) {
+            final IplantDisplayStrings messages, final UUIDServiceAsync uuidService) {
         this.view = view;
         this.eventBus = eventBus;
         this.atService = atService;
         this.errorMessages = errorMessages;
         this.messages = messages;
+        this.uuidService = uuidService;
         view.setPresenter(this);
         SelectionHandler handler = new SelectionHandler(view);
-        eventBus.addHandler(ArgumentSelectedEvent.TYPE, handler);
-        eventBus.addHandler(ArgumentGroupSelectedEvent.TYPE, handler);
-        eventBus.addHandler(AppTemplateSelectedEvent.TYPE, handler);
-        eventBus.addHandler(AppTemplateUpdatedEvent.TYPE, this);
+        view.addArgumentSelectedEventHandler(handler);
+        view.addArgumentGroupSelectedEventHandler(handler);
+        view.addAppTemplateSelectedEventHandler(handler);
+        view.addAppTemplateUpdatedEventHandler(this);
     }
 
     @Override
@@ -119,7 +112,6 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
          * template is fetched. This will result in a false detection of changes in the BeforeHide
          * handler method
          */
-        view.flush();
         this.lastSave = AppTemplateUtils.copyAppTemplate(appTemplate);
         updateCommandLinePreview(lastSave);
         container.setWidget(view);
@@ -143,18 +135,16 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     @Override
     public void onSaveClicked() {
         // The flushed AppTemplate is the same object when editing was first started.
-        AppTemplate savedAppTemplate = view.flush();
+        AppTemplate toBeSaved = view.flush();
 
         // Update the AppTemplate's edited and published date.
         Date currentTime = new Date();
-        savedAppTemplate.setEditedDate(currentTime);
-        savedAppTemplate.setPublishedDate(currentTime);
-
-        UUIDServiceAsync uuidService = GWT.create(UUIDService.class);
+        toBeSaved.setEditedDate(currentTime);
+        toBeSaved.setPublishedDate(currentTime);
 
         final List<Argument> argNeedUuid = Lists.newArrayList();
         // First loop over AppTemplate and look for UUIDs which need to be applied
-        for (ArgumentGroup ag : savedAppTemplate.getArgumentGroups()) {
+        for (ArgumentGroup ag : toBeSaved.getArgumentGroups()) {
             for (Argument arg : ag.getArguments()) {
                 if (Strings.isNullOrEmpty(arg.getId())) {
                     argNeedUuid.add(arg);
@@ -164,15 +154,15 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
 
         // Check if we have anything which needs a UUID
         if (argNeedUuid.size() > 0) {
-            uuidService.getUUIDs(argNeedUuid.size(), new GetUuidCallback(argNeedUuid));
+            uuidService.getUUIDs(argNeedUuid.size(), new GetUuidCallback(argNeedUuid, toBeSaved));
         } else {
-            doSave();
+            doSave(toBeSaved);
         }
     }
 
     @Override
     public void onPreviewUiClicked() {
-        AppWizardPreviewView preview = new AppWizardPreviewView(eventBus, view.flush());
+        AppWizardPreviewView preview = new AppWizardPreviewView(view.flush());
         preview.show();
     }
 
@@ -256,7 +246,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
 
     @Override
     public void onAppTemplateUpdate(AppTemplateUpdatedEvent event) {
-        updateCommandLinePreview(view.flush());
+        updateCommandLinePreview(event.getUpdatedAppTemplate());
     }
 
     @Override
@@ -297,14 +287,19 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         }
     }
 
-    private void doSave() {
+    private void doSave(AppTemplate toBeSaved) {
         // JDS Make a copy so we can check for differences on exit
-        lastSave = AppTemplateUtils.copyAppTemplate(view.flush());
+        lastSave = AppTemplateUtils.copyAppTemplate(toBeSaved);
+
         atService.saveAndPublishAppTemplate(lastSave, new AsyncCallback<String>() {
     
             @Override
             public void onSuccess(String result) {
-                eventBus.fireEvent(new AppGroupCountUpdateEvent(true, null));
+                // eventBus.fireEvent(new AppGroupCountUpdateEvent(true, null));
+                view.updateAppTemplateId(result);
+                lastSave = AppTemplateUtils.copyAppTemplate(view.flush());
+
+                eventBus.fireEvent(new AppUpdatedEvent(lastSave));
                 // TODO JDS The user feedback provided by the TempInfoWidget needs to be replaced pending completion of new notification widget (waiting on CORE-4126, CORE-4170)
                 Info infoThing = new TempInfoWidget();
                 infoThing.show(new DefaultInfoConfig("Success", "App Sucessfully Saved"));
@@ -332,17 +327,22 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         return args;
     }
 
-    private void setCurrentSelection(Object currentSelection) {
-        this.currentSelection = currentSelection;
-    }
-
-    private void updateCommandLinePreview(AppTemplate flush) {
-        atService.cmdLinePreview(flush, new AsyncCallback<String>() {
+    private void updateCommandLinePreview(final AppTemplate at) {
+        atService.cmdLinePreview(at, new AsyncCallback<String>() {
 
             @Override
             public void onSuccess(String result) {
                 Splittable split = StringQuoter.split(result);
-                view.setCmdLinePreview(split.get("params").asString());
+                String cmdLinePrev = split.get("params").asString();
+
+                /*
+                 * JDS If the given AppTemplate has a valid DeployedComponent, prepend the
+                 * DeployedComponent name to the command line preview
+                 */
+                if ((at.getDeployedComponent() != null) && !Strings.isNullOrEmpty(at.getDeployedComponent().getName())) {
+                    cmdLinePrev = at.getDeployedComponent().getName() + " " + cmdLinePrev;
+                }
+                view.setCmdLinePreview(cmdLinePrev);
             }
 
             @Override
@@ -366,9 +366,11 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
 
     private final class GetUuidCallback implements AsyncCallback<List<String>> {
         private final List<Argument> argNeedUuid;
+        private final AppTemplate toBeSaved;
 
-        private GetUuidCallback(List<Argument> argNeedUuid) {
+        private GetUuidCallback(List<Argument> argNeedUuid, AppTemplate toBeSaved) {
             this.argNeedUuid = argNeedUuid;
+            this.toBeSaved = toBeSaved;
         }
 
         @Override
@@ -380,7 +382,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
             for (Argument arg : argNeedUuid) {
                 arg.setId(result.remove(0));
             }
-            doSave();
+            doSave(toBeSaved);
         }
 
         @Override
@@ -404,31 +406,21 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     
         @Override
         public void onArgumentSelected(ArgumentSelectedEvent event) {
-            if ((event.getSource() instanceof IArgumentEditor) 
-                    && (((IArgumentEditor)event.getSource()).getArgumentPropertyEditor() != null)) {
-                IsWidget argumentPropertyEditor = ((IArgumentEditor)event.getSource()).getArgumentPropertyEditor();
-                view.setEastWidget(argumentPropertyEditor);
-                setCurrentSelection(((IArgumentEditor)event.getSource()).getCurrentArgument());
-            }
+            IsWidget argumentPropertyEditor = event.getArgumentPropertyEditor();
+            view.setEastWidget(argumentPropertyEditor);
         }
     
         @Override
         public void onArgumentGroupSelected(ArgumentGroupSelectedEvent event) {
-            if ((event.getSource() instanceof IArgumentGroupEditor) 
-                    && (((IArgumentGroupEditor)event.getSource()).getArgumentGroupPropertyEditor() != null)) {
-                IsWidget argumentGrpPropertyEditor = ((IArgumentGroupEditor)event.getSource()).getArgumentGroupPropertyEditor();
-                view.setEastWidget(argumentGrpPropertyEditor);
-                setCurrentSelection(((IArgumentGroupEditor)event.getSource()).getCurrentArgumentGroup());
-            }
+            IsWidget argumentGrpPropertyEditor = event.getArgumentGroupPropertyEditor();
+            view.setEastWidget(argumentGrpPropertyEditor);
         }
     
         @Override
         public void onAppTemplateSelected(AppTemplateSelectedEvent event) {
-            if ((event.getSource() instanceof IAppTemplateEditor) 
-                    && (((IAppTemplateEditor)event.getSource()).getAppTemplatePropertyEditor() != null)) {
-                IsWidget appTemplatePropertyEditor = ((IAppTemplateEditor)event.getSource()).getAppTemplatePropertyEditor();
+            IsWidget appTemplatePropertyEditor = event.getAppTemplatePropertyEditor();
+            if (appTemplatePropertyEditor != null) {
                 view.setEastWidget(appTemplatePropertyEditor);
-                setCurrentSelection(appTemplate);
             }
         }
     }
