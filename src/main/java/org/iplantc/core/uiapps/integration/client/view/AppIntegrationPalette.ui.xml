@@ -27,7 +27,9 @@
         </con:child>
 
 	   <gxt:ContentPanel headingText="Files/Folders"
-	                     collapsible="true">
+	                     collapsible="true"
+	                     titleCollapse="true"
+	                     expanded="false">
 	       <con:VerticalLayoutContainer>
 				<con:child layoutData="{childData}">
 					<g:Image ui:field="multiFileSelector"
@@ -45,7 +47,9 @@
 	   </gxt:ContentPanel>
 	   
 	   <gxt:ContentPanel headingText="Selection"
-                         collapsible="true">
+                         collapsible="true"
+                         titleCollapse="true"
+                         expanded="false">
             <con:VerticalLayoutContainer>
 				<con:child layoutData="{childData}">
 					<g:Image ui:field="singleSelect"
@@ -71,7 +75,9 @@
 	   </gxt:ContentPanel>
 	   
 	   <gxt:ContentPanel headingText="Text/Numerical Input"
-                         collapsible="true">
+                         collapsible="true"
+                         titleCollapse="true"
+                         expanded="false">
 	       <con:VerticalLayoutContainer>
 				<con:child layoutData="{childData}">
 					<g:Image ui:field="text" 
@@ -101,7 +107,9 @@
 	   </gxt:ContentPanel>
 	   
 	   <gxt:ContentPanel headingText="Output"
-                         collapsible="true">
+                         collapsible="true"
+                         titleCollapse="true"
+                         expanded="false">
 	       <con:VerticalLayoutContainer>
 				<con:child layoutData="{childData}">
 				    <g:Label ui:field="fileOutput"

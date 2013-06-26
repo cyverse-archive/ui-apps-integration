@@ -5,9 +5,11 @@ import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentType;
 import org.iplantc.core.uiapps.widgets.client.models.DataObject;
+import org.iplantc.core.uiapps.widgets.client.models.DataSource;
 import org.iplantc.core.uiapps.widgets.client.models.FileInfoType;
 import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItem;
 import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItemGroup;
+import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;
 
 import com.google.common.collect.Lists;
 import com.google.gwt.core.client.GWT;
@@ -18,6 +20,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.dnd.core.client.DragSource;
 import com.sencha.gxt.widget.core.client.Composite;
+import com.sencha.gxt.widget.core.client.tips.ToolTip;
+import com.sencha.gxt.widget.core.client.tips.ToolTipConfig;
 import com.sencha.gxt.widget.core.client.tree.Tree.CheckCascade;
 
 /**
@@ -45,6 +49,13 @@ class AppIntegrationPalette extends Composite {
 
     public AppIntegrationPalette() {
         initWidget(uiBinder.createAndBindUi(this));
+        new ToolTip(environmentVariable, new ToolTipConfig("An environment variable which is set before running a job."));
+        new ToolTip(doubleInput, new ToolTipConfig("A textbox that checks for valid decimal input."));
+        new ToolTip(integerInput, new ToolTipConfig("A textbox that checks for valid integer input."));
+        new ToolTip(doubleSelection, new ToolTipConfig("A list for selecting a decimal value."));
+        new ToolTip(integerSelection, new ToolTipConfig("A list for selecting an integer value."));
+        new ToolTip(singleSelect, new ToolTipConfig("A list for selecting a choice."));
+        new ToolTip(treeSelection, new ToolTipConfig("A hierarchical list for selecting a choice."));
 
         // Add dragSource objects to each button
         DragSource ds1 = new DragSource(environmentVariable);
@@ -112,47 +123,94 @@ class AppIntegrationPalette extends Composite {
     private Argument createNewArgument(ArgumentType type) {
         Argument argument = factory.argument().as();
         argument.setLabel("DEFAULT");
-        argument.setDescription("DEFAULT");
+        argument.setDescription("");
         argument.setType(type);
         argument.setName("");
         argument.setVisible(true);
 
+        if (AppTemplateUtils.isSimpleSelectionArgumentType(type)) {
+            argument.setSelectionItems(Lists.<SelectionItem> newArrayList());
+        } else if (type.equals(ArgumentType.TreeSelection)) {
+            SelectionItemGroup sig = factory.selectionItemGroup().as();
+            sig.setSingleSelect(false);
+            sig.setSelectionCascade(CheckCascade.CHILDREN);
+            sig.setArguments(Lists.<SelectionItem> newArrayList());
+            sig.setGroups(Lists.<SelectionItemGroup> newArrayList());
+            argument.setSelectionItems(Lists.<SelectionItem> newArrayList(sig));
+
+        } else if (AppTemplateUtils.isDiskResourceArgumentType(type)) {
+            DataObject dataObj = factory.dataObject().as();
+            dataObj.setFormat("Unspecified");
+            dataObj.setDataSource(DataSource.file);
+            dataObj.setCmdSwitch("");
+            dataObj.setFileInfoType(FileInfoType.File);
+            argument.setDataObject(dataObj);
+
+        }
         // Special handling to initialize new arguments, for specific ArgumentTypes.
         switch (type) {
-            case TextSelection:
-            case IntegerSelection:
-            case DoubleSelection:
             case Selection:
+            case TextSelection:
+                argument.setLabel("Text Selection");
+                break;
+            case IntegerSelection:
+                argument.setLabel("Integer Selection");
+                break;
             case ValueSelection:
-                argument.setSelectionItems(Lists.<SelectionItem> newArrayList());
+            case DoubleSelection:
+                argument.setLabel("Double Selection");
                 break;
 
             case TreeSelection:
-                SelectionItemGroup sig = factory.selectionItemGroup().as();
-                sig.setSingleSelect(false);
-                sig.setSelectionCascade(CheckCascade.CHILDREN);
-                sig.setArguments(Lists.<SelectionItem> newArrayList());
-                sig.setGroups(Lists.<SelectionItemGroup> newArrayList());
-                argument.setSelectionItems(Lists.<SelectionItem> newArrayList(sig));
+                argument.setLabel("Tree Selection");
                 break;
 
             case FileInput:
-                DataObject dataObj = factory.dataObject().as();
-                dataObj.setFormat("Unspecified");
-                dataObj.setDataSource("file");
-                dataObj.setCmdSwitch("");
-                // argument.setDataObject(dataObj);
+                argument.setLabel("File Selector");
+                break;
+
+            case FolderInput:
+                argument.setLabel("Folder Selector");
                 break;
 
             case MultiFileSelector:
-                DataObject multiDataObj = factory.dataObject().as();
-                multiDataObj.setFormat("Unspecified");
-                multiDataObj.setDataSource("file");
-                multiDataObj.setFileInfoType(FileInfoType.File);
-                // argument.setDataObject(multiDataObj);
+                argument.setLabel("Multi-file Selector");
+                break;
+
+            case Flag:
+                argument.setLabel("CheckBox");
+                break;
+
+            case Text:
+                argument.setLabel("Text Input");
+                break;
+
+            case MultiLineText:
+                argument.setLabel("Multi-line Text Input");
+                break;
+
+            case EnvironmentVariable:
+                argument.setLabel("Environment Variable");
+                break;
+
+            case Integer:
+                argument.setLabel("Integer Input");
+                break;
+
+            case Double:
+                argument.setLabel("Double Input");
+                break;
+
+            case FileOutput:
+                argument.setLabel("File Output");
+                break;
+
+            case FolderOutput:
+                argument.setLabel("Folder Output");
                 break;
 
             default:
+                argument.setLabel("Default Label");
                 break;
         }
         return argument;
