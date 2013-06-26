@@ -119,6 +119,10 @@
 				    <g:Label ui:field="folderOutput"
 				             text="Folder Output"/>
 				</con:child>
+				<con:child layoutData="{childData}">
+				    <g:Label ui:field="multiFileOutput"
+				             text="Multi-file Output"/>
+				</con:child>
 	       </con:VerticalLayoutContainer>
 	   </gxt:ContentPanel>
 	</con:VerticalLayoutContainer>

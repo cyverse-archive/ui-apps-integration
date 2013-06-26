@@ -42,7 +42,7 @@ class AppIntegrationPalette extends Composite {
     Image flag, environmentVariable, multiFileSelector, fileInput, group, integerInput, treeSelection, multiSelect, singleSelect, multiLineText, text;
 
     @UiField
-    Label info, folderInput, integerSelection, doubleSelection, doubleInput, fileOutput, folderOutput;
+    Label info, folderInput, integerSelection, doubleSelection, doubleInput, fileOutput, folderOutput, multiFileOutput;
 
     // Expose group drag source for special case handling in AppsIntegrationViewImpl
     DragSource grpDragSource;
@@ -111,6 +111,9 @@ class AppIntegrationPalette extends Composite {
 
         DragSource ds18 = new DragSource(folderOutput);
         ds18.setData(createNewArgument(ArgumentType.FolderOutput));
+
+        DragSource ds19 = new DragSource(multiFileOutput);
+        ds19.setData(createNewArgument(ArgumentType.MultiFileOutput));
     }
 
     private ArgumentGroup createNewArgumentGroup() {
@@ -207,6 +210,10 @@ class AppIntegrationPalette extends Composite {
 
             case FolderOutput:
                 argument.setLabel("Folder Output");
+                break;
+
+            case MultiFileOutput:
+                argument.setLabel("Multi-file Output");
                 break;
 
             default:
