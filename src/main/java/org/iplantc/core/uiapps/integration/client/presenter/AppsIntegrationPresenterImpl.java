@@ -7,7 +7,7 @@ import java.util.List;
 import org.iplantc.core.jsonutil.JsonUtil;
 import org.iplantc.core.resources.client.messages.IplantDisplayStrings;
 import org.iplantc.core.resources.client.uiapps.integration.AppIntegrationErrorMessages;
-import org.iplantc.core.uiapps.client.events.AppGroupCountUpdateEvent;
+import org.iplantc.core.uiapps.client.events.AppUpdatedEvent;
 import org.iplantc.core.uiapps.integration.client.dialogs.CommandLineOrderingPanel;
 import org.iplantc.core.uiapps.integration.client.view.AppsIntegrationView;
 import org.iplantc.core.uiapps.widgets.client.dialog.DCListingDialog;
@@ -295,10 +295,11 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     
             @Override
             public void onSuccess(String result) {
-                eventBus.fireEvent(new AppGroupCountUpdateEvent(true, null));
+                // eventBus.fireEvent(new AppGroupCountUpdateEvent(true, null));
                 view.updateAppTemplateId(result);
                 lastSave = AppTemplateUtils.copyAppTemplate(view.flush());
 
+                eventBus.fireEvent(new AppUpdatedEvent(lastSave));
                 // TODO JDS The user feedback provided by the TempInfoWidget needs to be replaced pending completion of new notification widget (waiting on CORE-4126, CORE-4170)
                 Info infoThing = new TempInfoWidget();
                 infoThing.show(new DefaultInfoConfig("Success", "App Sucessfully Saved"));
