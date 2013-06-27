@@ -4,9 +4,9 @@ import org.iplantc.core.uiapps.widgets.client.models.AppTemplateAutoBeanFactory;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentType;
-import org.iplantc.core.uiapps.widgets.client.models.DataObject;
-import org.iplantc.core.uiapps.widgets.client.models.DataSource;
-import org.iplantc.core.uiapps.widgets.client.models.FileInfoType;
+import org.iplantc.core.uiapps.widgets.client.models.metadata.DataObject;
+import org.iplantc.core.uiapps.widgets.client.models.metadata.DataSource;
+import org.iplantc.core.uiapps.widgets.client.models.metadata.FileInfoTypeEnum;
 import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItem;
 import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItemGroup;
 import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;
@@ -146,7 +146,7 @@ class AppIntegrationPalette extends Composite {
             dataObj.setFormat("Unspecified");
             dataObj.setDataSource(DataSource.file);
             dataObj.setCmdSwitch("");
-            dataObj.setFileInfoType(FileInfoType.File);
+            dataObj.setFileInfoType(FileInfoTypeEnum.File);
             argument.setDataObject(dataObj);
 
         }

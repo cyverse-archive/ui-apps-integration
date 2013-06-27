@@ -23,7 +23,7 @@ import org.iplantc.core.uiapps.widgets.client.models.AppTemplateAutoBeanFactory;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentType;
-import org.iplantc.core.uiapps.widgets.client.models.DataObject;
+import org.iplantc.core.uiapps.widgets.client.models.metadata.DataObject;
 import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;
 import org.iplantc.core.uiapps.widgets.client.presenter.AppWizardPresenterJsonAdapter;
 import org.iplantc.core.uiapps.widgets.client.services.AppTemplateServices;
