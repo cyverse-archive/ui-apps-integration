@@ -10,7 +10,6 @@ import org.iplantc.core.resources.client.uiapps.integration.AppIntegrationErrorM
 import org.iplantc.core.uiapps.client.events.AppUpdatedEvent;
 import org.iplantc.core.uiapps.integration.client.dialogs.CommandLineOrderingPanel;
 import org.iplantc.core.uiapps.integration.client.view.AppsIntegrationView;
-import org.iplantc.core.uiapps.widgets.client.dialog.DCListingDialog;
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent;
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent.AppTemplateSelectedEventHandler;
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateUpdatedEvent;
@@ -30,7 +29,6 @@ import org.iplantc.core.uiapps.widgets.client.services.AppTemplateServices;
 import org.iplantc.core.uiapps.widgets.client.view.AppWizardPreviewView;
 import org.iplantc.core.uicommons.client.ErrorHandler;
 import org.iplantc.core.uicommons.client.events.EventBus;
-import org.iplantc.core.uicommons.client.models.deployedcomps.DeployedComponent;
 import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IPlantDialog;
 import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IplantInfoBox;
 import org.iplantc.de.client.UUIDServiceAsync;
@@ -202,24 +200,6 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
             }
         });
         dlg.show();
-    }
-
-    @Override
-    public void onSelectToolClicked() {
-        final DCListingDialog dialog = new DCListingDialog();
-        dialog.addHideHandler(new HideHandler() {
-    
-            @Override
-            public void onHide(HideEvent event) {
-                DeployedComponent dc = dialog.getSelectedComponent();
-                // Set the deployed component in the AppTemplate
-                if ((dc != null) && (appTemplate != null)) {
-                    appTemplate.setDeployedComponent(dc);
-                    onAppTemplateChanged();
-                }
-            }
-        });
-        dialog.show();
     }
 
     @Override

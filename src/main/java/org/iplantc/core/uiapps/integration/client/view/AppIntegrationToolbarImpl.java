@@ -23,9 +23,6 @@ public class AppIntegrationToolbarImpl implements AppIntegrationToolbar {
     TextButton saveButton;
 
     @UiField
-    TextButton selectToolButton;
-
-    @UiField
     MenuItem previewUiMenuItem, previewJsonMenuItem;
 
     @UiField
@@ -52,11 +49,6 @@ public class AppIntegrationToolbarImpl implements AppIntegrationToolbar {
     @UiHandler("saveButton")
     void onSaveButtonClicked(SelectEvent event) {
         presenter.onSaveClicked();
-    }
-
-    @UiHandler("selectToolButton")
-    void onSelectToolClicked(SelectEvent event) {
-        presenter.onSelectToolClicked();
     }
 
     @UiHandler("previewUiMenuItem")
