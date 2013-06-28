@@ -5,7 +5,7 @@ import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentType;
 import org.iplantc.core.uiapps.widgets.client.models.metadata.DataObject;
-import org.iplantc.core.uiapps.widgets.client.models.metadata.DataSource;
+import org.iplantc.core.uiapps.widgets.client.models.metadata.DataSourceEnum;
 import org.iplantc.core.uiapps.widgets.client.models.metadata.FileInfoTypeEnum;
 import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItem;
 import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItemGroup;
@@ -144,7 +144,7 @@ class AppIntegrationPalette extends Composite {
         } else if (AppTemplateUtils.isDiskResourceArgumentType(type)) {
             DataObject dataObj = factory.dataObject().as();
             dataObj.setFormat("Unspecified");
-            dataObj.setDataSource(DataSource.file);
+            dataObj.setDataSource(DataSourceEnum.file);
             dataObj.setCmdSwitch("");
             dataObj.setFileInfoType(FileInfoTypeEnum.File);
             argument.setDataObject(dataObj);
