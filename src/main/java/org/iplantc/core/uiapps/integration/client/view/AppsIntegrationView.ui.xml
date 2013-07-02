@@ -31,19 +31,19 @@
    <ui:with field="westData"
             type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData">
       <ui:attributes margins="{westMargins}"
-                     size="155"
+                     size="165"
                      collapsible="true"/>
    </ui:with>
    <ui:with field="centerData"
             type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData">
       <ui:attributes margins="{centerMargins}" 
-                     size="1"
+                     size=".50"
                      hidden="false"/>
    </ui:with>
    <ui:with field="eastData"
             type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData">
-      <ui:attributes size="300"
-                     minSize="250"
+      <ui:attributes size=".35"
+                     minSize="300"
                      split="true"
                      hidden="false"/>
    </ui:with>

@@ -39,10 +39,10 @@ class AppIntegrationPalette extends Composite {
     private final AppTemplateAutoBeanFactory factory = GWT.create(AppTemplateAutoBeanFactory.class);
 
     @UiField
-    Image flag, environmentVariable, multiFileSelector, fileInput, group, integerInput, treeSelection, multiSelect, singleSelect, multiLineText, text;
+    Image flag, environmentVariable, multiFileSelector, fileInput, group, integerInput, treeSelection, singleSelect, multiLineText, text;
 
     @UiField
-    Label info, folderInput, integerSelection, doubleSelection, doubleInput, fileOutput, folderOutput, multiFileOutput;
+    Label info, folderInput, integerSelection, doubleSelection, doubleInput, fileOutput, folderOutput, multiFileOutput, referenceGenome, referenceSequence, referenceAnnotation;
 
     // Expose group drag source for special case handling in AppsIntegrationViewImpl
     DragSource grpDragSource;
@@ -79,9 +79,6 @@ class AppIntegrationPalette extends Composite {
         DragSource ds7 = new DragSource(multiLineText);
         ds7.setData(createNewArgument(ArgumentType.MultiLineText));
 
-        DragSource ds8 = new DragSource(multiSelect);
-        ds8.setData(createNewArgument(ArgumentType.TextSelection));
-
         DragSource ds9 = new DragSource(text);
         ds9.setData(createNewArgument(ArgumentType.Text));
 
@@ -114,6 +111,15 @@ class AppIntegrationPalette extends Composite {
 
         DragSource ds19 = new DragSource(multiFileOutput);
         ds19.setData(createNewArgument(ArgumentType.MultiFileOutput));
+
+        DragSource ds20 = new DragSource(referenceGenome);
+        ds20.setData(createNewArgument(ArgumentType.ReferenceGenome));
+
+        DragSource ds21 = new DragSource(referenceAnnotation);
+        ds21.setData(createNewArgument(ArgumentType.ReferenceAnnotation));
+
+        DragSource ds22 = new DragSource(referenceSequence);
+        ds22.setData(createNewArgument(ArgumentType.ReferenceSequence));
     }
 
     private ArgumentGroup createNewArgumentGroup() {
@@ -214,6 +220,18 @@ class AppIntegrationPalette extends Composite {
 
             case MultiFileOutput:
                 argument.setLabel("Multi-file Output");
+                break;
+
+            case ReferenceAnnotation:
+                argument.setLabel("Reference Annotation");
+                break;
+
+            case ReferenceGenome:
+                argument.setLabel("Reference Genome");
+                break;
+
+            case ReferenceSequence:
+                argument.setLabel("Reference Sequence");
                 break;
 
             default:
