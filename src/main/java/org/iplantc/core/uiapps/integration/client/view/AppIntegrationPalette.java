@@ -1,5 +1,7 @@
 package org.iplantc.core.uiapps.integration.client.view;
 
+import java.util.Map;
+
 import org.iplantc.core.uiapps.widgets.client.models.AppTemplateAutoBeanFactory;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup;
@@ -12,12 +14,15 @@ import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItemGrou
 import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.sencha.gxt.dnd.core.client.DndDragStartEvent;
+import com.sencha.gxt.dnd.core.client.DndDragStartEvent.DndDragStartHandler;
 import com.sencha.gxt.dnd.core.client.DragSource;
 import com.sencha.gxt.widget.core.client.Composite;
 import com.sencha.gxt.widget.core.client.tips.ToolTip;
@@ -47,6 +52,10 @@ class AppIntegrationPalette extends Composite {
     // Expose group drag source for special case handling in AppsIntegrationViewImpl
     DragSource grpDragSource;
 
+    private final Map<ArgumentType, DragSource> dragSourceMap = Maps.newHashMap();
+
+    private boolean onlyLabelEditMode;
+
     public AppIntegrationPalette() {
         initWidget(uiBinder.createAndBindUi(this));
         new ToolTip(environmentVariable, new ToolTipConfig("An environment variable which is set before running a job."));
@@ -57,69 +66,66 @@ class AppIntegrationPalette extends Composite {
         new ToolTip(singleSelect, new ToolTipConfig("A list for selecting a choice."));
         new ToolTip(treeSelection, new ToolTipConfig("A hierarchical list for selecting a choice."));
 
-        // Add dragSource objects to each button
-        DragSource ds1 = new DragSource(environmentVariable);
-        ds1.setData(createNewArgument(ArgumentType.EnvironmentVariable));
-
-        DragSource ds2 = new DragSource(fileInput);
-        ds2.setData(createNewArgument(ArgumentType.FileInput));
-
-        DragSource ds3 = new DragSource(flag);
-        ds3.setData(createNewArgument(ArgumentType.Flag));
-
         grpDragSource = new DragSource(group);
+        grpDragSource.addDragStartHandler(new DndDragStartHandler() {
+
+            @Override
+            public void onDragStart(DndDragStartEvent event) {
+                if (onlyLabelEditMode) {
+                    event.getStatusProxy().setStatus(false);
+                    event.getStatusProxy().update("Groups cannot be added to a published app.");
+                    // event.setCancelled(true);
+                    return;
+                }
+
+                event.getStatusProxy().setStatus(true);
+                event.getStatusProxy().update(group.getElement().getString());
+
+            }
+        });
         grpDragSource.setData(createNewArgumentGroup());
+        dragSourceMap.put(ArgumentType.Group, grpDragSource);
 
-        DragSource ds5 = new DragSource(integerInput);
-        ds5.setData(createNewArgument(ArgumentType.Integer));
+        // Add dragSource objects to each button
+        createDragSource(environmentVariable, ArgumentType.EnvironmentVariable);
+        createDragSource(fileInput, ArgumentType.FileInput);
+        createDragSource(flag, ArgumentType.Flag);
+        createDragSource(integerInput, ArgumentType.Integer);
+        createDragSource(multiFileSelector, ArgumentType.MultiFileSelector);
+        createDragSource(multiLineText, ArgumentType.MultiLineText);
+        createDragSource(text, ArgumentType.Text);
+        createDragSource(singleSelect, ArgumentType.TextSelection);
+        createDragSource(treeSelection, ArgumentType.TreeSelection);
+        createDragSource(info, ArgumentType.Info);
+        createDragSource(folderInput, ArgumentType.FolderInput);
+        createDragSource(integerSelection, ArgumentType.IntegerSelection);
+        createDragSource(doubleSelection, ArgumentType.DoubleSelection);
+        createDragSource(doubleInput, ArgumentType.Double);
+        createDragSource(fileOutput, ArgumentType.FileOutput);
+        createDragSource(folderOutput, ArgumentType.FolderOutput);
+        createDragSource(multiFileOutput, ArgumentType.MultiFileOutput);
+        createDragSource(referenceGenome, ArgumentType.ReferenceGenome);
+        createDragSource(referenceAnnotation, ArgumentType.ReferenceAnnotation);
+        createDragSource(referenceSequence, ArgumentType.ReferenceSequence);
+    }
 
-        DragSource ds6 = new DragSource(multiFileSelector);
-        ds6.setData(createNewArgument(ArgumentType.MultiFileSelector));
+    private void createDragSource(final Widget widget, final ArgumentType type) {
+        DragSource ds = new DragSource(widget);
+        ds.addDragStartHandler(new DndDragStartHandler() {
 
-        DragSource ds7 = new DragSource(multiLineText);
-        ds7.setData(createNewArgument(ArgumentType.MultiLineText));
+            @Override
+            public void onDragStart(DndDragStartEvent event) {
+                if (onlyLabelEditMode && !type.equals(ArgumentType.Info)) {
+                    event.getStatusProxy().setStatus(false);
+                    event.getStatusProxy().update("This item cannot be added to a published app.");
+                    return;
+                }
 
-        DragSource ds9 = new DragSource(text);
-        ds9.setData(createNewArgument(ArgumentType.Text));
-
-        DragSource ds10 = new DragSource(singleSelect);
-        ds10.setData(createNewArgument(ArgumentType.TextSelection));
-
-        DragSource ds11 = new DragSource(treeSelection);
-        ds11.setData(createNewArgument(ArgumentType.TreeSelection));
-
-        DragSource ds12 = new DragSource(info);
-        ds12.setData(createNewArgument(ArgumentType.Info));
-
-        DragSource ds13 = new DragSource(folderInput);
-        ds13.setData(createNewArgument(ArgumentType.FolderInput));
-
-        DragSource ds14 = new DragSource(integerSelection);
-        ds14.setData(createNewArgument(ArgumentType.IntegerSelection));
-
-        DragSource ds15 = new DragSource(doubleSelection);
-        ds15.setData(createNewArgument(ArgumentType.DoubleSelection));
-
-        DragSource ds16 = new DragSource(doubleInput);
-        ds16.setData(createNewArgument(ArgumentType.Double));
-
-        DragSource ds17 = new DragSource(fileOutput);
-        ds17.setData(createNewArgument(ArgumentType.FileOutput));
-
-        DragSource ds18 = new DragSource(folderOutput);
-        ds18.setData(createNewArgument(ArgumentType.FolderOutput));
-
-        DragSource ds19 = new DragSource(multiFileOutput);
-        ds19.setData(createNewArgument(ArgumentType.MultiFileOutput));
-
-        DragSource ds20 = new DragSource(referenceGenome);
-        ds20.setData(createNewArgument(ArgumentType.ReferenceGenome));
-
-        DragSource ds21 = new DragSource(referenceAnnotation);
-        ds21.setData(createNewArgument(ArgumentType.ReferenceAnnotation));
-
-        DragSource ds22 = new DragSource(referenceSequence);
-        ds22.setData(createNewArgument(ArgumentType.ReferenceSequence));
+                event.getStatusProxy().update(widget.getElement().getString());
+            }
+        });
+        ds.setData(createNewArgument(type));
+        dragSourceMap.put(type, ds);
     }
 
     private ArgumentGroup createNewArgumentGroup() {
@@ -239,6 +245,10 @@ class AppIntegrationPalette extends Composite {
                 break;
         }
         return argument;
+    }
+
+    public void setOnlyLabelEditMode(boolean onlyLabelEditMode) {
+        this.onlyLabelEditMode = onlyLabelEditMode;
     }
 
 }

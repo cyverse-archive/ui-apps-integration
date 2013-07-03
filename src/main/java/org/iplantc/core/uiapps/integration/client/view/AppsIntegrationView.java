@@ -30,6 +30,10 @@ public interface AppsIntegrationView extends IsWidget {
         void onAppTemplateChanged();
 
         void setBeforeHideHandlerRegistration(HandlerRegistration hr);
+
+        boolean isOnlyLabelEditMode();
+
+        void setOnlyLabelEditMode(boolean onlyLabelEditMode);
     }
 
     void setPresenter(Presenter presenter);
@@ -60,5 +64,7 @@ public interface AppsIntegrationView extends IsWidget {
      * @param id
      */
     void updateAppTemplateId(String id);
+
+    void setOnlyLabelEditMode(boolean onlyLabelEditMode);
 
 }

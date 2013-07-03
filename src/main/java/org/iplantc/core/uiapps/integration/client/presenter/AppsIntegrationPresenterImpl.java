@@ -72,6 +72,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     private AppTemplate lastSave;
     private HandlerRegistration beforeHideHandlerRegistration;
     private final UUIDServiceAsync uuidService;
+    private boolean onlyLabelEditMode = false;
 
     public AppsIntegrationPresenterImpl(final AppsIntegrationView view, final EventBus eventBus, final AppTemplateServices atService, final AppIntegrationErrorMessages errorMessages,
             final IplantDisplayStrings messages, final UUIDServiceAsync uuidService) {
@@ -408,6 +409,17 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     @Override
     public void setBeforeHideHandlerRegistration(HandlerRegistration hr) {
         this.beforeHideHandlerRegistration = hr;
+    }
+
+    @Override
+    public boolean isOnlyLabelEditMode() {
+        return onlyLabelEditMode;
+    }
+
+    @Override
+    public void setOnlyLabelEditMode(boolean onlyLabelEditMode) {
+        this.onlyLabelEditMode = onlyLabelEditMode;
+        view.setOnlyLabelEditMode(onlyLabelEditMode);
     }
 
 }

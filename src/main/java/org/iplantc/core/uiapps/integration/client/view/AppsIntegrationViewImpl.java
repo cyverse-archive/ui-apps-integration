@@ -64,7 +64,9 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
 
             @Override
             public void onDragStart(DndDragStartEvent event) {
-                wizard.collapseAllArgumentGroups();
+                if (event.getStatusProxy().getStatus()) {
+                    wizard.collapseAllArgumentGroups();
+                }
             }
         });
     }
@@ -127,6 +129,12 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     @Override
     public void updateAppTemplateId(String id) {
         wizard.updateAppTemplateId(id);
+    }
+
+    @Override
+    public void setOnlyLabelEditMode(boolean onlyLabelEditMode) {
+        wizard.setOnlyLabelEditMode(onlyLabelEditMode);
+        palette.setOnlyLabelEditMode(onlyLabelEditMode);
     }
 
 }
