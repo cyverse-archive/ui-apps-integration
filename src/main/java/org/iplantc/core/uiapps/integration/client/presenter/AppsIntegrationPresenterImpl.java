@@ -272,7 +272,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         // JDS Make a copy so we can check for differences on exit
         lastSave = AppTemplateUtils.copyAppTemplate(toBeSaved);
 
-        atService.saveAndPublishAppTemplate(lastSave, new AsyncCallback<String>() {
+        AsyncCallback<String> saveCallback = new AsyncCallback<String>() {
     
             @Override
             public void onSuccess(String result) {
@@ -292,8 +292,15 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
                 // TODO JDS Notify user of failure via new notification widget (waiting on CORE-4126, CORE-4170)
                 Info infoThing = new TempInfoWidget();
                 infoThing.show(new DefaultInfoConfig("Oops!", failureMsg + "\n" + caught.getMessage()));
+                GWT.log(caught.getMessage());
             }
-        });
+        };
+
+        if (isOnlyLabelEditMode()) {
+            atService.updateAppLabels(lastSave, saveCallback);
+        } else {
+            atService.saveAndPublishAppTemplate(lastSave, saveCallback);
+        }
     
     }
 
