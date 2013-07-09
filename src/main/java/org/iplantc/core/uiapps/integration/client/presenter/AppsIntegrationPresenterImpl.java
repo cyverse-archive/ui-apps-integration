@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.iplantc.core.jsonutil.JsonUtil;
+import org.iplantc.core.resources.client.AnnouncerStyle;
 import org.iplantc.core.resources.client.messages.IplantDisplayStrings;
 import org.iplantc.core.resources.client.uiapps.integration.AppIntegrationErrorMessages;
 import org.iplantc.core.uiapps.client.events.AppUpdatedEvent;
@@ -29,6 +30,8 @@ import org.iplantc.core.uiapps.widgets.client.services.AppTemplateServices;
 import org.iplantc.core.uiapps.widgets.client.view.AppWizardPreviewView;
 import org.iplantc.core.uicommons.client.ErrorHandler;
 import org.iplantc.core.uicommons.client.events.EventBus;
+import org.iplantc.core.uicommons.client.info.ErrorAnnouncementConfig;
+import org.iplantc.core.uicommons.client.info.IplantAnnouncer;
 import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IPlantDialog;
 import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IplantInfoBox;
 import org.iplantc.de.client.UUIDServiceAsync;
@@ -281,17 +284,13 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
                 lastSave = AppTemplateUtils.copyAppTemplate(view.flush());
 
                 eventBus.fireEvent(new AppUpdatedEvent(lastSave));
-                // TODO JDS The user feedback provided by the TempInfoWidget needs to be replaced pending completion of new notification widget (waiting on CORE-4126, CORE-4170)
-                Info infoThing = new TempInfoWidget();
-                infoThing.show(new DefaultInfoConfig("Success", "App Sucessfully Saved"));
+                IplantAnnouncer.getInstance().schedule("App Sucessfully Saved");
             }
     
             @Override
             public void onFailure(Throwable caught) {
                 String failureMsg = errorMessages.publishFailureDefaultMessage();
-                // TODO JDS Notify user of failure via new notification widget (waiting on CORE-4126, CORE-4170)
-                Info infoThing = new TempInfoWidget();
-                infoThing.show(new DefaultInfoConfig("Oops!", failureMsg + "\n" + caught.getMessage()));
+                IplantAnnouncer.getInstance().schedule(failureMsg, new ErrorAnnouncementConfig());
                 GWT.log(caught.getMessage());
             }
         };
