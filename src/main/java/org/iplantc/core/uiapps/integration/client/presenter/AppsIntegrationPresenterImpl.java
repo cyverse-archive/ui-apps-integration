@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.iplantc.core.jsonutil.JsonUtil;
-import org.iplantc.core.resources.client.AnnouncerStyle;
+import org.iplantc.core.resources.client.IplantResources;
 import org.iplantc.core.resources.client.messages.IplantDisplayStrings;
 import org.iplantc.core.resources.client.uiapps.integration.AppIntegrationErrorMessages;
 import org.iplantc.core.uiapps.client.events.AppUpdatedEvent;
@@ -39,7 +39,11 @@ import org.iplantc.de.client.UUIDServiceAsync;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
+import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -57,7 +61,6 @@ import com.sencha.gxt.widget.core.client.event.BeforeHideEvent;
 import com.sencha.gxt.widget.core.client.event.HideEvent;
 import com.sencha.gxt.widget.core.client.event.HideEvent.HideHandler;
 import com.sencha.gxt.widget.core.client.form.TextArea;
-import com.sencha.gxt.widget.core.client.info.DefaultInfoConfig;
 import com.sencha.gxt.widget.core.client.info.Info;
 
 /**
@@ -284,7 +287,14 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
                 lastSave = AppTemplateUtils.copyAppTemplate(view.flush());
 
                 eventBus.fireEvent(new AppUpdatedEvent(lastSave));
-                IplantAnnouncer.getInstance().schedule("App Sucessfully Saved");
+
+                SafeHtmlBuilder sb = new SafeHtmlBuilder();
+                ImageElement imgEl = Document.get().createImageElement();
+                imgEl.setSrc(IplantResources.RESOURCES.tick().getSafeUri().asString());
+                sb.appendHtmlConstant(imgEl.getString());
+                sb.appendHtmlConstant("&nbsp");
+                sb.append(SafeHtmlUtils.fromString("App Sucessfully Saved"));
+                IplantAnnouncer.getInstance().schedule(sb.toSafeHtml());
             }
     
             @Override
