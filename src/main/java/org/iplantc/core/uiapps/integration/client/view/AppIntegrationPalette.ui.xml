@@ -27,7 +27,9 @@
         </con:child>
 
 	   <gxt:ContentPanel headingText="Files/Folders"
-	                     collapsible="true">
+	                     collapsible="true"
+	                     titleCollapse="true"
+	                     expanded="true">
 	       <con:VerticalLayoutContainer>
 				<con:child layoutData="{childData}">
 					<g:Image ui:field="multiFileSelector"
@@ -45,7 +47,9 @@
 	   </gxt:ContentPanel>
 	   
 	   <gxt:ContentPanel headingText="Selection"
-                         collapsible="true">
+                         collapsible="true"
+                         titleCollapse="true"
+                         expanded="true">
             <con:VerticalLayoutContainer>
 				<con:child layoutData="{childData}">
 					<g:Image ui:field="singleSelect"
@@ -63,15 +67,13 @@
 					<g:Image ui:field="treeSelection"
 						     resource="{icons.inputSelectGrouped}" />
 				</con:child>
-				<con:child layoutData="{childData}">
-					<g:Image ui:field="multiSelect"
-						     resource="{icons.inputSelectMulti}" />
-				</con:child>
             </con:VerticalLayoutContainer>	   
 	   </gxt:ContentPanel>
 	   
 	   <gxt:ContentPanel headingText="Text/Numerical Input"
-                         collapsible="true">
+                         collapsible="true"
+                         titleCollapse="true"
+                         expanded="true">
 	       <con:VerticalLayoutContainer>
 				<con:child layoutData="{childData}">
 					<g:Image ui:field="text" 
@@ -101,7 +103,9 @@
 	   </gxt:ContentPanel>
 	   
 	   <gxt:ContentPanel headingText="Output"
-                         collapsible="true">
+                         collapsible="true"
+                         titleCollapse="true"
+                         expanded="true">
 	       <con:VerticalLayoutContainer>
 				<con:child layoutData="{childData}">
 				    <g:Label ui:field="fileOutput"
@@ -111,7 +115,31 @@
 				    <g:Label ui:field="folderOutput"
 				             text="Folder Output"/>
 				</con:child>
+				<con:child layoutData="{childData}">
+				    <g:Label ui:field="multiFileOutput"
+				             text="Multi-file Output"/>
+				</con:child>
 	       </con:VerticalLayoutContainer>
+	   </gxt:ContentPanel>
+	   
+	   <gxt:ContentPanel headingText="Reference Genome"
+	                     collapsible="true"
+	                     titleCollapse="true"
+	                     expanded="true">
+	       <con:VerticalLayoutContainer>
+	           <con:child layoutData="{childData}">
+	               <g:Label ui:field="referenceGenome"
+	                        text="Reference Genome"/>
+	           </con:child>
+	           <con:child layoutData="{childData}">
+	               <g:Label ui:field="referenceSequence"
+	                        text="Reference Sequence Only"/>
+	           </con:child>
+	           <con:child layoutData="{childData}">
+	               <g:Label ui:field="referenceAnnotation"
+	                        text="Reference Annotation Only"/>
+	           </con:child>
+	      </con:VerticalLayoutContainer>
 	   </gxt:ContentPanel>
 	</con:VerticalLayoutContainer>
 </ui:UiBinder> 

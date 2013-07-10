@@ -5,11 +5,12 @@ import org.iplantc.core.uiapps.widgets.client.events.AppTemplateUpdatedEvent.App
 import org.iplantc.core.uiapps.widgets.client.events.ArgumentGroupSelectedEvent.ArgumentGroupSelectedEventHandler;
 import org.iplantc.core.uiapps.widgets.client.events.ArgumentSelectedEvent.ArgumentSelectedEventHandler;
 import org.iplantc.core.uiapps.widgets.client.models.AppTemplate;
+import org.iplantc.core.uiapps.widgets.client.services.AppMetadataServiceFacade;
 import org.iplantc.core.uiapps.widgets.client.view.editors.AppTemplateWizard;
+import org.iplantc.de.client.UUIDServiceAsync;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.HTML;
@@ -38,7 +39,7 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     @UiField
     CardLayoutContainer eastPanel;
 
-    @UiField
+    @UiField(provided = true)
     AppTemplateWizard wizard;
 
     @UiField
@@ -50,7 +51,8 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     @UiField
     HTML cmdLinePreview;
 
-    public AppsIntegrationViewImpl() {
+    public AppsIntegrationViewImpl(final UUIDServiceAsync uuidService, final AppMetadataServiceFacade appMetadataService) {
+        wizard = new AppTemplateWizard(true, uuidService, appMetadataService);
         initWidget(BINDER.createAndBindUi(this));
 
         /*
@@ -62,14 +64,11 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
 
             @Override
             public void onDragStart(DndDragStartEvent event) {
-                wizard.collapseAllArgumentGroups();
+                if (event.getStatusProxy().getStatus()) {
+                    wizard.collapseAllArgumentGroups();
+                }
             }
         });
-    }
-
-    @UiFactory
-    AppTemplateWizard createAppTemplateWizard() {
-        return new AppTemplateWizard(true);
     }
 
     @Override
@@ -130,6 +129,12 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     @Override
     public void updateAppTemplateId(String id) {
         wizard.updateAppTemplateId(id);
+    }
+
+    @Override
+    public void setOnlyLabelEditMode(boolean onlyLabelEditMode) {
+        wizard.setOnlyLabelEditMode(onlyLabelEditMode);
+        palette.setOnlyLabelEditMode(onlyLabelEditMode);
     }
 
 }

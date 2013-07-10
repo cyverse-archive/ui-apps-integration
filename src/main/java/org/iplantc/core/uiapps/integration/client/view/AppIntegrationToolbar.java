@@ -17,8 +17,6 @@ public interface AppIntegrationToolbar extends IsWidget {
 
         void onArgumentOrderClicked();
 
-        void onSelectToolClicked();
-
     }
 
     void setPresenter(AppIntegrationToolbar.Presenter presenter);

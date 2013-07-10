@@ -10,7 +10,6 @@ import org.iplantc.core.resources.client.uiapps.integration.AppIntegrationErrorM
 import org.iplantc.core.uiapps.client.events.AppUpdatedEvent;
 import org.iplantc.core.uiapps.integration.client.dialogs.CommandLineOrderingPanel;
 import org.iplantc.core.uiapps.integration.client.view.AppsIntegrationView;
-import org.iplantc.core.uiapps.widgets.client.dialog.DCListingDialog;
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent;
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent.AppTemplateSelectedEventHandler;
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateUpdatedEvent;
@@ -23,14 +22,16 @@ import org.iplantc.core.uiapps.widgets.client.models.AppTemplateAutoBeanFactory;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentType;
-import org.iplantc.core.uiapps.widgets.client.models.DataObject;
+import org.iplantc.core.uiapps.widgets.client.models.metadata.DataObject;
 import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;
 import org.iplantc.core.uiapps.widgets.client.presenter.AppWizardPresenterJsonAdapter;
 import org.iplantc.core.uiapps.widgets.client.services.AppTemplateServices;
 import org.iplantc.core.uiapps.widgets.client.view.AppWizardPreviewView;
 import org.iplantc.core.uicommons.client.ErrorHandler;
 import org.iplantc.core.uicommons.client.events.EventBus;
-import org.iplantc.core.uicommons.client.models.deployedcomps.DeployedComponent;
+import org.iplantc.core.uicommons.client.info.ErrorAnnouncementConfig;
+import org.iplantc.core.uicommons.client.info.IplantAnnouncer;
+import org.iplantc.core.uicommons.client.info.SuccessAnnouncementConfig;
 import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IPlantDialog;
 import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IplantInfoBox;
 import org.iplantc.de.client.UUIDServiceAsync;
@@ -56,7 +57,6 @@ import com.sencha.gxt.widget.core.client.event.BeforeHideEvent;
 import com.sencha.gxt.widget.core.client.event.HideEvent;
 import com.sencha.gxt.widget.core.client.event.HideEvent.HideHandler;
 import com.sencha.gxt.widget.core.client.form.TextArea;
-import com.sencha.gxt.widget.core.client.info.DefaultInfoConfig;
 import com.sencha.gxt.widget.core.client.info.Info;
 
 /**
@@ -74,6 +74,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     private AppTemplate lastSave;
     private HandlerRegistration beforeHideHandlerRegistration;
     private final UUIDServiceAsync uuidService;
+    private boolean onlyLabelEditMode = false;
 
     public AppsIntegrationPresenterImpl(final AppsIntegrationView view, final EventBus eventBus, final AppTemplateServices atService, final AppIntegrationErrorMessages errorMessages,
             final IplantDisplayStrings messages, final UUIDServiceAsync uuidService) {
@@ -205,24 +206,6 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     }
 
     @Override
-    public void onSelectToolClicked() {
-        final DCListingDialog dialog = new DCListingDialog();
-        dialog.addHideHandler(new HideHandler() {
-    
-            @Override
-            public void onHide(HideEvent event) {
-                DeployedComponent dc = dialog.getSelectedComponent();
-                // Set the deployed component in the AppTemplate
-                if ((dc != null) && (appTemplate != null)) {
-                    appTemplate.setDeployedComponent(dc);
-                    onAppTemplateChanged();
-                }
-            }
-        });
-        dialog.show();
-    }
-
-    @Override
     public boolean orderingRequired(Argument arg) {
         if (arg == null) {
             return false;
@@ -291,7 +274,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         // JDS Make a copy so we can check for differences on exit
         lastSave = AppTemplateUtils.copyAppTemplate(toBeSaved);
 
-        atService.saveAndPublishAppTemplate(lastSave, new AsyncCallback<String>() {
+        AsyncCallback<String> saveCallback = new AsyncCallback<String>() {
     
             @Override
             public void onSuccess(String result) {
@@ -300,19 +283,24 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
                 lastSave = AppTemplateUtils.copyAppTemplate(view.flush());
 
                 eventBus.fireEvent(new AppUpdatedEvent(lastSave));
-                // TODO JDS The user feedback provided by the TempInfoWidget needs to be replaced pending completion of new notification widget (waiting on CORE-4126, CORE-4170)
-                Info infoThing = new TempInfoWidget();
-                infoThing.show(new DefaultInfoConfig("Success", "App Sucessfully Saved"));
+
+                IplantAnnouncer.getInstance().schedule(
+                        new SuccessAnnouncementConfig("App Sucessfully Saved"));
             }
     
             @Override
             public void onFailure(Throwable caught) {
                 String failureMsg = errorMessages.publishFailureDefaultMessage();
-                // TODO JDS Notify user of failure via new notification widget (waiting on CORE-4126, CORE-4170)
-                Info infoThing = new TempInfoWidget();
-                infoThing.show(new DefaultInfoConfig("Oops!", failureMsg + "\n" + caught.getMessage()));
+                IplantAnnouncer.getInstance().schedule(new ErrorAnnouncementConfig(failureMsg));
+                GWT.log(caught.getMessage());
             }
-        });
+        };
+
+        if (isOnlyLabelEditMode()) {
+            atService.updateAppLabels(lastSave, saveCallback);
+        } else {
+            atService.saveAndPublishAppTemplate(lastSave, saveCallback);
+        }
     
     }
 
@@ -428,6 +416,17 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     @Override
     public void setBeforeHideHandlerRegistration(HandlerRegistration hr) {
         this.beforeHideHandlerRegistration = hr;
+    }
+
+    @Override
+    public boolean isOnlyLabelEditMode() {
+        return onlyLabelEditMode;
+    }
+
+    @Override
+    public void setOnlyLabelEditMode(boolean onlyLabelEditMode) {
+        this.onlyLabelEditMode = onlyLabelEditMode;
+        view.setOnlyLabelEditMode(onlyLabelEditMode);
     }
 
 }

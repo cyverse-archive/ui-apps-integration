@@ -1,23 +1,32 @@
 package org.iplantc.core.uiapps.integration.client.view;
 
+import java.util.Map;
+
 import org.iplantc.core.uiapps.widgets.client.models.AppTemplateAutoBeanFactory;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentType;
-import org.iplantc.core.uiapps.widgets.client.models.DataObject;
-import org.iplantc.core.uiapps.widgets.client.models.FileInfoType;
+import org.iplantc.core.uiapps.widgets.client.models.metadata.DataObject;
+import org.iplantc.core.uiapps.widgets.client.models.metadata.DataSourceEnum;
+import org.iplantc.core.uiapps.widgets.client.models.metadata.FileInfoTypeEnum;
 import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItem;
 import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItemGroup;
+import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.sencha.gxt.dnd.core.client.DndDragStartEvent;
+import com.sencha.gxt.dnd.core.client.DndDragStartEvent.DndDragStartHandler;
 import com.sencha.gxt.dnd.core.client.DragSource;
 import com.sencha.gxt.widget.core.client.Composite;
+import com.sencha.gxt.widget.core.client.tips.ToolTip;
+import com.sencha.gxt.widget.core.client.tips.ToolTipConfig;
 import com.sencha.gxt.widget.core.client.tree.Tree.CheckCascade;
 
 /**
@@ -35,71 +44,88 @@ class AppIntegrationPalette extends Composite {
     private final AppTemplateAutoBeanFactory factory = GWT.create(AppTemplateAutoBeanFactory.class);
 
     @UiField
-    Image flag, environmentVariable, multiFileSelector, fileInput, group, integerInput, treeSelection, multiSelect, singleSelect, multiLineText, text;
+    Image flag, environmentVariable, multiFileSelector, fileInput, group, integerInput, treeSelection, singleSelect, multiLineText, text;
 
     @UiField
-    Label info, folderInput, integerSelection, doubleSelection, doubleInput, fileOutput, folderOutput;
+    Label info, folderInput, integerSelection, doubleSelection, doubleInput, fileOutput, folderOutput, multiFileOutput, referenceGenome, referenceSequence, referenceAnnotation;
 
     // Expose group drag source for special case handling in AppsIntegrationViewImpl
     DragSource grpDragSource;
 
+    private final Map<ArgumentType, DragSource> dragSourceMap = Maps.newHashMap();
+
+    private boolean onlyLabelEditMode;
+
     public AppIntegrationPalette() {
         initWidget(uiBinder.createAndBindUi(this));
-
-        // Add dragSource objects to each button
-        DragSource ds1 = new DragSource(environmentVariable);
-        ds1.setData(createNewArgument(ArgumentType.EnvironmentVariable));
-
-        DragSource ds2 = new DragSource(fileInput);
-        ds2.setData(createNewArgument(ArgumentType.FileInput));
-
-        DragSource ds3 = new DragSource(flag);
-        ds3.setData(createNewArgument(ArgumentType.Flag));
+        new ToolTip(environmentVariable, new ToolTipConfig("An environment variable which is set before running a job."));
+        new ToolTip(doubleInput, new ToolTipConfig("A textbox that checks for valid decimal input."));
+        new ToolTip(integerInput, new ToolTipConfig("A textbox that checks for valid integer input."));
+        new ToolTip(doubleSelection, new ToolTipConfig("A list for selecting a decimal value."));
+        new ToolTip(integerSelection, new ToolTipConfig("A list for selecting an integer value."));
+        new ToolTip(singleSelect, new ToolTipConfig("A list for selecting a choice."));
+        new ToolTip(treeSelection, new ToolTipConfig("A hierarchical list for selecting a choice."));
 
         grpDragSource = new DragSource(group);
+        grpDragSource.addDragStartHandler(new DndDragStartHandler() {
+
+            @Override
+            public void onDragStart(DndDragStartEvent event) {
+                if (onlyLabelEditMode) {
+                    event.getStatusProxy().setStatus(false);
+                    event.getStatusProxy().update("Groups cannot be added to a published app.");
+                    // event.setCancelled(true);
+                    return;
+                }
+
+                event.getStatusProxy().setStatus(true);
+                event.getStatusProxy().update(group.getElement().getString());
+
+            }
+        });
         grpDragSource.setData(createNewArgumentGroup());
+        dragSourceMap.put(ArgumentType.Group, grpDragSource);
 
-        DragSource ds5 = new DragSource(integerInput);
-        ds5.setData(createNewArgument(ArgumentType.Integer));
+        // Add dragSource objects to each button
+        createDragSource(environmentVariable, ArgumentType.EnvironmentVariable);
+        createDragSource(fileInput, ArgumentType.FileInput);
+        createDragSource(flag, ArgumentType.Flag);
+        createDragSource(integerInput, ArgumentType.Integer);
+        createDragSource(multiFileSelector, ArgumentType.MultiFileSelector);
+        createDragSource(multiLineText, ArgumentType.MultiLineText);
+        createDragSource(text, ArgumentType.Text);
+        createDragSource(singleSelect, ArgumentType.TextSelection);
+        createDragSource(treeSelection, ArgumentType.TreeSelection);
+        createDragSource(info, ArgumentType.Info);
+        createDragSource(folderInput, ArgumentType.FolderInput);
+        createDragSource(integerSelection, ArgumentType.IntegerSelection);
+        createDragSource(doubleSelection, ArgumentType.DoubleSelection);
+        createDragSource(doubleInput, ArgumentType.Double);
+        createDragSource(fileOutput, ArgumentType.FileOutput);
+        createDragSource(folderOutput, ArgumentType.FolderOutput);
+        createDragSource(multiFileOutput, ArgumentType.MultiFileOutput);
+        createDragSource(referenceGenome, ArgumentType.ReferenceGenome);
+        createDragSource(referenceAnnotation, ArgumentType.ReferenceAnnotation);
+        createDragSource(referenceSequence, ArgumentType.ReferenceSequence);
+    }
 
-        DragSource ds6 = new DragSource(multiFileSelector);
-        ds6.setData(createNewArgument(ArgumentType.MultiFileSelector));
+    private void createDragSource(final Widget widget, final ArgumentType type) {
+        DragSource ds = new DragSource(widget);
+        ds.addDragStartHandler(new DndDragStartHandler() {
 
-        DragSource ds7 = new DragSource(multiLineText);
-        ds7.setData(createNewArgument(ArgumentType.MultiLineText));
+            @Override
+            public void onDragStart(DndDragStartEvent event) {
+                if (onlyLabelEditMode && !type.equals(ArgumentType.Info)) {
+                    event.getStatusProxy().setStatus(false);
+                    event.getStatusProxy().update("This item cannot be added to a published app.");
+                    return;
+                }
 
-        DragSource ds8 = new DragSource(multiSelect);
-        ds8.setData(createNewArgument(ArgumentType.TextSelection));
-
-        DragSource ds9 = new DragSource(text);
-        ds9.setData(createNewArgument(ArgumentType.Text));
-
-        DragSource ds10 = new DragSource(singleSelect);
-        ds10.setData(createNewArgument(ArgumentType.TextSelection));
-
-        DragSource ds11 = new DragSource(treeSelection);
-        ds11.setData(createNewArgument(ArgumentType.TreeSelection));
-
-        DragSource ds12 = new DragSource(info);
-        ds12.setData(createNewArgument(ArgumentType.Info));
-
-        DragSource ds13 = new DragSource(folderInput);
-        ds13.setData(createNewArgument(ArgumentType.FolderInput));
-
-        DragSource ds14 = new DragSource(integerSelection);
-        ds14.setData(createNewArgument(ArgumentType.IntegerSelection));
-
-        DragSource ds15 = new DragSource(doubleSelection);
-        ds15.setData(createNewArgument(ArgumentType.DoubleSelection));
-
-        DragSource ds16 = new DragSource(doubleInput);
-        ds16.setData(createNewArgument(ArgumentType.Double));
-
-        DragSource ds17 = new DragSource(fileOutput);
-        ds17.setData(createNewArgument(ArgumentType.FileOutput));
-
-        DragSource ds18 = new DragSource(folderOutput);
-        ds18.setData(createNewArgument(ArgumentType.FolderOutput));
+                event.getStatusProxy().update(widget.getElement().getString());
+            }
+        });
+        ds.setData(createNewArgument(type));
+        dragSourceMap.put(type, ds);
     }
 
     private ArgumentGroup createNewArgumentGroup() {
@@ -112,50 +138,117 @@ class AppIntegrationPalette extends Composite {
     private Argument createNewArgument(ArgumentType type) {
         Argument argument = factory.argument().as();
         argument.setLabel("DEFAULT");
-        argument.setDescription("DEFAULT");
+        argument.setDescription("");
         argument.setType(type);
         argument.setName("");
         argument.setVisible(true);
 
+        if (AppTemplateUtils.isSimpleSelectionArgumentType(type)) {
+            argument.setSelectionItems(Lists.<SelectionItem> newArrayList());
+        } else if (type.equals(ArgumentType.TreeSelection)) {
+            SelectionItemGroup sig = factory.selectionItemGroup().as();
+            sig.setSingleSelect(false);
+            sig.setSelectionCascade(CheckCascade.CHILDREN);
+            sig.setArguments(Lists.<SelectionItem> newArrayList());
+            sig.setGroups(Lists.<SelectionItemGroup> newArrayList());
+            argument.setSelectionItems(Lists.<SelectionItem> newArrayList(sig));
+
+        } else if (AppTemplateUtils.isDiskResourceArgumentType(type)) {
+            DataObject dataObj = factory.dataObject().as();
+            dataObj.setFormat("Unspecified");
+            dataObj.setDataSource(DataSourceEnum.file);
+            dataObj.setCmdSwitch("");
+            dataObj.setFileInfoType(FileInfoTypeEnum.File);
+            argument.setDataObject(dataObj);
+
+        }
         // Special handling to initialize new arguments, for specific ArgumentTypes.
         switch (type) {
-            case TextSelection:
-            case IntegerSelection:
-            case DoubleSelection:
             case Selection:
+            case TextSelection:
+                argument.setLabel("Text Selection");
+                break;
+            case IntegerSelection:
+                argument.setLabel("Integer Selection");
+                break;
             case ValueSelection:
-                argument.setSelectionItems(Lists.<SelectionItem> newArrayList());
+            case DoubleSelection:
+                argument.setLabel("Double Selection");
                 break;
 
             case TreeSelection:
-                SelectionItemGroup sig = factory.selectionItemGroup().as();
-                sig.setSingleSelect(false);
-                sig.setSelectionCascade(CheckCascade.CHILDREN);
-                sig.setArguments(Lists.<SelectionItem> newArrayList());
-                sig.setGroups(Lists.<SelectionItemGroup> newArrayList());
-                argument.setSelectionItems(Lists.<SelectionItem> newArrayList(sig));
+                argument.setLabel("Tree Selection");
                 break;
 
             case FileInput:
-                DataObject dataObj = factory.dataObject().as();
-                dataObj.setFormat("Unspecified");
-                dataObj.setDataSource("file");
-                dataObj.setCmdSwitch("");
-                // argument.setDataObject(dataObj);
+                argument.setLabel("File Selector");
+                break;
+
+            case FolderInput:
+                argument.setLabel("Folder Selector");
                 break;
 
             case MultiFileSelector:
-                DataObject multiDataObj = factory.dataObject().as();
-                multiDataObj.setFormat("Unspecified");
-                multiDataObj.setDataSource("file");
-                multiDataObj.setFileInfoType(FileInfoType.File);
-                // argument.setDataObject(multiDataObj);
+                argument.setLabel("Multi-file Selector");
+                break;
+
+            case Flag:
+                argument.setLabel("CheckBox");
+                break;
+
+            case Text:
+                argument.setLabel("Text Input");
+                break;
+
+            case MultiLineText:
+                argument.setLabel("Multi-line Text Input");
+                break;
+
+            case EnvironmentVariable:
+                argument.setLabel("Environment Variable");
+                break;
+
+            case Integer:
+                argument.setLabel("Integer Input");
+                break;
+
+            case Double:
+                argument.setLabel("Double Input");
+                break;
+
+            case FileOutput:
+                argument.setLabel("File Output");
+                break;
+
+            case FolderOutput:
+                argument.setLabel("Folder Output");
+                break;
+
+            case MultiFileOutput:
+                argument.setLabel("Multi-file Output");
+                break;
+
+            case ReferenceAnnotation:
+                argument.setLabel("Reference Annotation");
+                break;
+
+            case ReferenceGenome:
+                argument.setLabel("Reference Genome");
+                break;
+
+            case ReferenceSequence:
+                argument.setLabel("Reference Sequence");
                 break;
 
             default:
+                argument.setLabel("Default Label");
                 break;
         }
         return argument;
+    }
+
+    public void setOnlyLabelEditMode(boolean onlyLabelEditMode) {
+        this.onlyLabelEditMode = onlyLabelEditMode;
     }
 
 }
