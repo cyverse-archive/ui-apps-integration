@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.iplantc.core.jsonutil.JsonUtil;
-import org.iplantc.core.resources.client.IplantResources;
 import org.iplantc.core.resources.client.messages.IplantDisplayStrings;
 import org.iplantc.core.resources.client.uiapps.integration.AppIntegrationErrorMessages;
 import org.iplantc.core.uiapps.client.events.AppUpdatedEvent;
@@ -32,6 +31,7 @@ import org.iplantc.core.uicommons.client.ErrorHandler;
 import org.iplantc.core.uicommons.client.events.EventBus;
 import org.iplantc.core.uicommons.client.info.ErrorAnnouncementConfig;
 import org.iplantc.core.uicommons.client.info.IplantAnnouncer;
+import org.iplantc.core.uicommons.client.info.SuccessAnnouncementConfig;
 import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IPlantDialog;
 import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IplantInfoBox;
 import org.iplantc.de.client.UUIDServiceAsync;
@@ -39,11 +39,7 @@ import org.iplantc.de.client.UUIDServiceAsync;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
-import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -288,19 +284,14 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
 
                 eventBus.fireEvent(new AppUpdatedEvent(lastSave));
 
-                SafeHtmlBuilder sb = new SafeHtmlBuilder();
-                ImageElement imgEl = Document.get().createImageElement();
-                imgEl.setSrc(IplantResources.RESOURCES.tick().getSafeUri().asString());
-                sb.appendHtmlConstant(imgEl.getString());
-                sb.appendHtmlConstant("&nbsp");
-                sb.append(SafeHtmlUtils.fromString("App Sucessfully Saved"));
-                IplantAnnouncer.getInstance().schedule(sb.toSafeHtml());
+                IplantAnnouncer.getInstance().schedule(
+                        new SuccessAnnouncementConfig("App Sucessfully Saved"));
             }
     
             @Override
             public void onFailure(Throwable caught) {
                 String failureMsg = errorMessages.publishFailureDefaultMessage();
-                IplantAnnouncer.getInstance().schedule(failureMsg, new ErrorAnnouncementConfig());
+                IplantAnnouncer.getInstance().schedule(new ErrorAnnouncementConfig(failureMsg));
                 GWT.log(caught.getMessage());
             }
         };
