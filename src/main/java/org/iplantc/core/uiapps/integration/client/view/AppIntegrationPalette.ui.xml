@@ -29,7 +29,7 @@
 	   <gxt:ContentPanel headingText="Files/Folders"
 	                     collapsible="true"
 	                     titleCollapse="true"
-	                     expanded="false">
+	                     expanded="true">
 	       <con:VerticalLayoutContainer>
 				<con:child layoutData="{childData}">
 					<g:Image ui:field="multiFileSelector"
@@ -49,7 +49,7 @@
 	   <gxt:ContentPanel headingText="Selection"
                          collapsible="true"
                          titleCollapse="true"
-                         expanded="false">
+                         expanded="true">
             <con:VerticalLayoutContainer>
 				<con:child layoutData="{childData}">
 					<g:Image ui:field="singleSelect"
@@ -73,7 +73,7 @@
 	   <gxt:ContentPanel headingText="Text/Numerical Input"
                          collapsible="true"
                          titleCollapse="true"
-                         expanded="false">
+                         expanded="true">
 	       <con:VerticalLayoutContainer>
 				<con:child layoutData="{childData}">
 					<g:Image ui:field="text" 
@@ -105,7 +105,7 @@
 	   <gxt:ContentPanel headingText="Output"
                          collapsible="true"
                          titleCollapse="true"
-                         expanded="false">
+                         expanded="true">
 	       <con:VerticalLayoutContainer>
 				<con:child layoutData="{childData}">
 				    <g:Label ui:field="fileOutput"
@@ -125,7 +125,7 @@
 	   <gxt:ContentPanel headingText="Reference Genome"
 	                     collapsible="true"
 	                     titleCollapse="true"
-	                     expanded="false">
+	                     expanded="true">
 	       <con:VerticalLayoutContainer>
 	           <con:child layoutData="{childData}">
 	               <g:Label ui:field="referenceGenome"
