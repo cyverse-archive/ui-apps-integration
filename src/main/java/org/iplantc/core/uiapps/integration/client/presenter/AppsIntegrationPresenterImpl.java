@@ -7,6 +7,7 @@ import java.util.List;
 import org.iplantc.core.jsonutil.JsonUtil;
 import org.iplantc.core.resources.client.messages.IplantDisplayStrings;
 import org.iplantc.core.resources.client.uiapps.integration.AppIntegrationErrorMessages;
+import org.iplantc.core.resources.client.uiapps.integration.AppIntegrationMessages;
 import org.iplantc.core.uiapps.client.events.AppUpdatedEvent;
 import org.iplantc.core.uiapps.integration.client.dialogs.CommandLineOrderingPanel;
 import org.iplantc.core.uiapps.integration.client.view.AppsIntegrationView;
@@ -48,7 +49,6 @@ import com.google.web.bindery.autobean.shared.AutoBeanCodex;
 import com.google.web.bindery.autobean.shared.AutoBeanUtils;
 import com.google.web.bindery.autobean.shared.Splittable;
 import com.google.web.bindery.autobean.shared.impl.StringQuoter;
-import com.sencha.gxt.core.client.util.Point;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
 import com.sencha.gxt.widget.core.client.box.MessageBox;
@@ -57,7 +57,6 @@ import com.sencha.gxt.widget.core.client.event.BeforeHideEvent;
 import com.sencha.gxt.widget.core.client.event.HideEvent;
 import com.sencha.gxt.widget.core.client.event.HideEvent.HideHandler;
 import com.sencha.gxt.widget.core.client.form.TextArea;
-import com.sencha.gxt.widget.core.client.info.Info;
 
 /**
  * @author jstroot
@@ -69,6 +68,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     private AppTemplate appTemplate;
     private final AppTemplateServices atService;
     private final AppIntegrationErrorMessages errorMessages;
+    private final AppIntegrationMessages appIntmessages;
     private final EventBus eventBus;
     private final IplantDisplayStrings messages;
     private AppTemplate lastSave;
@@ -84,6 +84,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         this.errorMessages = errorMessages;
         this.messages = messages;
         this.uuidService = uuidService;
+        appIntmessages = messages;
         view.setPresenter(this);
         SelectionHandler handler = new SelectionHandler(view);
         view.addArgumentSelectedEventHandler(handler);
@@ -284,15 +285,12 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
 
                 eventBus.fireEvent(new AppUpdatedEvent(lastSave));
 
-                IplantAnnouncer.getInstance().schedule(
-                        new SuccessAnnouncementConfig("App Sucessfully Saved"));
+                IplantAnnouncer.getInstance().schedule(new SuccessAnnouncementConfig(appIntmessages.saveSuccessful()));
             }
     
             @Override
             public void onFailure(Throwable caught) {
-                String failureMsg = errorMessages.publishFailureDefaultMessage();
-                IplantAnnouncer.getInstance().schedule(new ErrorAnnouncementConfig(failureMsg));
-                GWT.log(caught.getMessage());
+                IplantAnnouncer.getInstance().schedule(new ErrorAnnouncementConfig(errorMessages.unableToSave()));
             }
         };
 
@@ -339,17 +337,6 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
                 ErrorHandler.post(caught);
             }
         });
-    }
-
-    private final class TempInfoWidget extends Info {
-        @Override
-        protected Point position() {
-            int left = view.asWidget().getAbsoluteLeft() + view.asWidget().getOffsetWidth() - config.getWidth();
-
-            int top = view.asWidget().getAbsoluteTop() + 10;
-
-            return new Point(left, top);
-        }
     }
 
     private final class GetUuidCallback implements AsyncCallback<List<String>> {
