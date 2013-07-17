@@ -21,6 +21,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.web.bindery.autobean.shared.AutoBean;
 import com.sencha.gxt.dnd.core.client.DndDragStartEvent;
 import com.sencha.gxt.dnd.core.client.DndDragStartEvent.DndDragStartHandler;
 import com.sencha.gxt.dnd.core.client.DragSource;
@@ -136,7 +137,11 @@ class AppIntegrationPalette extends Composite {
     }
 
     private Argument createNewArgument(ArgumentType type) {
-        Argument argument = factory.argument().as();
+        AutoBean<Argument> argAb = factory.argument();
+        // JDS Annotate as a newly created autobean.
+        argAb.setTag(Argument.IS_NEW, "--");
+
+        Argument argument = argAb.as();
         argument.setLabel("DEFAULT");
         argument.setDescription("");
         argument.setType(type);
