@@ -22,3 +22,7 @@ war
 *.jar
 *.war
 *.ear
+
+# IntelliJ Idea files
+.idea
+*.iml
