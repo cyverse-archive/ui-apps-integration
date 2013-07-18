@@ -130,7 +130,11 @@ class AppIntegrationPalette extends Composite {
     }
 
     private ArgumentGroup createNewArgumentGroup() {
-        ArgumentGroup ag = factory.argumentGroup().as();
+        AutoBean<ArgumentGroup> argGrpAb = factory.argumentGroup();
+        // JDS Annotate as a newly created autobean
+        argGrpAb.setTag(ArgumentGroup.IS_NEW, "--");
+
+        ArgumentGroup ag = argGrpAb.as();
         ag.setArguments(Lists.<Argument> newArrayList());
         ag.setLabel("DEFAULT");
         return ag;
