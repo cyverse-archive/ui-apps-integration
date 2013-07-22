@@ -41,7 +41,7 @@
 	       </con:VerticalLayoutContainer>
 	   </gxt:ContentPanel>
 	   
-	   <gxt:ContentPanel headingText="Files/Folders"
+	   <gxt:ContentPanel headingText="Lists"
                          collapsible="true"
                          titleCollapse="true"
                          expanded="true">
