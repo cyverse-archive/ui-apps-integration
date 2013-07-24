@@ -33,6 +33,7 @@ import org.iplantc.core.uicommons.client.events.EventBus;
 import org.iplantc.core.uicommons.client.info.ErrorAnnouncementConfig;
 import org.iplantc.core.uicommons.client.info.IplantAnnouncer;
 import org.iplantc.core.uicommons.client.info.SuccessAnnouncementConfig;
+import org.iplantc.core.uicommons.client.views.IsMinimizable;
 import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IPlantDialog;
 import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IplantInfoBox;
 import org.iplantc.de.client.UUIDServiceAsync;
@@ -170,7 +171,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
 
     @Override
     public void onPreviewJsonClicked() {
-        Splittable split = AutoBeanCodex.encode(AutoBeanUtils.getAutoBean(appTemplate));
+        Splittable split = AutoBeanCodex.encode(AutoBeanUtils.getAutoBean(AppTemplateUtils.removeEmptyGroupArguments(appTemplate)));
         TextArea ta = new TextArea();
         ta.setReadOnly(true);
         ta.setValue(JsonUtil.prettyPrint(split.getPayload(), null, 4));
@@ -235,12 +236,16 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
 
     @Override
     public void onBeforeHide(final BeforeHideEvent event) {
+        if ((event.getSource() instanceof IsMinimizable) && ((IsMinimizable)event.getSource()).isMinimized()) {
+            return;
+        }
         // Determine if there are any changes, variables are broken out for readability
         AutoBean<AppTemplate> lastSaveAb = AutoBeanUtils.getAutoBean(lastSave);
         AutoBean<AppTemplate> currentAb = AutoBeanUtils.getAutoBean(AppTemplateUtils.copyAppTemplate(view.flush()));
         String lastSavePayload = AutoBeanCodex.encode(lastSaveAb).getPayload();
         String currentPayload = AutoBeanCodex.encode(currentAb).getPayload();
         boolean areEqual = lastSavePayload.equals(currentPayload);
+
     
         if (!areEqual) {
             event.setCancelled(true);
@@ -314,7 +319,8 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     }
 
     private void updateCommandLinePreview(final AppTemplate at) {
-        atService.cmdLinePreview(at, new AsyncCallback<String>() {
+        AppTemplate cleaned = AppTemplateUtils.removeEmptyGroupArguments(at);
+        atService.cmdLinePreview(cleaned, new AsyncCallback<String>() {
 
             @Override
             public void onSuccess(String result) {
