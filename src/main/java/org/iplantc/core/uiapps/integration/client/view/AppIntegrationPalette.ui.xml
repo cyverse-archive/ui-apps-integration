@@ -7,7 +7,7 @@
              type="org.iplantc.core.resources.client.IplantResources" />
     <ui:with field="margins"
             type="com.sencha.gxt.core.client.util.Margins">
-      <ui:attributes top="1"
+      <ui:attributes top="0"
                      right="2"
                      bottom="1"
                      left="2" />
@@ -19,13 +19,8 @@
 	   
 		<con:child layoutData="{childData}">
 			<g:Image ui:field="group" 
-			         resource="{icons.inputGroup}" />
+			         resource="{icons.inputSection}" />
 		</con:child>
-		<con:child layoutData="{childData}">
-            <g:Label ui:field="info"
-                     text="Info"/>
-        </con:child>
-
 	   <gxt:ContentPanel headingText="Files/Folders"
 	                     collapsible="true"
 	                     titleCollapse="true"
@@ -37,16 +32,16 @@
 				</con:child>
 				<con:child layoutData="{childData}">
 					<g:Image ui:field="fileInput"
-						     resource="{icons.inputFileSingle}" />
+						     resource="{icons.inputFile}" />
 				</con:child>
 				<con:child layoutData="{childData}">
-		            <g:Label ui:field="folderInput"
-		                     text="Folder Input"/>
+		            <g:Image ui:field="folderInput"
+		                     resource="{icons.inputFolder}"/>
 		        </con:child>
 	       </con:VerticalLayoutContainer>
 	   </gxt:ContentPanel>
 	   
-	   <gxt:ContentPanel headingText="Selection"
+	   <gxt:ContentPanel headingText="Lists"
                          collapsible="true"
                          titleCollapse="true"
                          expanded="true">
@@ -56,12 +51,12 @@
 						     resource="{icons.inputSelectSingle}" />
 				</con:child>
 				<con:child layoutData="{childData}">
-				    <g:Label ui:field="integerSelection"
-				             text="Integer Selection"/>
+				    <g:Image ui:field="integerSelection"
+				             resource="{icons.inputSelectInteger}"/>
 				</con:child>
 				<con:child layoutData="{childData}">
-				    <g:Label ui:field="doubleSelection"
-				             text="Double Selection"/>
+				    <g:Image ui:field="doubleSelection"
+				             resource="{icons.inputSelectDouble}"/>
 				</con:child>
 				<con:child layoutData="{childData}">
 					<g:Image ui:field="treeSelection"
@@ -75,6 +70,11 @@
                          titleCollapse="true"
                          expanded="true">
 	       <con:VerticalLayoutContainer>
+                <con:child layoutData="{childData}">
+		           <g:Image ui:field="info" 
+		                    resource="{icons.generalInfoText}" />
+                </con:child>
+
 				<con:child layoutData="{childData}">
 					<g:Image ui:field="text" 
 					         resource="{icons.inputTextSingle}" />
@@ -96,8 +96,8 @@
 						     resource="{icons.inputNumberInteger}" />
 				</con:child>
 				<con:child layoutData="{childData}">
-				    <g:Label ui:field="doubleInput"
-				             text="Double"/>
+				    <g:Image ui:field="doubleInput"
+				             resource="{icons.inputNumberDouble}"/>
 				</con:child>
 	       </con:VerticalLayoutContainer>
 	   </gxt:ContentPanel>
@@ -108,16 +108,16 @@
                          expanded="true">
 	       <con:VerticalLayoutContainer>
 				<con:child layoutData="{childData}">
-				    <g:Label ui:field="fileOutput"
-				             text="File Output"/>
+				    <g:Image ui:field="fileOutput"
+				             resource="{icons.outputFileName}"/>
 				</con:child>
 				<con:child layoutData="{childData}">
-				    <g:Label ui:field="folderOutput"
-				             text="Folder Output"/>
+				    <g:Image ui:field="folderOutput"
+				             resource="{icons.outputFolderName}"/>
 				</con:child>
 				<con:child layoutData="{childData}">
-				    <g:Label ui:field="multiFileOutput"
-				             text="Multi-file Output"/>
+				    <g:Image ui:field="multiFileOutput"
+				             resource="{icons.outputMultiFile}"/>
 				</con:child>
 	       </con:VerticalLayoutContainer>
 	   </gxt:ContentPanel>
@@ -128,16 +128,16 @@
 	                     expanded="true">
 	       <con:VerticalLayoutContainer>
 	           <con:child layoutData="{childData}">
-	               <g:Label ui:field="referenceGenome"
-	                        text="Reference Genome"/>
+	               <g:Image ui:field="referenceGenome"
+	                        resource="{icons.referenceGenome}"/>
 	           </con:child>
 	           <con:child layoutData="{childData}">
-	               <g:Label ui:field="referenceSequence"
-	                        text="Reference Sequence Only"/>
+	               <g:Image ui:field="referenceSequence"
+	                        resource="{icons.referenceSequence}"/>
 	           </con:child>
 	           <con:child layoutData="{childData}">
-	               <g:Label ui:field="referenceAnnotation"
-	                        text="Reference Annotation Only"/>
+	               <g:Image ui:field="referenceAnnotation"
+	                        resource="{icons.referenceAnnotation}"/>
 	           </con:child>
 	      </con:VerticalLayoutContainer>
 	   </gxt:ContentPanel>

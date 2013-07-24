@@ -19,8 +19,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.web.bindery.autobean.shared.AutoBean;
 import com.sencha.gxt.dnd.core.client.DndDragStartEvent;
 import com.sencha.gxt.dnd.core.client.DndDragStartEvent.DndDragStartHandler;
 import com.sencha.gxt.dnd.core.client.DragSource;
@@ -47,7 +47,7 @@ class AppIntegrationPalette extends Composite {
     Image flag, environmentVariable, multiFileSelector, fileInput, group, integerInput, treeSelection, singleSelect, multiLineText, text;
 
     @UiField
-    Label info, folderInput, integerSelection, doubleSelection, doubleInput, fileOutput, folderOutput, multiFileOutput, referenceGenome, referenceSequence, referenceAnnotation;
+    Image info, folderInput, integerSelection, doubleSelection, doubleInput, fileOutput, folderOutput, multiFileOutput, referenceGenome, referenceSequence, referenceAnnotation;
 
     // Expose group drag source for special case handling in AppsIntegrationViewImpl
     DragSource grpDragSource;
@@ -129,14 +129,22 @@ class AppIntegrationPalette extends Composite {
     }
 
     private ArgumentGroup createNewArgumentGroup() {
-        ArgumentGroup ag = factory.argumentGroup().as();
+        AutoBean<ArgumentGroup> argGrpAb = factory.argumentGroup();
+        // JDS Annotate as a newly created autobean
+        argGrpAb.setTag(ArgumentGroup.IS_NEW, "--");
+
+        ArgumentGroup ag = argGrpAb.as();
         ag.setArguments(Lists.<Argument> newArrayList());
         ag.setLabel("DEFAULT");
         return ag;
     }
 
     private Argument createNewArgument(ArgumentType type) {
-        Argument argument = factory.argument().as();
+        AutoBean<Argument> argAb = factory.argument();
+        // JDS Annotate as a newly created autobean.
+        argAb.setTag(Argument.IS_NEW, "--");
+
+        Argument argument = argAb.as();
         argument.setLabel("DEFAULT");
         argument.setDescription("");
         argument.setType(type);
