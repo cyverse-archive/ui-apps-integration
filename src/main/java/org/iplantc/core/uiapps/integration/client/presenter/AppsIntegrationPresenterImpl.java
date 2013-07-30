@@ -68,7 +68,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     private AppTemplate appTemplate;
     private final AppTemplateServices atService;
     private final AppIntegrationErrorMessages errorMessages;
-    private final AppIntegrationMessages appIntmessages;
+    private final AppIntegrationMessages appIntMessages = GWT.create(AppIntegrationMessages.class);
     private final EventBus eventBus;
     private final IplantDisplayStrings messages;
     private AppTemplate lastSave;
@@ -84,7 +84,6 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         this.errorMessages = errorMessages;
         this.messages = messages;
         this.uuidService = uuidService;
-        appIntmessages = messages;
         view.setPresenter(this);
         SelectionHandler handler = new SelectionHandler(view);
         view.addArgumentSelectedEventHandler(handler);
@@ -159,7 +158,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         ta.setReadOnly(true);
         ta.setValue(JsonUtil.prettyPrint(split.getPayload(), null, 4));
         IPlantDialog dlg = new IPlantDialog();
-        dlg.setHeadingText(messages.previewJSON());
+        dlg.setHeadingText(appIntMessages.previewJSON());
         dlg.setPredefinedButtons(PredefinedButton.OK);
         dlg.add(ta);
         dlg.setSize("500", "350");
@@ -172,12 +171,12 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     public void onArgumentOrderClicked() {
         IPlantDialog dlg = new IPlantDialog();
         dlg.setPredefinedButtons(PredefinedButton.OK);
-        dlg.setHeadingText(messages.commandLineOrder());
+        dlg.setHeadingText(appIntMessages.commandLineOrder());
         dlg.setModal(true);
         dlg.setOkButtonText(messages.done());
         dlg.setAutoHide(false);
     
-        CommandLineOrderingPanel clop = new CommandLineOrderingPanel(getAllTemplateArguments(view.flush()), this, messages);
+        CommandLineOrderingPanel clop = new CommandLineOrderingPanel(getAllTemplateArguments(view.flush()), this, appIntMessages);
         clop.setSize("640", "480");
         dlg.add(clop);
         dlg.addHideHandler(new HideHandler() {
@@ -280,7 +279,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
 
                 eventBus.fireEvent(new AppUpdatedEvent(lastSave));
 
-                IplantAnnouncer.getInstance().schedule(new SuccessAnnouncementConfig(appIntmessages.saveSuccessful()));
+                IplantAnnouncer.getInstance().schedule(new SuccessAnnouncementConfig(appIntMessages.saveSuccessful()));
             }
     
             @Override

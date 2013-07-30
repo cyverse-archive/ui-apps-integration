@@ -6,6 +6,9 @@
              xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client"
              xmlns:appWizardView="urn:import:org.iplantc.core.uiapps.widgets.client.view.editors"
              xmlns:appsInt="urn:import:org.iplantc.core.uiapps.integration.client.view">
+             
+   <ui:with field="appIntStrings"
+            type="org.iplantc.core.resources.client.uiapps.integration.AppIntegrationMessages"/>
 
     <!-- Border Layout Data -->
    <ui:with field="westMargins"
@@ -57,14 +60,11 @@
         <!-- Toolbar -->
         <con:north layoutData="{northData}">
             <appsInt:AppIntegrationToolbar ui:field="toolbar"/>
-            <!-- <gxt:ContentPanel headerVisible="false">
-            	<gwt:TextButton ui:field="toolSelector" text="Select Tool"></gwt:TextButton>
-            </gxt:ContentPanel> -->
         </con:north>
         
         <!-- Palette -->
         <con:west layoutData="{westData}">
-            <gxt:ContentPanel headingText="Palette">
+            <gxt:ContentPanel headingText="{appIntStrings.paletteHeader}">
                 <appsInt:AppIntegrationPalette ui:field="palette"/>
             </gxt:ContentPanel>
         </con:west>
@@ -83,7 +83,7 @@
         
         <!-- Command Line Preview -->
         <con:south layoutData="{southData}">
-            <gxt:ContentPanel headingText="Command line view">
+            <gxt:ContentPanel headingText="{appIntStrings.cmdLinePreviewHeader}">
                 <g:HTML ui:field="cmdLinePreview"
                         wordWrap="true"/>
             </gxt:ContentPanel>

@@ -9,6 +9,8 @@
             type="org.iplantc.core.resources.client.IplantResources"/>
    <ui:with field="display"
             type="org.iplantc.core.resources.client.messages.IplantDisplayStrings"/>
+   <ui:with field="appIntStrings"
+            type="org.iplantc.core.resources.client.uiapps.integration.AppIntegrationMessages"/>
 
    <toolbar:ToolBar>
       <!-- Save button -->
@@ -25,9 +27,9 @@
             <button:menu>
                <menu:Menu>
                   <menu:MenuItem ui:field="previewUiMenuItem"
-                                 text="{display.previewUI}"/>
+                                 text="{appIntStrings.previewUI}"/>
                   <menu:MenuItem ui:field="previewJsonMenuItem"
-                                 text="{display.previewJSON}"/>
+                                 text="{appIntStrings.previewJSON}"/>
                </menu:Menu>
             </button:menu>
          </button:TextButton>
