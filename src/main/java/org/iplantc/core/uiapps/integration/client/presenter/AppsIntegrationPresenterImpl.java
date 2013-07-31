@@ -19,20 +19,20 @@ import org.iplantc.core.uiapps.widgets.client.events.ArgumentGroupSelectedEvent.
 import org.iplantc.core.uiapps.widgets.client.events.ArgumentSelectedEvent;
 import org.iplantc.core.uiapps.widgets.client.events.ArgumentSelectedEvent.ArgumentSelectedEventHandler;
 import org.iplantc.core.uiapps.widgets.client.models.AppTemplate;
-import org.iplantc.core.uiapps.widgets.client.models.AppTemplateAutoBeanFactory;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentType;
 import org.iplantc.core.uiapps.widgets.client.models.metadata.DataObject;
 import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;
-import org.iplantc.core.uiapps.widgets.client.presenter.AppWizardPresenterJsonAdapter;
 import org.iplantc.core.uiapps.widgets.client.services.AppTemplateServices;
 import org.iplantc.core.uiapps.widgets.client.view.AppWizardPreviewView;
 import org.iplantc.core.uicommons.client.ErrorHandler;
+import org.iplantc.core.uicommons.client.errorHandling.models.SimpleServiceError;
 import org.iplantc.core.uicommons.client.events.EventBus;
 import org.iplantc.core.uicommons.client.info.ErrorAnnouncementConfig;
 import org.iplantc.core.uicommons.client.info.IplantAnnouncer;
 import org.iplantc.core.uicommons.client.info.SuccessAnnouncementConfig;
+import org.iplantc.core.uicommons.client.views.IsMinimizable;
 import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IPlantDialog;
 import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IplantInfoBox;
 import org.iplantc.de.client.UUIDServiceAsync;
@@ -68,7 +68,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     private AppTemplate appTemplate;
     private final AppTemplateServices atService;
     private final AppIntegrationErrorMessages errorMessages;
-    private final AppIntegrationMessages appIntmessages;
+    private final AppIntegrationMessages appIntMessages = GWT.create(AppIntegrationMessages.class);
     private final EventBus eventBus;
     private final IplantDisplayStrings messages;
     private AppTemplate lastSave;
@@ -84,19 +84,12 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         this.errorMessages = errorMessages;
         this.messages = messages;
         this.uuidService = uuidService;
-        appIntmessages = messages;
         view.setPresenter(this);
         SelectionHandler handler = new SelectionHandler(view);
         view.addArgumentSelectedEventHandler(handler);
         view.addArgumentGroupSelectedEventHandler(handler);
         view.addAppTemplateSelectedEventHandler(handler);
         view.addAppTemplateUpdatedEventHandler(this);
-    }
-
-    @Override
-    public void goLegacy(HasOneWidget container, Splittable legacyJson) {
-        setAppTemplateFromLegacyJson(legacyJson);
-        go(container);
     }
 
     @Override
@@ -117,16 +110,6 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         this.lastSave = AppTemplateUtils.copyAppTemplate(appTemplate);
         updateCommandLinePreview(lastSave);
         container.setWidget(view);
-    }
-
-    @Override
-    public void setAppTemplateFromLegacyJson(Splittable legacyJson) {
-        Splittable appTemplateSplit = AppWizardPresenterJsonAdapter.adaptAppTemplateJsonString(legacyJson);
-
-        AppTemplateAutoBeanFactory factory = GWT.create(AppTemplateAutoBeanFactory.class);
-        AutoBean<AppTemplate> appTemplateAb = AutoBeanCodex.decode(factory, AppTemplate.class, appTemplateSplit);
-
-        this.appTemplate = appTemplateAb.as();
     }
 
     @Override
@@ -170,12 +153,12 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
 
     @Override
     public void onPreviewJsonClicked() {
-        Splittable split = AutoBeanCodex.encode(AutoBeanUtils.getAutoBean(appTemplate));
+        Splittable split = AutoBeanCodex.encode(AutoBeanUtils.getAutoBean(AppTemplateUtils.removeEmptyGroupArguments(appTemplate)));
         TextArea ta = new TextArea();
         ta.setReadOnly(true);
         ta.setValue(JsonUtil.prettyPrint(split.getPayload(), null, 4));
         IPlantDialog dlg = new IPlantDialog();
-        dlg.setHeadingText(messages.previewJSON());
+        dlg.setHeadingText(appIntMessages.previewJSON());
         dlg.setPredefinedButtons(PredefinedButton.OK);
         dlg.add(ta);
         dlg.setSize("500", "350");
@@ -188,12 +171,12 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     public void onArgumentOrderClicked() {
         IPlantDialog dlg = new IPlantDialog();
         dlg.setPredefinedButtons(PredefinedButton.OK);
-        dlg.setHeadingText(messages.commandLineOrder());
+        dlg.setHeadingText(appIntMessages.commandLineOrder());
         dlg.setModal(true);
         dlg.setOkButtonText(messages.done());
         dlg.setAutoHide(false);
     
-        CommandLineOrderingPanel clop = new CommandLineOrderingPanel(getAllTemplateArguments(view.flush()), this, messages);
+        CommandLineOrderingPanel clop = new CommandLineOrderingPanel(getAllTemplateArguments(view.flush()), this, appIntMessages);
         clop.setSize("640", "480");
         dlg.add(clop);
         dlg.addHideHandler(new HideHandler() {
@@ -235,39 +218,50 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
 
     @Override
     public void onBeforeHide(final BeforeHideEvent event) {
-        // Determine if there are any changes, variables are broken out for readability
-        AutoBean<AppTemplate> lastSaveAb = AutoBeanUtils.getAutoBean(lastSave);
-        AutoBean<AppTemplate> currentAb = AutoBeanUtils.getAutoBean(AppTemplateUtils.copyAppTemplate(view.flush()));
-        String lastSavePayload = AutoBeanCodex.encode(lastSaveAb).getPayload();
-        String currentPayload = AutoBeanCodex.encode(currentAb).getPayload();
-        boolean areEqual = lastSavePayload.equals(currentPayload);
-    
-        if (!areEqual) {
-            event.setCancelled(true);
-            final Component component = event.getSource();
-            // JDS There are differences, so prompt user to save.
-            final IplantInfoBox dlg = new IplantInfoBox(messages.save(), messages.unsavedChanges()) {
-                @Override
-                protected void onButtonPressed(TextButton button) {
-                    if (button == getButtonBar().getItemByItemId(PredefinedButton.YES.name())) {
-                        // JDS Do save and let window close
-                        beforeHideHandlerRegistration.removeHandler();
-                        onSaveClicked();
-                        component.hide();
-                    } else if (button == getButtonBar().getItemByItemId(PredefinedButton.NO.name())) {
-                        // JDS Just let window close
-                        beforeHideHandlerRegistration.removeHandler();
-                        component.hide();
-                    } else if (button == getButtonBar().getItemByItemId(PredefinedButton.CANCEL.name())) {
-                        // JDS Do not hide the window
+        if ((event.getSource() instanceof IsMinimizable) && ((IsMinimizable)event.getSource()).isMinimized()) {
+            return;
+        }
 
+    
+        try {
+            // Determine if there are any changes, variables are broken out for readability
+            AutoBean<AppTemplate> lastSaveAb = AutoBeanUtils.getAutoBean(lastSave);
+            AutoBean<AppTemplate> currentAb = AutoBeanUtils.getAutoBean(AppTemplateUtils.copyAppTemplate(view.flush()));
+            String lastSavePayload = AutoBeanCodex.encode(lastSaveAb).getPayload();
+            String currentPayload = AutoBeanCodex.encode(currentAb).getPayload();
+            boolean areEqual = lastSavePayload.equals(currentPayload);
+
+            if (!areEqual) {
+                event.setCancelled(true);
+                final Component component = event.getSource();
+                // JDS There are differences, so prompt user to save.
+                final IplantInfoBox dlg = new IplantInfoBox(messages.save(), messages.unsavedChanges()) {
+                    @Override
+                    protected void onButtonPressed(TextButton button) {
+                        if (button == getButtonBar().getItemByItemId(PredefinedButton.YES.name())) {
+                            // JDS Do save and let window close
+                            beforeHideHandlerRegistration.removeHandler();
+                            onSaveClicked();
+                            component.hide();
+                        } else if (button == getButtonBar().getItemByItemId(PredefinedButton.NO.name())) {
+                            // JDS Just let window close
+                            beforeHideHandlerRegistration.removeHandler();
+                            component.hide();
+                        } else if (button == getButtonBar().getItemByItemId(PredefinedButton.CANCEL.name())) {
+                            // JDS Do not hide the window
+
+                        }
+                        hide();
                     }
-                    hide();
-                }
-            };
-            dlg.setIcon(MessageBox.ICONS.question());
-            dlg.setPredefinedButtons(PredefinedButton.YES, PredefinedButton.NO, PredefinedButton.CANCEL);
-            dlg.show();
+                };
+                dlg.setIcon(MessageBox.ICONS.question());
+                dlg.setPredefinedButtons(PredefinedButton.YES, PredefinedButton.NO, PredefinedButton.CANCEL);
+                dlg.show();
+            }
+        } catch (IllegalStateException e) {
+            /*
+             * JDS This is expected to occur when 'flush()' is called when 'edit()' was not called first.
+             */
         }
     }
 
@@ -285,11 +279,12 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
 
                 eventBus.fireEvent(new AppUpdatedEvent(lastSave));
 
-                IplantAnnouncer.getInstance().schedule(new SuccessAnnouncementConfig(appIntmessages.saveSuccessful()));
+                IplantAnnouncer.getInstance().schedule(new SuccessAnnouncementConfig(appIntMessages.saveSuccessful()));
             }
     
             @Override
             public void onFailure(Throwable caught) {
+                SimpleServiceError serviceError = AutoBeanCodex.decode(atService.getAppTemplateFactory(), SimpleServiceError.class, caught.getMessage()).as();
                 IplantAnnouncer.getInstance().schedule(new ErrorAnnouncementConfig(errorMessages.unableToSave()));
             }
         };
@@ -314,7 +309,8 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     }
 
     private void updateCommandLinePreview(final AppTemplate at) {
-        atService.cmdLinePreview(at, new AsyncCallback<String>() {
+        AppTemplate cleaned = AppTemplateUtils.removeEmptyGroupArguments(at);
+        atService.cmdLinePreview(cleaned, new AsyncCallback<String>() {
 
             @Override
             public void onSuccess(String result) {

@@ -6,6 +6,8 @@
 
     <ui:with field="display"
              type="org.iplantc.core.resources.client.messages.IplantDisplayStrings"/>
+    <ui:with field="appIntStrings"
+             type="org.iplantc.core.resources.client.uiapps.integration.AppIntegrationMessages"/>
              
     <ui:with type="com.sencha.gxt.widget.core.client.grid.ColumnModel" 
              field="cm1"/>
@@ -19,13 +21,13 @@
              field="view1">
         <ui:attributes stripeRows="true" 
                        forceFit="true"
-                       emptyText="{display.noArguments}"/>
+                       emptyText="{appIntStrings.noArguments}"/>
     </ui:with> 
     <ui:with type="com.sencha.gxt.widget.core.client.grid.GridView" 
              field="view2">
         <ui:attributes stripeRows="true" 
                        forceFit="true"
-                       emptyText="{display.noArguments}"/>
+                       emptyText="{appIntStrings.noArguments}"/>
     </ui:with> 
     
     <ui:with type="com.sencha.gxt.core.client.util.Margins" field="margins0">

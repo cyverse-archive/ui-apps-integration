@@ -56,6 +56,7 @@ class AppIntegrationPalette extends Composite {
 
     private boolean onlyLabelEditMode;
 
+
     public AppIntegrationPalette() {
         initWidget(uiBinder.createAndBindUi(this));
         new ToolTip(environmentVariable, new ToolTipConfig("An environment variable which is set before running a job."));
