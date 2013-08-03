@@ -1,5 +1,7 @@
 package org.iplantc.core.uiapps.integration.client.view;
 
+import java.util.List;
+
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent.AppTemplateSelectedEventHandler;
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateUpdatedEvent.AppTemplateUpdatedEventHandler;
 import org.iplantc.core.uiapps.widgets.client.events.ArgumentGroupSelectedEvent.ArgumentGroupSelectedEventHandler;
@@ -7,6 +9,7 @@ import org.iplantc.core.uiapps.widgets.client.events.ArgumentSelectedEvent.Argum
 import org.iplantc.core.uiapps.widgets.client.models.AppTemplate;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 
+import com.google.gwt.editor.client.EditorError;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.sencha.gxt.widget.core.client.event.BeforeHideEvent.BeforeHideHandler;
@@ -66,5 +69,9 @@ public interface AppsIntegrationView extends IsWidget {
     void updateAppTemplateId(String id);
 
     void setOnlyLabelEditMode(boolean onlyLabelEditMode);
+
+    boolean hasErrors();
+
+    List<EditorError> getErrors();
 
 }

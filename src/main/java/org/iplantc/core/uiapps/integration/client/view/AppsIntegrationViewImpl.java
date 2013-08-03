@@ -1,5 +1,7 @@
 package org.iplantc.core.uiapps.integration.client.view;
 
+import java.util.List;
+
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent.AppTemplateSelectedEventHandler;
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateUpdatedEvent.AppTemplateUpdatedEventHandler;
 import org.iplantc.core.uiapps.widgets.client.events.ArgumentGroupSelectedEvent.ArgumentGroupSelectedEventHandler;
@@ -10,6 +12,7 @@ import org.iplantc.core.uiapps.widgets.client.view.editors.AppTemplateWizard;
 import org.iplantc.de.client.UUIDServiceAsync;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.editor.client.EditorError;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
@@ -135,6 +138,16 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     public void setOnlyLabelEditMode(boolean onlyLabelEditMode) {
         wizard.setOnlyLabelEditMode(onlyLabelEditMode);
         palette.setOnlyLabelEditMode(onlyLabelEditMode);
+    }
+
+    @Override
+    public boolean hasErrors() {
+        return wizard.hasErrors();
+    }
+
+    @Override
+    public List<EditorError> getErrors() {
+        return wizard.getErrors();
     }
 
 }
