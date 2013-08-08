@@ -3,27 +3,8 @@
 	         xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	         xmlns:con="urn:import:com.sencha.gxt.widget.core.client.container"
 	         xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client">
-	<ui:style>
-	   .grab {}
-	
-	   	@if user.agent gecko1_8 {
-	   		.grab:hover {
-	   			cursor: -moz-grab;
-	   		}
-	   		.grab:active {
-	   			cursor: -moz-grabbing !important;
-	   		}
-	   	}
-	   	
-	   	@elif user.agent safari {
-	   		.grab:hover {
-	   			cursor: -webkit-grab;
-	   		}
-	   		.grab:active {
-	   			cursor: -webkit-grabbing !important;
-	   		}
-	   	}
-	   </ui:style>
+	<ui:with field="res"
+	         type="org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance"/>
     <ui:with field="icons"
              type="org.iplantc.core.resources.client.IplantResources" />
     <ui:with field="margins"
@@ -41,7 +22,7 @@
 		<con:child layoutData="{childData}">
 			<g:Image ui:field="group" 
 			         resource="{icons.inputSection}"
-			         styleName="{style.grab}" />
+			         styleName="{res.getStyle.grab}" />
 		</con:child>
 	   <gxt:ContentPanel headingText="Files/Folders"
 	                     collapsible="true"
@@ -51,17 +32,17 @@
 				<con:child layoutData="{childData}">
 					<g:Image ui:field="multiFileSelector"
 						     resource="{icons.inputFileMulti}"
-						     styleName="{style.grab}" />
+						     styleName="{res.getStyle.grab}" />
 				</con:child>
 				<con:child layoutData="{childData}">
 					<g:Image ui:field="fileInput"
 						     resource="{icons.inputFile}"
-						     styleName="{style.grab}" />
+						     styleName="{res.getStyle.grab}" />
 				</con:child>
 				<con:child layoutData="{childData}">
 		            <g:Image ui:field="folderInput"
 		                     resource="{icons.inputFolder}"
-						     styleName="{style.grab}"/>
+						     styleName="{res.getStyle.grab}"/>
 		        </con:child>
 	       </con:VerticalLayoutContainer>
 	   </gxt:ContentPanel>
@@ -74,22 +55,22 @@
 				<con:child layoutData="{childData}">
 					<g:Image ui:field="singleSelect"
 						     resource="{icons.inputSelectSingle}"
-						     styleName="{style.grab}" />
+						     styleName="{res.getStyle.grab}" />
 				</con:child>
 				<con:child layoutData="{childData}">
 				    <g:Image ui:field="integerSelection"
 				             resource="{icons.inputSelectInteger}"
-						     styleName="{style.grab}"/>
+						     styleName="{res.getStyle.grab}"/>
 				</con:child>
 				<con:child layoutData="{childData}">
 				    <g:Image ui:field="doubleSelection"
 				             resource="{icons.inputSelectDouble}"
-						     styleName="{style.grab}"/>
+						     styleName="{res.getStyle.grab}"/>
 				</con:child>
 				<con:child layoutData="{childData}">
 					<g:Image ui:field="treeSelection"
 						     resource="{icons.inputSelectGrouped}"
-						     styleName="{style.grab}" />
+						     styleName="{res.getStyle.grab}" />
 				</con:child>
             </con:VerticalLayoutContainer>	   
 	   </gxt:ContentPanel>
@@ -102,38 +83,38 @@
                 <con:child layoutData="{childData}">
 		           <g:Image ui:field="info" 
 		                    resource="{icons.generalInfoText}"
-						     styleName="{style.grab}" />
+						     styleName="{res.getStyle.grab}" />
                 </con:child>
 
 				<con:child layoutData="{childData}">
 					<g:Image ui:field="text" 
 					         resource="{icons.inputTextSingle}"
-						     styleName="{style.grab}" />
+						     styleName="{res.getStyle.grab}" />
 				</con:child>
 				<con:child layoutData="{childData}">
 					<g:Image ui:field="multiLineText"
 						     resource="{icons.inputTextMulti}"
-						     styleName="{style.grab}" />
+						     styleName="{res.getStyle.grab}" />
 				</con:child>
 				<con:child layoutData="{childData}">
 					<g:Image ui:field="flag" 
 					         resource="{icons.inputCheckBox}"
-						     styleName="{style.grab}" />
+						     styleName="{res.getStyle.grab}" />
 				</con:child>
 				<con:child layoutData="{childData}">
 					<g:Image ui:field="environmentVariable"
 						     resource="{icons.inputEnvVar}"
-						     styleName="{style.grab}" />
+						     styleName="{res.getStyle.grab}" />
 				</con:child>
 				<con:child layoutData="{childData}">
 					<g:Image ui:field="integerInput"
 						     resource="{icons.inputNumberInteger}"
-						     styleName="{style.grab}" />
+						     styleName="{res.getStyle.grab}" />
 				</con:child>
 				<con:child layoutData="{childData}">
 				    <g:Image ui:field="doubleInput"
 				             resource="{icons.inputNumberDouble}"
-						     styleName="{style.grab}"/>
+						     styleName="{res.getStyle.grab}"/>
 				</con:child>
 	       </con:VerticalLayoutContainer>
 	   </gxt:ContentPanel>
@@ -146,17 +127,17 @@
 				<con:child layoutData="{childData}">
 				    <g:Image ui:field="fileOutput"
 				             resource="{icons.outputFileName}"
-						     styleName="{style.grab}"/>
+						     styleName="{res.getStyle.grab}"/>
 				</con:child>
 				<con:child layoutData="{childData}">
 				    <g:Image ui:field="folderOutput"
 				             resource="{icons.outputFolderName}"
-						     styleName="{style.grab}"/>
+						     styleName="{res.getStyle.grab}"/>
 				</con:child>
 				<con:child layoutData="{childData}">
 				    <g:Image ui:field="multiFileOutput"
 				             resource="{icons.outputMultiFile}"
-						     styleName="{style.grab}"/>
+						     styleName="{res.getStyle.grab}"/>
 				</con:child>
 	       </con:VerticalLayoutContainer>
 	   </gxt:ContentPanel>
@@ -169,17 +150,17 @@
 	           <con:child layoutData="{childData}">
 	               <g:Image ui:field="referenceGenome"
 	                        resource="{icons.referenceGenome}"
-						     styleName="{style.grab}"/>
+						     styleName="{res.getStyle.grab}"/>
 	           </con:child>
 	           <con:child layoutData="{childData}">
 	               <g:Image ui:field="referenceSequence"
 	                        resource="{icons.referenceSequence}"
-						     styleName="{style.grab}"/>
+						     styleName="{res.getStyle.grab}"/>
 	           </con:child>
 	           <con:child layoutData="{childData}">
 	               <g:Image ui:field="referenceAnnotation"
 	                        resource="{icons.referenceAnnotation}"
-						     styleName="{style.grab}"/>
+						     styleName="{res.getStyle.grab}"/>
 	           </con:child>
 	      </con:VerticalLayoutContainer>
 	   </gxt:ContentPanel>

@@ -12,15 +12,21 @@ import org.iplantc.core.uiapps.widgets.client.models.metadata.FileInfoTypeEnum;
 import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItem;
 import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItemGroup;
 import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;
+import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
+import com.google.gwt.event.dom.client.MouseUpEvent;
+import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.web.bindery.autobean.shared.AutoBean;
+import com.sencha.gxt.core.client.GXT;
 import com.sencha.gxt.dnd.core.client.DndDragStartEvent;
 import com.sencha.gxt.dnd.core.client.DndDragStartEvent.DndDragStartHandler;
 import com.sencha.gxt.dnd.core.client.DragSource;
@@ -55,6 +61,8 @@ class AppIntegrationPalette extends Composite {
     private final Map<ArgumentType, DragSource> dragSourceMap = Maps.newHashMap();
 
     private boolean onlyLabelEditMode;
+
+    private final AppTemplateWizardAppearance appearance = GWT.create(AppTemplateWizardAppearance.class);
 
 
     public AppIntegrationPalette() {
@@ -108,9 +116,10 @@ class AppIntegrationPalette extends Composite {
         createDragSource(referenceGenome, ArgumentType.ReferenceGenome);
         createDragSource(referenceAnnotation, ArgumentType.ReferenceAnnotation);
         createDragSource(referenceSequence, ArgumentType.ReferenceSequence);
+
     }
 
-    private void createDragSource(final Widget widget, final ArgumentType type) {
+    private void createDragSource(final Image widget, final ArgumentType type) {
         DragSource ds = new DragSource(widget);
         ds.addDragStartHandler(new DndDragStartHandler() {
 
@@ -127,6 +136,20 @@ class AppIntegrationPalette extends Composite {
         });
         ds.setData(createNewArgument(type));
         dragSourceMap.put(type, ds);
+        if (GXT.isGecko()) {
+            widget.addMouseDownHandler(new MouseDownHandler() {
+                @Override
+                public void onMouseDown(MouseDownEvent event) {
+                    widget.addStyleName(appearance.getStyle().grabbing());
+                }
+            });
+            widget.addMouseUpHandler(new MouseUpHandler() {
+                @Override
+                public void onMouseUp(MouseUpEvent event) {
+                    widget.removeStyleName(appearance.getStyle().grabbing());
+                }
+            });
+        }
     }
 
     private ArgumentGroup createNewArgumentGroup() {
