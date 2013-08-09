@@ -13,6 +13,7 @@ import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItem;
 import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItemGroup;
 import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;
 import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.core.uicommons.client.widgets.ContextualHelpPopup;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -21,8 +22,12 @@ import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.web.bindery.autobean.shared.AutoBean;
@@ -31,8 +36,8 @@ import com.sencha.gxt.dnd.core.client.DndDragStartEvent;
 import com.sencha.gxt.dnd.core.client.DndDragStartEvent.DndDragStartHandler;
 import com.sencha.gxt.dnd.core.client.DragSource;
 import com.sencha.gxt.widget.core.client.Composite;
-import com.sencha.gxt.widget.core.client.tips.ToolTip;
-import com.sencha.gxt.widget.core.client.tips.ToolTipConfig;
+import com.sencha.gxt.widget.core.client.button.ToolButton;
+import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.tree.Tree.CheckCascade;
 
 /**
@@ -55,6 +60,9 @@ class AppIntegrationPalette extends Composite {
     @UiField
     Image info, folderInput, integerSelection, doubleSelection, doubleInput, fileOutput, folderOutput, multiFileOutput, referenceGenome, referenceSequence, referenceAnnotation;
 
+    @UiField
+    ToolButton fileFolderCategoryHelpBtn, listsCategoryHelpBtn, textNumericalInputCategoryHelpBtn, outputCategoryHelpBtn, referenceGenomeCategoryHelpBtn;
+
     // Expose group drag source for special case handling in AppsIntegrationViewImpl
     DragSource grpDragSource;
 
@@ -67,13 +75,6 @@ class AppIntegrationPalette extends Composite {
 
     public AppIntegrationPalette() {
         initWidget(uiBinder.createAndBindUi(this));
-        new ToolTip(environmentVariable, new ToolTipConfig("An environment variable which is set before running a job."));
-        new ToolTip(doubleInput, new ToolTipConfig("A textbox that checks for valid decimal input."));
-        new ToolTip(integerInput, new ToolTipConfig("A textbox that checks for valid integer input."));
-        new ToolTip(doubleSelection, new ToolTipConfig("A list for selecting a decimal value."));
-        new ToolTip(integerSelection, new ToolTipConfig("A list for selecting an integer value."));
-        new ToolTip(singleSelect, new ToolTipConfig("A list for selecting a choice."));
-        new ToolTip(treeSelection, new ToolTipConfig("A hierarchical list for selecting a choice."));
 
         grpDragSource = new DragSource(group);
         grpDragSource.addDragStartHandler(new DndDragStartHandler() {
@@ -83,7 +84,6 @@ class AppIntegrationPalette extends Composite {
                 if (onlyLabelEditMode) {
                     event.getStatusProxy().setStatus(false);
                     event.getStatusProxy().update("Groups cannot be added to a published app.");
-                    // event.setCancelled(true);
                     return;
                 }
 
@@ -117,6 +117,39 @@ class AppIntegrationPalette extends Composite {
         createDragSource(referenceAnnotation, ArgumentType.ReferenceAnnotation);
         createDragSource(referenceSequence, ArgumentType.ReferenceSequence);
 
+    }
+
+    @UiFactory
+    ToolButton createToolButton() {
+        return new ToolButton(ToolButton.QUESTION);
+    }
+
+    @UiHandler({"fileFolderCategoryHelpBtn", "listsCategoryHelpBtn", "textNumericalInputCategoryHelpBtn", "outputCategoryHelpBtn", "referenceGenomeCategoryHelpBtn"})
+    void onSelect(SelectEvent event) {
+        if (!(event.getSource() instanceof ToolButton)) {
+            return;
+        }
+        ToolButton btn = (ToolButton)event.getSource();
+        ContextualHelpPopup popup = new ContextualHelpPopup();
+        popup.setWidth(450);
+        popup.add(new HTML(getCategoryContextHelp(btn)));
+        popup.showAt(btn.getAbsoluteLeft(), btn.getAbsoluteTop() + 15);
+    }
+
+    private SafeHtml getCategoryContextHelp(ToolButton btn) {
+        SafeHtml ret = null;
+        if (btn == fileFolderCategoryHelpBtn) {
+            ret = appearance.getContextHelpMessages().appCategoryFileInput();
+        } else if (btn == listsCategoryHelpBtn) {
+            ret = appearance.getContextHelpMessages().appCategoryLists();
+        } else if (btn == textNumericalInputCategoryHelpBtn) {
+            ret = appearance.getContextHelpMessages().appCategoryTextInput();
+        } else if (btn == outputCategoryHelpBtn) {
+            ret = appearance.getContextHelpMessages().appCategoryOutput();
+        } else if (btn == referenceGenomeCategoryHelpBtn) {
+            ret = appearance.getContextHelpMessages().appCategoryReferenceGenome();
+        }
+        return ret;
     }
 
     private void createDragSource(final Image widget, final ArgumentType type) {

@@ -5,6 +5,7 @@
              xmlns:con="urn:import:com.sencha.gxt.widget.core.client.container"
              xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client"
              xmlns:appWizardView="urn:import:org.iplantc.core.uiapps.widgets.client.view.editors"
+             xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button"
              xmlns:appsInt="urn:import:org.iplantc.core.uiapps.integration.client.view">
              
    <ui:with field="appIntStrings"
@@ -65,6 +66,9 @@
         <!-- Palette -->
         <con:west layoutData="{westData}">
             <gxt:ContentPanel headingText="{appIntStrings.paletteHeader}">
+                <gxt:tool>
+                    <button:ToolButton ui:field="paletteContextualHelpBtn"/>
+                </gxt:tool>
                 <appsInt:AppIntegrationPalette ui:field="palette"/>
             </gxt:ContentPanel>
         </con:west>
