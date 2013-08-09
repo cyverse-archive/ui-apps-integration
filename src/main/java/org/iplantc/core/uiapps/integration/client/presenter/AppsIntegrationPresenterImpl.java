@@ -205,7 +205,8 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         dlg.setOkButtonText(messages.done());
         dlg.setAutoHide(false);
     
-        CommandLineOrderingPanel clop = new CommandLineOrderingPanel(getAllTemplateArguments(view.flush()), this, appIntMessages);
+        CommandLineOrderingPanel clop = new CommandLineOrderingPanel(
+                getAllTemplateArguments(view.flushRawApp()), this, appIntMessages);
         clop.setSize("640", "480");
         dlg.add(clop);
         dlg.addHideHandler(new HideHandler() {

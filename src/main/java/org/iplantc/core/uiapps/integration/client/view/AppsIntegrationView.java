@@ -47,6 +47,8 @@ public interface AppsIntegrationView extends IsWidget {
 
     AppTemplate flush();
 
+    AppTemplate flushRawApp();
+
     AppIntegrationToolbar getToolbar();
 
     void onAppTemplateChanged();
