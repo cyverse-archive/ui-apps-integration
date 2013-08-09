@@ -2,6 +2,7 @@ package org.iplantc.core.uiapps.integration.client.view;
 
 import java.util.Map;
 
+import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsDefaultLabels;
 import org.iplantc.core.uiapps.widgets.client.models.AppTemplateAutoBeanFactory;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup;
@@ -71,7 +72,7 @@ class AppIntegrationPalette extends Composite {
     private boolean onlyLabelEditMode;
 
     private final AppTemplateWizardAppearance appearance = GWT.create(AppTemplateWizardAppearance.class);
-
+    private final AppsWidgetsDefaultLabels defaultLabels = GWT.create(AppsWidgetsDefaultLabels.class);
 
     public AppIntegrationPalette() {
         initWidget(uiBinder.createAndBindUi(this));
@@ -231,82 +232,86 @@ class AppIntegrationPalette extends Composite {
         switch (type) {
             case Selection:
             case TextSelection:
-                argument.setLabel("Text Selection");
+                argument.setLabel(defaultLabels.defTextSelection());
                 break;
             case IntegerSelection:
-                argument.setLabel("Integer Selection");
+                argument.setLabel(defaultLabels.defIntegerSelection());
                 break;
             case ValueSelection:
             case DoubleSelection:
-                argument.setLabel("Double Selection");
+                argument.setLabel(defaultLabels.defDoubleSelection());
                 break;
 
             case TreeSelection:
-                argument.setLabel("Tree Selection");
+                argument.setLabel(defaultLabels.defTreeSelection());
                 break;
 
             case FileInput:
-                argument.setLabel("File Selector");
+                argument.setLabel(defaultLabels.defFileInput());
                 break;
 
             case FolderInput:
-                argument.setLabel("Folder Selector");
+                argument.setLabel(defaultLabels.defFolderInput());
                 break;
 
             case MultiFileSelector:
-                argument.setLabel("Multi-file Selector");
+                argument.setLabel(defaultLabels.defMultiFileSelector());
                 break;
 
             case Flag:
-                argument.setLabel("CheckBox");
+                argument.setLabel(defaultLabels.defCheckBox());
                 break;
 
             case Text:
-                argument.setLabel("Text Input");
+                argument.setLabel(defaultLabels.defTextInput());
                 break;
 
             case MultiLineText:
-                argument.setLabel("Multi-line Text Input");
+                argument.setLabel(defaultLabels.defMultiLineText());
                 break;
 
             case EnvironmentVariable:
-                argument.setLabel("Environment Variable");
+                argument.setLabel(defaultLabels.defEnvVar());
                 break;
 
             case Integer:
-                argument.setLabel("Integer Input");
+                argument.setLabel(defaultLabels.defIntegerInput());
                 break;
 
             case Double:
-                argument.setLabel("Double Input");
+                argument.setLabel(defaultLabels.defDoubleInput());
                 break;
 
             case FileOutput:
-                argument.setLabel("File Output");
+                argument.setLabel(defaultLabels.defFileOutput());
                 break;
 
             case FolderOutput:
-                argument.setLabel("Folder Output");
+                argument.setLabel(defaultLabels.defFolderOutput());
                 break;
 
             case MultiFileOutput:
-                argument.setLabel("Multi-file Output");
+                argument.setLabel(defaultLabels.defMultiFileOutput());
                 break;
 
             case ReferenceAnnotation:
-                argument.setLabel("Reference Annotation");
+                argument.setLabel(defaultLabels.defReferenceAnnotation());
                 break;
 
             case ReferenceGenome:
-                argument.setLabel("Reference Genome");
+                argument.setLabel(defaultLabels.defReferenceGenome());
                 break;
 
             case ReferenceSequence:
-                argument.setLabel("Reference Sequence");
+                argument.setLabel(defaultLabels.defReferenceSequence());
+                break;
+
+            case Info:
+                argument.setLabel(defaultLabels.defInfo());
                 break;
 
             default:
-                argument.setLabel("Default Label");
+                argument.setLabel(defaultLabels.defaultLabel());
                 break;
         }
         return argument;

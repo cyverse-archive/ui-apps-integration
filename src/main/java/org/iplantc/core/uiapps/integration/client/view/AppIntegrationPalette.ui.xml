@@ -3,13 +3,16 @@
 	         xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	         xmlns:con="urn:import:com.sencha.gxt.widget.core.client.container"
 	         xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client"
-	         xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button">
+	         xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button"
+	         xmlns:comWidgets="urn:import:org.iplantc.core.uicommons.client.widgets">
 	<ui:with field="res"
 	         type="org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance"/>
     <ui:with field="icons"
              type="org.iplantc.core.resources.client.IplantResources" />
     <ui:with field="strings"
              type="org.iplantc.core.resources.client.uiapps.integration.AppIntegrationMessages"/>
+    <ui:with field="contextHelp"
+             type="org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages"/>
     <ui:with field="margins"
             type="com.sencha.gxt.core.client.util.Margins">
       <ui:attributes top="0"
