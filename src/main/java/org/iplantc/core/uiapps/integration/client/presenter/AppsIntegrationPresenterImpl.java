@@ -230,7 +230,9 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         }
     
         DataObject dataObject = arg.getDataObject();
-        if ((dataObject != null) && dataObject.isImplicit() && type.equals(ArgumentType.Output)) {
+        boolean isOutput = ArgumentType.FileOutput.equals(type)
+                || ArgumentType.FolderOutput.equals(type) || ArgumentType.MultiFileOutput.equals(type);
+        if (isOutput && (dataObject != null) && dataObject.isImplicit()) {
             return false;
         }
         return true;
