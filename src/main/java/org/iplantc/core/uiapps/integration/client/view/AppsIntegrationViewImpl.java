@@ -2,6 +2,7 @@ package org.iplantc.core.uiapps.integration.client.view;
 
 import java.util.List;
 
+import org.iplantc.core.resources.client.messages.I18N;
 import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent.AppTemplateSelectedEventHandler;
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateUpdatedEvent.AppTemplateUpdatedEventHandler;
@@ -60,7 +61,7 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     @UiField
     HTML cmdLinePreview;
 
-    private final AppsWidgetsContextualHelpMessages helpMessages = GWT.create(AppsWidgetsContextualHelpMessages.class);
+    private final AppsWidgetsContextualHelpMessages helpMessages = I18N.APPS_HELP;
 
     public AppsIntegrationViewImpl(final UUIDServiceAsync uuidService, final AppMetadataServiceFacade appMetadataService) {
         wizard = new AppTemplateWizard(true, uuidService, appMetadataService);
