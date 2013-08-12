@@ -27,7 +27,6 @@ import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;
 import org.iplantc.core.uiapps.widgets.client.services.AppTemplateServices;
 import org.iplantc.core.uiapps.widgets.client.view.AppWizardPreviewView;
 import org.iplantc.core.uicommons.client.ErrorHandler;
-import org.iplantc.core.uicommons.client.errorHandling.models.SimpleServiceError;
 import org.iplantc.core.uicommons.client.events.EventBus;
 import org.iplantc.core.uicommons.client.info.ErrorAnnouncementConfig;
 import org.iplantc.core.uicommons.client.info.IplantAnnouncer;
@@ -320,7 +319,6 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     
             @Override
             public void onFailure(Throwable caught) {
-                SimpleServiceError serviceError = AutoBeanCodex.decode(atService.getAppTemplateFactory(), SimpleServiceError.class, caught.getMessage()).as();
                 IplantAnnouncer.getInstance().schedule(new ErrorAnnouncementConfig(errorMessages.unableToSave()));
             }
         };
@@ -426,9 +424,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         @Override
         public void onAppTemplateSelected(AppTemplateSelectedEvent event) {
             IsWidget appTemplatePropertyEditor = event.getAppTemplatePropertyEditor();
-            if (appTemplatePropertyEditor != null) {
-                view.setEastWidget(appTemplatePropertyEditor);
-            }
+            view.setEastWidget(appTemplatePropertyEditor);
         }
     }
 
