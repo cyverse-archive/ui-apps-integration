@@ -2,6 +2,8 @@ package org.iplantc.core.uiapps.integration.client.view;
 
 import java.util.Map;
 
+import org.iplantc.core.resources.client.IplantContextualHelpAccessStyle;
+import org.iplantc.core.resources.client.IplantResources;
 import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsDefaultLabels;
 import org.iplantc.core.uiapps.widgets.client.models.AppTemplateAutoBeanFactory;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
@@ -73,8 +75,10 @@ class AppIntegrationPalette extends Composite {
 
     private final AppTemplateWizardAppearance appearance = GWT.create(AppTemplateWizardAppearance.class);
     private final AppsWidgetsDefaultLabels defaultLabels = GWT.create(AppsWidgetsDefaultLabels.class);
+    private final IplantContextualHelpAccessStyle style = IplantResources.RESOURCES.getContxtualHelpStyle();
 
     public AppIntegrationPalette() {
+        style.ensureInjected();
         initWidget(uiBinder.createAndBindUi(this));
 
         grpDragSource = new DragSource(group);
@@ -122,7 +126,7 @@ class AppIntegrationPalette extends Composite {
 
     @UiFactory
     ToolButton createToolButton() {
-        return new ToolButton(ToolButton.QUESTION);
+        return new ToolButton(style.contextualHelp());
     }
 
     @UiHandler({"fileFolderCategoryHelpBtn", "listsCategoryHelpBtn", "textNumericalInputCategoryHelpBtn", "outputCategoryHelpBtn", "referenceGenomeCategoryHelpBtn"})

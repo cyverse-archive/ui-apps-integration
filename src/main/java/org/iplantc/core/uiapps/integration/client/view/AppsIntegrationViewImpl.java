@@ -2,6 +2,8 @@ package org.iplantc.core.uiapps.integration.client.view;
 
 import java.util.List;
 
+import org.iplantc.core.resources.client.IplantContextualHelpAccessStyle;
+import org.iplantc.core.resources.client.IplantResources;
 import org.iplantc.core.resources.client.messages.I18N;
 import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent.AppTemplateSelectedEventHandler;
@@ -62,8 +64,10 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     HTML cmdLinePreview;
 
     private final AppsWidgetsContextualHelpMessages helpMessages = I18N.APPS_HELP;
+    private final IplantContextualHelpAccessStyle style = IplantResources.RESOURCES.getContxtualHelpStyle();
 
     public AppsIntegrationViewImpl(final UUIDServiceAsync uuidService, final AppMetadataServiceFacade appMetadataService) {
+        style.ensureInjected();
         wizard = new AppTemplateWizard(true, uuidService, appMetadataService);
         initWidget(BINDER.createAndBindUi(this));
 
@@ -85,7 +89,7 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
 
     @UiFactory
     ToolButton createToolBtn() {
-        final ToolButton toolButton = new ToolButton(ToolButton.QUESTION);
+        final ToolButton toolButton = new ToolButton(style.contextualHelp());
         toolButton.addSelectHandler(new SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
