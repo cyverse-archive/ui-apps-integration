@@ -27,12 +27,12 @@ import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;
 import org.iplantc.core.uiapps.widgets.client.services.AppTemplateServices;
 import org.iplantc.core.uiapps.widgets.client.view.AppWizardPreviewView;
 import org.iplantc.core.uicommons.client.ErrorHandler;
-import org.iplantc.core.uicommons.client.errorHandling.models.SimpleServiceError;
 import org.iplantc.core.uicommons.client.events.EventBus;
 import org.iplantc.core.uicommons.client.info.ErrorAnnouncementConfig;
 import org.iplantc.core.uicommons.client.info.IplantAnnouncer;
 import org.iplantc.core.uicommons.client.info.SuccessAnnouncementConfig;
 import org.iplantc.core.uicommons.client.views.IsMinimizable;
+import org.iplantc.core.uicommons.client.views.gxt3.dialogs.ErrorDialog3;
 import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IPlantDialog;
 import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IplantInfoBox;
 import org.iplantc.de.client.UUIDServiceAsync;
@@ -40,7 +40,9 @@ import org.iplantc.de.client.UUIDServiceAsync;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.editor.client.EditorError;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -117,9 +119,35 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         return appTemplate;
     }
 
+    private boolean isViewValid() {
+        // The flushed AppTemplate is the same object when editing was first started.
+        view.flush();
+        boolean hasErrors = view.hasErrors();
+
+        if (hasErrors) {
+            List<EditorError> errors = view.getErrors();
+            String description = "";
+            for (EditorError err : errors) {
+                description += err.getMessage();
+                if (errors.indexOf(err) < errors.size() - 1) {
+                    description += "\n";
+                }
+            }
+            ErrorDialog3 errDlg = new ErrorDialog3(SafeHtmlUtils.fromString("App Editor contains errors"), description);
+            errDlg.show();
+            return false;
+        }
+
+        return true;
+
+    }
+
     @Override
     public void onSaveClicked() {
-        // The flushed AppTemplate is the same object when editing was first started.
+
+        if (!isViewValid()) {
+            return;
+        }
         AppTemplate toBeSaved = view.flush();
 
         // Update the AppTemplate's edited and published date.
@@ -176,7 +204,8 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         dlg.setOkButtonText(messages.done());
         dlg.setAutoHide(false);
     
-        CommandLineOrderingPanel clop = new CommandLineOrderingPanel(getAllTemplateArguments(view.flush()), this, appIntMessages);
+        CommandLineOrderingPanel clop = new CommandLineOrderingPanel(
+                getAllTemplateArguments(view.flushRawApp()), this, appIntMessages);
         clop.setSize("640", "480");
         dlg.add(clop);
         dlg.addHideHandler(new HideHandler() {
@@ -200,7 +229,9 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         }
     
         DataObject dataObject = arg.getDataObject();
-        if ((dataObject != null) && dataObject.isImplicit() && type.equals(ArgumentType.Output)) {
+        boolean isOutput = ArgumentType.FileOutput.equals(type)
+                || ArgumentType.FolderOutput.equals(type) || ArgumentType.MultiFileOutput.equals(type);
+        if (isOutput && (dataObject != null) && dataObject.isImplicit()) {
             return false;
         }
         return true;
@@ -239,6 +270,10 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
                     @Override
                     protected void onButtonPressed(TextButton button) {
                         if (button == getButtonBar().getItemByItemId(PredefinedButton.YES.name())) {
+                            if (!isViewValid()) {
+                                hide();
+                                return;
+                            }
                             // JDS Do save and let window close
                             beforeHideHandlerRegistration.removeHandler();
                             onSaveClicked();
@@ -284,7 +319,6 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     
             @Override
             public void onFailure(Throwable caught) {
-                SimpleServiceError serviceError = AutoBeanCodex.decode(atService.getAppTemplateFactory(), SimpleServiceError.class, caught.getMessage()).as();
                 IplantAnnouncer.getInstance().schedule(new ErrorAnnouncementConfig(errorMessages.unableToSave()));
             }
         };
@@ -390,9 +424,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         @Override
         public void onAppTemplateSelected(AppTemplateSelectedEvent event) {
             IsWidget appTemplatePropertyEditor = event.getAppTemplatePropertyEditor();
-            if (appTemplatePropertyEditor != null) {
-                view.setEastWidget(appTemplatePropertyEditor);
-            }
+            view.setEastWidget(appTemplatePropertyEditor);
         }
     }
 

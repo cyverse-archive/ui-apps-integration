@@ -1,5 +1,11 @@
 package org.iplantc.core.uiapps.integration.client.view;
 
+import java.util.List;
+
+import org.iplantc.core.resources.client.IplantContextualHelpAccessStyle;
+import org.iplantc.core.resources.client.IplantResources;
+import org.iplantc.core.resources.client.messages.I18N;
+import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent.AppTemplateSelectedEventHandler;
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateUpdatedEvent.AppTemplateUpdatedEventHandler;
 import org.iplantc.core.uiapps.widgets.client.events.ArgumentGroupSelectedEvent.ArgumentGroupSelectedEventHandler;
@@ -7,10 +13,13 @@ import org.iplantc.core.uiapps.widgets.client.events.ArgumentSelectedEvent.Argum
 import org.iplantc.core.uiapps.widgets.client.models.AppTemplate;
 import org.iplantc.core.uiapps.widgets.client.services.AppMetadataServiceFacade;
 import org.iplantc.core.uiapps.widgets.client.view.editors.AppTemplateWizard;
+import org.iplantc.core.uicommons.client.widgets.ContextualHelpPopup;
 import org.iplantc.de.client.UUIDServiceAsync;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.editor.client.EditorError;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.HTML;
@@ -19,8 +28,11 @@ import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.dnd.core.client.DndDragStartEvent;
 import com.sencha.gxt.dnd.core.client.DndDragStartEvent.DndDragStartHandler;
 import com.sencha.gxt.widget.core.client.Composite;
+import com.sencha.gxt.widget.core.client.button.ToolButton;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.CardLayoutContainer;
+import com.sencha.gxt.widget.core.client.event.SelectEvent;
+import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 
 public class AppsIntegrationViewImpl extends Composite implements AppsIntegrationView {
 
@@ -51,7 +63,11 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     @UiField
     HTML cmdLinePreview;
 
+    private final AppsWidgetsContextualHelpMessages helpMessages = I18N.APPS_HELP;
+    private final IplantContextualHelpAccessStyle style = IplantResources.RESOURCES.getContxtualHelpStyle();
+
     public AppsIntegrationViewImpl(final UUIDServiceAsync uuidService, final AppMetadataServiceFacade appMetadataService) {
+        style.ensureInjected();
         wizard = new AppTemplateWizard(true, uuidService, appMetadataService);
         initWidget(BINDER.createAndBindUi(this));
 
@@ -69,6 +85,21 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
                 }
             }
         });
+    }
+
+    @UiFactory
+    ToolButton createToolBtn() {
+        final ToolButton toolButton = new ToolButton(style.contextualHelp());
+        toolButton.addSelectHandler(new SelectHandler() {
+            @Override
+            public void onSelect(SelectEvent event) {
+                ContextualHelpPopup popup = new ContextualHelpPopup();
+                popup.setWidth(450);
+                popup.add(new HTML(helpMessages.appCategorySection()));
+                popup.showAt(toolButton.getAbsoluteLeft(), toolButton.getAbsoluteTop() + 15);
+            }
+        });
+        return toolButton;
     }
 
     @Override
@@ -89,6 +120,11 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     @Override
     public AppTemplate flush() {
         return wizard.flushAppTemplate();
+    }
+
+    @Override
+    public AppTemplate flushRawApp() {
+        return wizard.flushAppTemplateRaw();
     }
 
     @Override
@@ -135,6 +171,16 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     public void setOnlyLabelEditMode(boolean onlyLabelEditMode) {
         wizard.setOnlyLabelEditMode(onlyLabelEditMode);
         palette.setOnlyLabelEditMode(onlyLabelEditMode);
+    }
+
+    @Override
+    public boolean hasErrors() {
+        return wizard.hasErrors();
+    }
+
+    @Override
+    public List<EditorError> getErrors() {
+        return wizard.getErrors();
     }
 
 }

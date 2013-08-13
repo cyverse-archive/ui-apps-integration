@@ -2,6 +2,9 @@ package org.iplantc.core.uiapps.integration.client.view;
 
 import java.util.Map;
 
+import org.iplantc.core.resources.client.IplantContextualHelpAccessStyle;
+import org.iplantc.core.resources.client.IplantResources;
+import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsDefaultLabels;
 import org.iplantc.core.uiapps.widgets.client.models.AppTemplateAutoBeanFactory;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup;
@@ -12,21 +15,32 @@ import org.iplantc.core.uiapps.widgets.client.models.metadata.FileInfoTypeEnum;
 import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItem;
 import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItemGroup;
 import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;
+import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.core.uicommons.client.widgets.ContextualHelpPopup;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
+import com.google.gwt.event.dom.client.MouseUpEvent;
+import com.google.gwt.event.dom.client.MouseUpHandler;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.web.bindery.autobean.shared.AutoBean;
+import com.sencha.gxt.core.client.GXT;
 import com.sencha.gxt.dnd.core.client.DndDragStartEvent;
 import com.sencha.gxt.dnd.core.client.DndDragStartEvent.DndDragStartHandler;
 import com.sencha.gxt.dnd.core.client.DragSource;
 import com.sencha.gxt.widget.core.client.Composite;
-import com.sencha.gxt.widget.core.client.tips.ToolTip;
-import com.sencha.gxt.widget.core.client.tips.ToolTipConfig;
+import com.sencha.gxt.widget.core.client.button.ToolButton;
+import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.tree.Tree.CheckCascade;
 
 /**
@@ -49,6 +63,9 @@ class AppIntegrationPalette extends Composite {
     @UiField
     Image info, folderInput, integerSelection, doubleSelection, doubleInput, fileOutput, folderOutput, multiFileOutput, referenceGenome, referenceSequence, referenceAnnotation;
 
+    @UiField
+    ToolButton fileFolderCategoryHelpBtn, listsCategoryHelpBtn, textNumericalInputCategoryHelpBtn, outputCategoryHelpBtn, referenceGenomeCategoryHelpBtn;
+
     // Expose group drag source for special case handling in AppsIntegrationViewImpl
     DragSource grpDragSource;
 
@@ -56,16 +73,13 @@ class AppIntegrationPalette extends Composite {
 
     private boolean onlyLabelEditMode;
 
+    private final AppTemplateWizardAppearance appearance = GWT.create(AppTemplateWizardAppearance.class);
+    private final AppsWidgetsDefaultLabels defaultLabels = GWT.create(AppsWidgetsDefaultLabels.class);
+    private final IplantContextualHelpAccessStyle style = IplantResources.RESOURCES.getContxtualHelpStyle();
 
     public AppIntegrationPalette() {
+        style.ensureInjected();
         initWidget(uiBinder.createAndBindUi(this));
-        new ToolTip(environmentVariable, new ToolTipConfig("An environment variable which is set before running a job."));
-        new ToolTip(doubleInput, new ToolTipConfig("A textbox that checks for valid decimal input."));
-        new ToolTip(integerInput, new ToolTipConfig("A textbox that checks for valid integer input."));
-        new ToolTip(doubleSelection, new ToolTipConfig("A list for selecting a decimal value."));
-        new ToolTip(integerSelection, new ToolTipConfig("A list for selecting an integer value."));
-        new ToolTip(singleSelect, new ToolTipConfig("A list for selecting a choice."));
-        new ToolTip(treeSelection, new ToolTipConfig("A hierarchical list for selecting a choice."));
 
         grpDragSource = new DragSource(group);
         grpDragSource.addDragStartHandler(new DndDragStartHandler() {
@@ -75,7 +89,6 @@ class AppIntegrationPalette extends Composite {
                 if (onlyLabelEditMode) {
                     event.getStatusProxy().setStatus(false);
                     event.getStatusProxy().update("Groups cannot be added to a published app.");
-                    // event.setCancelled(true);
                     return;
                 }
 
@@ -108,9 +121,43 @@ class AppIntegrationPalette extends Composite {
         createDragSource(referenceGenome, ArgumentType.ReferenceGenome);
         createDragSource(referenceAnnotation, ArgumentType.ReferenceAnnotation);
         createDragSource(referenceSequence, ArgumentType.ReferenceSequence);
+
     }
 
-    private void createDragSource(final Widget widget, final ArgumentType type) {
+    @UiFactory
+    ToolButton createToolButton() {
+        return new ToolButton(style.contextualHelp());
+    }
+
+    @UiHandler({"fileFolderCategoryHelpBtn", "listsCategoryHelpBtn", "textNumericalInputCategoryHelpBtn", "outputCategoryHelpBtn", "referenceGenomeCategoryHelpBtn"})
+    void onSelect(SelectEvent event) {
+        if (!(event.getSource() instanceof ToolButton)) {
+            return;
+        }
+        ToolButton btn = (ToolButton)event.getSource();
+        ContextualHelpPopup popup = new ContextualHelpPopup();
+        popup.setWidth(450);
+        popup.add(new HTML(getCategoryContextHelp(btn)));
+        popup.showAt(btn.getAbsoluteLeft(), btn.getAbsoluteTop() + 15);
+    }
+
+    private SafeHtml getCategoryContextHelp(ToolButton btn) {
+        SafeHtml ret = null;
+        if (btn == fileFolderCategoryHelpBtn) {
+            ret = appearance.getContextHelpMessages().appCategoryFileInput();
+        } else if (btn == listsCategoryHelpBtn) {
+            ret = appearance.getContextHelpMessages().appCategoryLists();
+        } else if (btn == textNumericalInputCategoryHelpBtn) {
+            ret = appearance.getContextHelpMessages().appCategoryTextInput();
+        } else if (btn == outputCategoryHelpBtn) {
+            ret = appearance.getContextHelpMessages().appCategoryOutput();
+        } else if (btn == referenceGenomeCategoryHelpBtn) {
+            ret = appearance.getContextHelpMessages().appCategoryReferenceGenome();
+        }
+        return ret;
+    }
+
+    private void createDragSource(final Image widget, final ArgumentType type) {
         DragSource ds = new DragSource(widget);
         ds.addDragStartHandler(new DndDragStartHandler() {
 
@@ -127,6 +174,20 @@ class AppIntegrationPalette extends Composite {
         });
         ds.setData(createNewArgument(type));
         dragSourceMap.put(type, ds);
+        if (GXT.isGecko()) {
+            widget.addMouseDownHandler(new MouseDownHandler() {
+                @Override
+                public void onMouseDown(MouseDownEvent event) {
+                    widget.addStyleName(appearance.getStyle().grabbing());
+                }
+            });
+            widget.addMouseUpHandler(new MouseUpHandler() {
+                @Override
+                public void onMouseUp(MouseUpEvent event) {
+                    widget.removeStyleName(appearance.getStyle().grabbing());
+                }
+            });
+        }
     }
 
     private ArgumentGroup createNewArgumentGroup() {
@@ -175,82 +236,86 @@ class AppIntegrationPalette extends Composite {
         switch (type) {
             case Selection:
             case TextSelection:
-                argument.setLabel("Text Selection");
+                argument.setLabel(defaultLabels.defTextSelection());
                 break;
             case IntegerSelection:
-                argument.setLabel("Integer Selection");
+                argument.setLabel(defaultLabels.defIntegerSelection());
                 break;
             case ValueSelection:
             case DoubleSelection:
-                argument.setLabel("Double Selection");
+                argument.setLabel(defaultLabels.defDoubleSelection());
                 break;
 
             case TreeSelection:
-                argument.setLabel("Tree Selection");
+                argument.setLabel(defaultLabels.defTreeSelection());
                 break;
 
             case FileInput:
-                argument.setLabel("File Selector");
+                argument.setLabel(defaultLabels.defFileInput());
                 break;
 
             case FolderInput:
-                argument.setLabel("Folder Selector");
+                argument.setLabel(defaultLabels.defFolderInput());
                 break;
 
             case MultiFileSelector:
-                argument.setLabel("Multi-file Selector");
+                argument.setLabel(defaultLabels.defMultiFileSelector());
                 break;
 
             case Flag:
-                argument.setLabel("CheckBox");
+                argument.setLabel(defaultLabels.defCheckBox());
                 break;
 
             case Text:
-                argument.setLabel("Text Input");
+                argument.setLabel(defaultLabels.defTextInput());
                 break;
 
             case MultiLineText:
-                argument.setLabel("Multi-line Text Input");
+                argument.setLabel(defaultLabels.defMultiLineText());
                 break;
 
             case EnvironmentVariable:
-                argument.setLabel("Environment Variable");
+                argument.setLabel(defaultLabels.defEnvVar());
                 break;
 
             case Integer:
-                argument.setLabel("Integer Input");
+                argument.setLabel(defaultLabels.defIntegerInput());
                 break;
 
             case Double:
-                argument.setLabel("Double Input");
+                argument.setLabel(defaultLabels.defDoubleInput());
                 break;
 
             case FileOutput:
-                argument.setLabel("File Output");
+                argument.setLabel(defaultLabels.defFileOutput());
                 break;
 
             case FolderOutput:
-                argument.setLabel("Folder Output");
+                argument.setLabel(defaultLabels.defFolderOutput());
                 break;
 
             case MultiFileOutput:
-                argument.setLabel("Multi-file Output");
+                argument.setLabel(defaultLabels.defMultiFileOutput());
                 break;
 
             case ReferenceAnnotation:
-                argument.setLabel("Reference Annotation");
+                argument.setLabel(defaultLabels.defReferenceAnnotation());
                 break;
 
             case ReferenceGenome:
-                argument.setLabel("Reference Genome");
+                argument.setLabel(defaultLabels.defReferenceGenome());
                 break;
 
             case ReferenceSequence:
-                argument.setLabel("Reference Sequence");
+                argument.setLabel(defaultLabels.defReferenceSequence());
+                break;
+
+            case Info:
+                argument.setLabel(defaultLabels.defInfo());
                 break;
 
             default:
-                argument.setLabel("Default Label");
+                argument.setLabel(defaultLabels.defaultLabel());
                 break;
         }
         return argument;

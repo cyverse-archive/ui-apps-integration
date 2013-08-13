@@ -54,20 +54,20 @@ public class CommandLineOrderingPanel extends Composite {
 
         @Override
         public String getPath() {
-            return "name";
+            return "name"; //$NON-NLS-1$
         }
     }
 
     interface CommandLineOrderingPanelUiBinder extends UiBinder<Widget, CommandLineOrderingPanel> {}
 
     @UiField(provided = true)
-    ColumnModel<Argument> cm1, cm2;
+    ColumnModel<Argument> cm;
 
     @UiField(provided = true)
-    ListStore<Argument> unorderedStore, orderedStore;
+    ListStore<Argument> orderedStore;
 
     @UiField
-    Grid<Argument> unorderedGrid, orderedGrid;
+    Grid<Argument> orderedGrid;
 
     private final StoreSortInfo<Argument> orderStoreSortInfo;
 
@@ -86,13 +86,10 @@ public class CommandLineOrderingPanel extends Composite {
         initListStores(arguments);
         initWidget(BINDER.createAndBindUi(this));
 
-        new GridDragSource<Argument>(unorderedGrid);
         new GridDragSource<Argument>(orderedGrid);
-        GridDropTarget<Argument> unOrdDropTarget = new GridDropTarget<Argument>(unorderedGrid);
         GridDropTarget<Argument> ordDropTarget = new GridDropTarget<Argument>(orderedGrid);
 
         DropHandler dropHandler = new DropHandler();
-        unOrdDropTarget.addDropHandler(dropHandler);
         ordDropTarget.addDropHandler(dropHandler);
         ordDropTarget.setAllowSelfAsSource(true);
         ordDropTarget.setFeedback(Feedback.BOTH);
@@ -101,45 +98,39 @@ public class CommandLineOrderingPanel extends Composite {
 
     private void initColumnModels() {
         ArgNameValueProvider valueProvider = new ArgNameValueProvider();
-        ColumnConfig<Argument, String> name = new ColumnConfig<Argument, String>(valueProvider, 170, messages.unorderedArgument());
-
-        // cm1
-        List<ColumnConfig<Argument, ?>> cm1List = Lists.newArrayList();
-        cm1List.add(name);
-        cm1 = new ColumnModel<Argument>(cm1List);
-
-        // cm2
         ColumnConfig<Argument, String> ordName = new ColumnConfig<Argument, String>(valueProvider, 140, messages.argumentLabel());
         ColumnConfig<Argument, Integer> order = new ColumnConfig<Argument, Integer>(argProps.order(), 30, messages.orderLabel());
-        List<ColumnConfig<Argument, ?>> cm2List = Lists.newArrayList();
-        cm2List.add(order);
-        cm2List.add(ordName);
-        cm2 = new ColumnModel<Argument>(cm2List);
+
+        ordName.setSortable(false);
+        ordName.setMenuDisabled(true);
+        order.setSortable(false);
+        order.setMenuDisabled(true);
+
+        List<ColumnConfig<Argument, ?>> cmList = Lists.newArrayList();
+        cmList.add(order);
+        cmList.add(ordName);
+        cm = new ColumnModel<Argument>(cmList);
     }
 
     private void initListStores(List<Argument> arguments) {
-        unorderedStore = new ListStore<Argument>(argProps.id());
         orderedStore = new ListStore<Argument>(argProps.id());
         for (Argument arg : arguments) {
             if (presenter.orderingRequired(arg)) {
                 Integer order = arg.getOrder();
-                if ((order != null) && (order < 0)) {
-                    unorderedStore.add(arg);
-                } else {
-                    // JDS If the order is null or 0, set it to a number higher than the length of the
-                    // list to ensure that already numbered arguments are sorted into their appropriate
-                    // places
-                    if ((order == null) || (order == 0)) {
-                        arg.setOrder(arguments.size() + 1);
-                    }
-                    orderedStore.add(arg);
+
+                // JDS If the order is null or 0, set it to a number higher than the length of the
+                // list to ensure that already numbered arguments are sorted into their appropriate
+                // places
+                if ((order == null) || (order <= 0)) {
+                    arg.setOrder(arguments.size() + 1);
                 }
+
+                orderedStore.add(arg);
             }
         }
         // Set store sort info
-        unorderedStore.addSortInfo(new StoreSortInfo<Argument>(argProps.name(), SortDir.ASC));
-
         orderedStore.addSortInfo(orderStoreSortInfo);
+
         // JDS Immediately clear sort info. Otherwise, sorts will be applied when items are added to the
         // store during DnD.
         orderedStore.clearSortInfo();
@@ -166,16 +157,6 @@ public class CommandLineOrderingPanel extends Composite {
         @Override
         public void onDrop(DndDropEvent event) {
             updateArgumentOrdering();
-
-            if (event.getDropTarget().getWidget() == unorderedGrid) {
-                if (event.getData() instanceof List) {
-                    @SuppressWarnings("unchecked")
-                    List<Argument> args = (List<Argument>)event.getData();
-                    for (Argument arg : args) {
-                        arg.setOrder(-1);
-                    }
-                }
-            }
             presenter.onAppTemplateChanged();
         }
     }
