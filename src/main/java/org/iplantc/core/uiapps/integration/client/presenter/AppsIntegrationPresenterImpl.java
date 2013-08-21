@@ -51,6 +51,7 @@ import com.google.web.bindery.autobean.shared.AutoBeanCodex;
 import com.google.web.bindery.autobean.shared.AutoBeanUtils;
 import com.google.web.bindery.autobean.shared.Splittable;
 import com.google.web.bindery.autobean.shared.impl.StringQuoter;
+import com.sencha.gxt.core.client.dom.XElement;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
 import com.sencha.gxt.widget.core.client.box.MessageBox;
@@ -58,7 +59,6 @@ import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.BeforeHideEvent;
 import com.sencha.gxt.widget.core.client.event.HideEvent;
 import com.sencha.gxt.widget.core.client.event.HideEvent.HideHandler;
-import com.sencha.gxt.widget.core.client.form.TextArea;
 
 /**
  * @author jstroot
@@ -182,18 +182,25 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     @Override
     public void onPreviewJsonClicked() {
         Splittable split = AutoBeanCodex.encode(AutoBeanUtils.getAutoBean(AppTemplateUtils.removeEmptyGroupArguments(appTemplate)));
-        TextArea ta = new TextArea();
-        ta.setReadOnly(true);
-        ta.setValue(JsonUtil.prettyPrint(split.getPayload(), null, 4));
         IPlantDialog dlg = new IPlantDialog();
         dlg.setHeadingText(appIntMessages.previewJSON());
         dlg.setPredefinedButtons(PredefinedButton.OK);
-        dlg.add(ta);
         dlg.setSize("500", "350");
-        dlg.setResizable(true);
-
+        dlg.setResizable(false);
         dlg.show();
+        doJsonFormattting(dlg.getBody(),JsonUtil.prettyPrint(split.getPayload(), null, 4), dlg.getBody().getOffsetWidth(),dlg.getBody().getOffsetHeight());
+        dlg.forceLayout();
     }
+    
+    public static native void doJsonFormattting(XElement textArea,String val,int width, int height) /*-{
+      var myCodeMirror = $wnd.CodeMirror(textArea, {
+      value:  val,
+      mode:  {name: "javascript", json: true}
+      });
+      myCodeMirror.setOption("lineWrapping", false); 
+      myCodeMirror.setSize(width,height);
+      myCodeMirror.setOption("readOnly",true);
+    }-*/;
 
     @Override
     public void onArgumentOrderClicked() {
