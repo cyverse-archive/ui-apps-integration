@@ -33,6 +33,7 @@ import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.CardLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
+import com.sencha.gxt.widget.core.client.form.TextArea;
 
 public class AppsIntegrationViewImpl extends Composite implements AppsIntegrationView {
 
@@ -61,7 +62,7 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     AppIntegrationPalette palette;
 
     @UiField
-    HTML cmdLinePreview;
+    TextArea cmdLinePreview;
 
     private final AppsWidgetsContextualHelpMessages helpMessages = I18N.APPS_HELP;
     private final IplantContextualHelpAccessStyle style = IplantResources.RESOURCES.getContxtualHelpStyle();
