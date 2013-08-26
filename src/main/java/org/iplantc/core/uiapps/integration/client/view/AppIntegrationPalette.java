@@ -94,10 +94,10 @@ class AppIntegrationPalette extends Composite {
 
                 event.getStatusProxy().setStatus(true);
                 event.getStatusProxy().update(group.getElement().getString());
+                event.setData(createNewArgumentGroup());
 
             }
         });
-        grpDragSource.setData(createNewArgumentGroup());
         dragSourceMap.put(ArgumentType.Group, grpDragSource);
 
         // Add dragSource objects to each button
@@ -169,10 +169,11 @@ class AppIntegrationPalette extends Composite {
                     return;
                 }
 
+                event.getStatusProxy().setStatus(true);
                 event.getStatusProxy().update(widget.getElement().getString());
+                event.setData(createNewArgument(type));
             }
         });
-        ds.setData(createNewArgument(type));
         dragSourceMap.put(type, ds);
         if (GXT.isGecko()) {
             widget.addMouseDownHandler(new MouseDownHandler() {
