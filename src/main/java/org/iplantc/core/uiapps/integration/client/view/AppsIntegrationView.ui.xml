@@ -81,9 +81,7 @@
         
         <!-- Selected Widget Properties -->
         <con:east layoutData="{eastData}">
-            <con:CardLayoutContainer ui:field="eastPanel">
-                <g:HTML text="Selected widget Properties panel"/>
-            </con:CardLayoutContainer>
+            <con:CardLayoutContainer ui:field="eastPanel" />
         </con:east>
         
         <!-- Command Line Preview -->
