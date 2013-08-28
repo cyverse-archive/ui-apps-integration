@@ -74,7 +74,8 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
         style.ensureInjected();
         wizard = new AppTemplateWizard(true, uuidService, appMetadataService);
         defaultDetailsPanel = new ContentPanel(new AppTemplateWizardPropertyContentPanelAppearance());
-        defaultDetailsPanel.setHeadingText(I18N.APPS_LABELS.detailsPanelHeaderDefaultText());
+        defaultDetailsPanel.setHeadingText(I18N.APPS_LABELS.detailsPanelHeader("")); //$NON-NLS-1$
+        defaultDetailsPanel.add(new HTML(I18N.APPS_LABELS.detailsPanelDefaultText()));
 
         initWidget(BINDER.createAndBindUi(this));
 
