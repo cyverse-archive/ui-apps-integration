@@ -10,8 +10,6 @@ import org.iplantc.core.resources.client.messages.IplantDisplayStrings;
 import org.iplantc.core.resources.client.messages.IplantErrorStrings;
 import org.iplantc.core.resources.client.uiapps.integration.AppIntegrationErrorMessages;
 import org.iplantc.core.resources.client.uiapps.integration.AppIntegrationMessages;
-import org.iplantc.core.uiapps.client.events.AppPublishedEvent;
-import org.iplantc.core.uiapps.client.events.AppPublishedEvent.AppPublishedEventHandler;
 import org.iplantc.core.uiapps.client.events.AppUpdatedEvent;
 import org.iplantc.core.uiapps.integration.client.dialogs.CommandLineOrderingPanel;
 import org.iplantc.core.uiapps.integration.client.view.AppsIntegrationView;
@@ -68,7 +66,7 @@ import com.sencha.gxt.widget.core.client.form.TextArea;
  * @author jstroot
  *
  */
-public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Presenter, AppPublishedEventHandler {
+public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Presenter {
 
     private final AppsIntegrationView view;
     private AppTemplate appTemplate;
@@ -97,7 +95,6 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         view.addArgumentGroupSelectedEventHandler(handler);
         view.addAppTemplateSelectedEventHandler(handler);
         view.addAppTemplateUpdatedEventHandler(this);
-        eventBus.addHandler(AppPublishedEvent.TYPE, this);
     }
 
     @Override
@@ -108,7 +105,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     public void go(final HasOneWidget container, final AppTemplate appTemplate, final RenameWindowHeaderCommand renameCmd) {
         this.renameCmd = renameCmd;
         // If we are editing a new AppTemplate, and the current the current AppTemplate has unsaved changes
-        if ((appTemplate != null) && (lastSave != null) && isDirty() && !Strings.nullToEmpty(appTemplate.getId()).equals(Strings.nullToEmpty(lastSave.getId()))) {
+        if ((appTemplate != null) && (lastSave != null) && isEditorDirty() && !Strings.nullToEmpty(appTemplate.getId()).equals(Strings.nullToEmpty(lastSave.getId()))) {
 
             // JDS ScheduleDeferred to ensure that the dialog's show() method is called after any parent container's show() method.
             Scheduler.get().scheduleDeferred(new ScheduledCommand() {
@@ -272,7 +269,8 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         updateCommandLinePreview(event.getUpdatedAppTemplate());
     }
 
-    private boolean isDirty() {
+    @Override
+    public boolean isEditorDirty() {
         try {
             // Determine if there are any changes, variables are broken out for readability
             AutoBean<AppTemplate> lastSaveAb = AutoBeanUtils.getAutoBean(lastSave);
@@ -295,7 +293,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         if ((event.getSource() instanceof IsMinimizable) && ((IsMinimizable)event.getSource()).isMinimized()) {
             return;
         }
-        if (isDirty()) {
+        if (isEditorDirty()) {
             event.setCancelled(true);
             final Component component = event.getSource();
             if (isViewValid()) {
@@ -398,21 +396,6 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     public void setOnlyLabelEditMode(boolean onlyLabelEditMode) {
         this.onlyLabelEditMode = onlyLabelEditMode;
         view.setOnlyLabelEditMode(onlyLabelEditMode);
-    }
-
-    @Override
-    public void onAppPublished(AppPublishedEvent appPublishedEvent) {
-        final String appTemplateId = Strings.emptyToNull(appTemplate.getId());
-        if (appPublishedEvent.getPublishedApp().getId().equalsIgnoreCase(appTemplateId)) {
-            setOnlyLabelEditMode(true);
-            view.onAppTemplateChanged();
-            if (renameCmd != null) {
-                // KLUDGE: Should not have to manually set public flag.
-                appTemplate.setPublic(true);
-                renameCmd.setAppTemplate(appTemplate);
-                renameCmd.execute();
-            }
-        }
     }
 
     /**
