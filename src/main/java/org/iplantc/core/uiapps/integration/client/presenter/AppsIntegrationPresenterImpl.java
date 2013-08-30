@@ -115,7 +115,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
 
                 @Override
                 public void execute() {
-                    if (!isViewValid(false, null)) {
+                    if (!isViewValid()) {
                         // JDS View has changes, but contains errors.
                         new ContainsErrorsOnSwitchDialog(messages, I18N.ERROR, container, appTemplate, renameCmd).show();
                     } else {
@@ -156,27 +156,19 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     }
 
     private boolean isViewValid() {
-        return isViewValid(true, null);
-    }
-
-    private boolean isViewValid(boolean showDialog, Component container) {
         view.flush();
-        boolean hasErrors = view.hasErrors();
-
-        if (hasErrors) {
-            if (showDialog) {
-                new ContainsErrorsOnHideDialog(messages, I18N.ERROR, container, beforeHideHandlerRegistration).show();
-            }
-            return false;
-        }
-
-        return true;
+        return !view.hasErrors();
     }
 
     @Override
     public void onSaveClicked() {
         if (isViewValid()) {
             doOnSaveClicked(null);
+        } else {
+            IplantInfoBox errorsInfo = new IplantInfoBox(messages.warning(),
+                    I18N.ERROR.appContainsErrorsUnableToSave());
+            errorsInfo.setIcon(MessageBox.ICONS.error());
+            errorsInfo.show();
         }
     }
 
@@ -306,9 +298,12 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
         if (isDirty()) {
             event.setCancelled(true);
             final Component component = event.getSource();
-            if (isViewValid(true, component)) {
+            if (isViewValid()) {
                 // JDS There are differences and form is valid, so prompt user to save.
                 new PromptForSaveDialog(messages, component, beforeHideHandlerRegistration).show();
+            } else {
+                new ContainsErrorsOnHideDialog(messages, I18N.ERROR, component,
+                        beforeHideHandlerRegistration).show();
             }
         }
     }
