@@ -42,6 +42,8 @@ public interface AppsIntegrationView extends IsWidget {
 
         void go(final HasOneWidget container, final AppTemplate appTemplate, final RenameWindowHeaderCommand renameCmd);
 
+        boolean isEditorDirty();
+
     }
 
     void setPresenter(Presenter presenter);
