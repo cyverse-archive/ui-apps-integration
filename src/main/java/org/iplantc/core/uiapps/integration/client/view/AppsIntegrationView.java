@@ -8,9 +8,11 @@ import org.iplantc.core.uiapps.widgets.client.events.ArgumentGroupSelectedEvent.
 import org.iplantc.core.uiapps.widgets.client.events.ArgumentSelectedEvent.ArgumentSelectedEventHandler;
 import org.iplantc.core.uiapps.widgets.client.models.AppTemplate;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
+import org.iplantc.core.uiapps.widgets.client.view.AppWizardView.RenameWindowHeaderCommand;
 
 import com.google.gwt.editor.client.EditorError;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.ui.HasOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.sencha.gxt.widget.core.client.event.BeforeHideEvent.BeforeHideHandler;
 
@@ -37,6 +39,11 @@ public interface AppsIntegrationView extends IsWidget {
         boolean isOnlyLabelEditMode();
 
         void setOnlyLabelEditMode(boolean onlyLabelEditMode);
+
+        void go(final HasOneWidget container, final AppTemplate appTemplate, final RenameWindowHeaderCommand renameCmd);
+
+        boolean isEditorDirty();
+
     }
 
     void setPresenter(Presenter presenter);

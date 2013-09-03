@@ -13,6 +13,7 @@ import org.iplantc.core.uiapps.widgets.client.events.ArgumentSelectedEvent.Argum
 import org.iplantc.core.uiapps.widgets.client.models.AppTemplate;
 import org.iplantc.core.uiapps.widgets.client.services.AppMetadataServiceFacade;
 import org.iplantc.core.uiapps.widgets.client.view.editors.AppTemplateWizard;
+import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardPropertyContentPanelAppearance;
 import org.iplantc.core.uicommons.client.widgets.ContextualHelpPopup;
 import org.iplantc.de.client.UUIDServiceAsync;
 
@@ -28,11 +29,13 @@ import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.dnd.core.client.DndDragStartEvent;
 import com.sencha.gxt.dnd.core.client.DndDragStartEvent.DndDragStartHandler;
 import com.sencha.gxt.widget.core.client.Composite;
+import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.button.ToolButton;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.CardLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
+import com.sencha.gxt.widget.core.client.form.TextArea;
 
 public class AppsIntegrationViewImpl extends Composite implements AppsIntegrationView {
 
@@ -61,15 +64,22 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
     AppIntegrationPalette palette;
 
     @UiField
-    HTML cmdLinePreview;
+    TextArea cmdLinePreview;
 
+    private final ContentPanel defaultDetailsPanel;
     private final AppsWidgetsContextualHelpMessages helpMessages = I18N.APPS_HELP;
     private final IplantContextualHelpAccessStyle style = IplantResources.RESOURCES.getContxtualHelpStyle();
 
     public AppsIntegrationViewImpl(final UUIDServiceAsync uuidService, final AppMetadataServiceFacade appMetadataService) {
         style.ensureInjected();
         wizard = new AppTemplateWizard(true, uuidService, appMetadataService);
+        defaultDetailsPanel = new ContentPanel(new AppTemplateWizardPropertyContentPanelAppearance());
+        defaultDetailsPanel.setHeadingText(I18N.APPS_LABELS.detailsPanelHeader("")); //$NON-NLS-1$
+        defaultDetailsPanel.add(new HTML(I18N.APPS_LABELS.detailsPanelDefaultText()));
+
         initWidget(BINDER.createAndBindUi(this));
+
+        setEastWidget(defaultDetailsPanel);
 
         /*
          * JDS - Add handling to collapse all argument groups on drag start. To understand why, comment
@@ -109,6 +119,10 @@ public class AppsIntegrationViewImpl extends Composite implements AppsIntegratio
 
     @Override
     public void setEastWidget(IsWidget widget) {
+        if (widget == null) {
+            widget = defaultDetailsPanel;
+        }
+
         eastPanel.setActiveWidget(widget);
     }
 

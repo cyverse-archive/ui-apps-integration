@@ -5,7 +5,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.iplantc.core.jsonutil.JsonUtil;
+import org.iplantc.core.resources.client.messages.I18N;
 import org.iplantc.core.resources.client.messages.IplantDisplayStrings;
+import org.iplantc.core.resources.client.messages.IplantErrorStrings;
 import org.iplantc.core.resources.client.uiapps.integration.AppIntegrationErrorMessages;
 import org.iplantc.core.resources.client.uiapps.integration.AppIntegrationMessages;
 import org.iplantc.core.uiapps.client.events.AppUpdatedEvent;
@@ -26,13 +28,13 @@ import org.iplantc.core.uiapps.widgets.client.models.metadata.DataObject;
 import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;
 import org.iplantc.core.uiapps.widgets.client.services.AppTemplateServices;
 import org.iplantc.core.uiapps.widgets.client.view.AppWizardPreviewView;
+import org.iplantc.core.uiapps.widgets.client.view.AppWizardView.RenameWindowHeaderCommand;
 import org.iplantc.core.uicommons.client.ErrorHandler;
 import org.iplantc.core.uicommons.client.events.EventBus;
 import org.iplantc.core.uicommons.client.info.ErrorAnnouncementConfig;
 import org.iplantc.core.uicommons.client.info.IplantAnnouncer;
 import org.iplantc.core.uicommons.client.info.SuccessAnnouncementConfig;
 import org.iplantc.core.uicommons.client.views.IsMinimizable;
-import org.iplantc.core.uicommons.client.views.gxt3.dialogs.ErrorDialog3;
 import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IPlantDialog;
 import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IplantInfoBox;
 import org.iplantc.de.client.UUIDServiceAsync;
@@ -40,9 +42,9 @@ import org.iplantc.de.client.UUIDServiceAsync;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.editor.client.EditorError;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -77,6 +79,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     private HandlerRegistration beforeHideHandlerRegistration;
     private final UUIDServiceAsync uuidService;
     private boolean onlyLabelEditMode = false;
+    private RenameWindowHeaderCommand renameCmd;
 
     public AppsIntegrationPresenterImpl(final AppsIntegrationView view, final EventBus eventBus, final AppTemplateServices atService, final AppIntegrationErrorMessages errorMessages,
             final IplantDisplayStrings messages, final UUIDServiceAsync uuidService) {
@@ -95,23 +98,53 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     }
 
     @Override
-    public void go(HasOneWidget container, AppTemplate appTemplate) {
-        this.appTemplate = appTemplate;
-        go(container);
+    public void go(final HasOneWidget container, final AppTemplate appTemplate) {
+        go(container, appTemplate, null);
+    }
+    @Override
+    public void go(final HasOneWidget container, final AppTemplate appTemplate, final RenameWindowHeaderCommand renameCmd) {
+        this.renameCmd = renameCmd;
+        // If we are editing a new AppTemplate, and the current the current AppTemplate has unsaved changes
+        if ((appTemplate != null) && (lastSave != null) && isEditorDirty() && !Strings.nullToEmpty(appTemplate.getId()).equals(Strings.nullToEmpty(lastSave.getId()))) {
+
+            // JDS ScheduleDeferred to ensure that the dialog's show() method is called after any parent container's show() method.
+            Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+
+                @Override
+                public void execute() {
+                    if (!isViewValid()) {
+                        // JDS View has changes, but contains errors.
+                        new ContainsErrorsOnSwitchDialog(messages, I18N.ERROR, container, appTemplate, renameCmd).show();
+                    } else {
+                        // JDS There are differences and form is valid, so prompt user to save.
+                        new PromptForSaveThenSwitchDialog(messages, container, appTemplate, renameCmd).show();
+                    }
+
+                }
+            });
+        } else {
+            this.appTemplate = appTemplate;
+            go(container);
+            if (renameCmd != null) {
+                renameCmd.execute();                
+            }
+        }
     }
 
     @Override
     public void go(HasOneWidget container) {
-        view.edit(appTemplate);
+        setOnlyLabelEditMode(appTemplate.isPublic());
         /*
          * JDS Make a copy so we can check for differences on exit.
-         * Flushing is necessary before copying because some values don't exist in the JSON when the
-         * template is fetched. This will result in a false detection of changes in the BeforeHide
-         * handler method
          */
         this.lastSave = AppTemplateUtils.copyAppTemplate(appTemplate);
+
+        view.edit(appTemplate);
         updateCommandLinePreview(lastSave);
-        container.setWidget(view);
+        if (container.getWidget() == null) {
+            // JDS Only set widget if container has no widget.
+            container.setWidget(view);
+        }
     }
 
     @Override
@@ -120,34 +153,23 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     }
 
     private boolean isViewValid() {
-        // The flushed AppTemplate is the same object when editing was first started.
         view.flush();
-        boolean hasErrors = view.hasErrors();
-
-        if (hasErrors) {
-            List<EditorError> errors = view.getErrors();
-            String description = "";
-            for (EditorError err : errors) {
-                description += err.getMessage();
-                if (errors.indexOf(err) < errors.size() - 1) {
-                    description += "\n";
-                }
-            }
-            ErrorDialog3 errDlg = new ErrorDialog3(SafeHtmlUtils.fromString("App Editor contains errors"), description);
-            errDlg.show();
-            return false;
-        }
-
-        return true;
-
+        return !view.hasErrors();
     }
 
     @Override
     public void onSaveClicked() {
-
-        if (!isViewValid()) {
-            return;
+        if (isViewValid()) {
+            doOnSaveClicked(null);
+        } else {
+            IplantInfoBox errorsInfo = new IplantInfoBox(messages.warning(),
+                    I18N.ERROR.appContainsErrorsUnableToSave());
+            errorsInfo.setIcon(MessageBox.ICONS.error());
+            errorsInfo.show();
         }
+    }
+
+    private void doOnSaveClicked(AsyncCallback<Void> onSaveCallback) {
         AppTemplate toBeSaved = view.flush();
 
         // Update the AppTemplate's edited and published date.
@@ -167,9 +189,9 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
 
         // Check if we have anything which needs a UUID
         if (argNeedUuid.size() > 0) {
-            uuidService.getUUIDs(argNeedUuid.size(), new GetUuidCallback(argNeedUuid, toBeSaved));
+            uuidService.getUUIDs(argNeedUuid.size(), new GetUuidThenDoSaveCallback(argNeedUuid, toBeSaved, onSaveCallback));
         } else {
-            doSave(toBeSaved);
+            doSave(toBeSaved, onSaveCallback);
         }
     }
 
@@ -255,12 +277,7 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     }
 
     @Override
-    public void onBeforeHide(final BeforeHideEvent event) {
-        if ((event.getSource() instanceof IsMinimizable) && ((IsMinimizable)event.getSource()).isMinimized()) {
-            return;
-        }
-
-    
+    public boolean isEditorDirty() {
         try {
             // Determine if there are any changes, variables are broken out for readability
             AutoBean<AppTemplate> lastSaveAb = AutoBeanUtils.getAutoBean(lastSave);
@@ -268,46 +285,35 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
             String lastSavePayload = AutoBeanCodex.encode(lastSaveAb).getPayload();
             String currentPayload = AutoBeanCodex.encode(currentAb).getPayload();
             boolean areEqual = lastSavePayload.equals(currentPayload);
-
-            if (!areEqual) {
-                event.setCancelled(true);
-                final Component component = event.getSource();
-                // JDS There are differences, so prompt user to save.
-                final IplantInfoBox dlg = new IplantInfoBox(messages.save(), messages.unsavedChanges()) {
-                    @Override
-                    protected void onButtonPressed(TextButton button) {
-                        if (button == getButtonBar().getItemByItemId(PredefinedButton.YES.name())) {
-                            if (!isViewValid()) {
-                                hide();
-                                return;
-                            }
-                            // JDS Do save and let window close
-                            beforeHideHandlerRegistration.removeHandler();
-                            onSaveClicked();
-                            component.hide();
-                        } else if (button == getButtonBar().getItemByItemId(PredefinedButton.NO.name())) {
-                            // JDS Just let window close
-                            beforeHideHandlerRegistration.removeHandler();
-                            component.hide();
-                        } else if (button == getButtonBar().getItemByItemId(PredefinedButton.CANCEL.name())) {
-                            // JDS Do not hide the window
-
-                        }
-                        hide();
-                    }
-                };
-                dlg.setIcon(MessageBox.ICONS.question());
-                dlg.setPredefinedButtons(PredefinedButton.YES, PredefinedButton.NO, PredefinedButton.CANCEL);
-                dlg.show();
-            }
+            return !areEqual;
         } catch (IllegalStateException e) {
             /*
              * JDS This is expected to occur when 'flush()' is called when 'edit()' was not called first.
              */
+            e.printStackTrace();
+            return false;
         }
     }
 
-    private void doSave(AppTemplate toBeSaved) {
+    @Override
+    public void onBeforeHide(final BeforeHideEvent event) {
+        if ((event.getSource() instanceof IsMinimizable) && ((IsMinimizable)event.getSource()).isMinimized()) {
+            return;
+        }
+        if (isEditorDirty()) {
+            event.setCancelled(true);
+            final Component component = event.getSource();
+            if (isViewValid()) {
+                // JDS There are differences and form is valid, so prompt user to save.
+                new PromptForSaveDialog(messages, component, beforeHideHandlerRegistration).show();
+            } else {
+                new ContainsErrorsOnHideDialog(messages, I18N.ERROR, component,
+                        beforeHideHandlerRegistration).show();
+            }
+        }
+    }
+
+    private void doSave(AppTemplate toBeSaved, final AsyncCallback<Void> onSaveCallback) {
         // JDS Make a copy so we can check for differences on exit
         lastSave = AppTemplateUtils.copyAppTemplate(toBeSaved);
 
@@ -315,18 +321,26 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
     
             @Override
             public void onSuccess(String result) {
-                // eventBus.fireEvent(new AppGroupCountUpdateEvent(true, null));
                 view.updateAppTemplateId(result);
                 lastSave = AppTemplateUtils.copyAppTemplate(view.flush());
-
+                if (renameCmd != null) {
+                    renameCmd.setAppTemplate(lastSave);
+                    renameCmd.execute();
+                }
                 eventBus.fireEvent(new AppUpdatedEvent(lastSave));
 
                 IplantAnnouncer.getInstance().schedule(new SuccessAnnouncementConfig(appIntMessages.saveSuccessful()));
+                if (onSaveCallback != null) {
+                    onSaveCallback.onSuccess(null);
+                }
             }
     
             @Override
             public void onFailure(Throwable caught) {
                 IplantAnnouncer.getInstance().schedule(new ErrorAnnouncementConfig(errorMessages.unableToSave()));
+                if (onSaveCallback != null) {
+                    onSaveCallback.onFailure(caught);
+                }
             }
         };
 
@@ -370,19 +384,204 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
 
             @Override
             public void onFailure(Throwable caught) {
-                GWT.log("FAILS!!!!");
                 ErrorHandler.post(caught);
             }
         });
     }
 
-    private final class GetUuidCallback implements AsyncCallback<List<String>> {
+    @Override
+    public void setBeforeHideHandlerRegistration(HandlerRegistration hr) {
+        this.beforeHideHandlerRegistration = hr;
+    }
+
+    @Override
+    public boolean isOnlyLabelEditMode() {
+        return onlyLabelEditMode;
+    }
+
+    @Override
+    public void setOnlyLabelEditMode(boolean onlyLabelEditMode) {
+        this.onlyLabelEditMode = onlyLabelEditMode;
+        view.setOnlyLabelEditMode(onlyLabelEditMode);
+    }
+
+    /**
+     * This dialog is used when the user attempts to close the view when the current AppTemplate contains
+     * errors
+     * 
+     * @author jstroot
+     * 
+     */
+    private final class ContainsErrorsOnHideDialog extends IplantInfoBox {
+        private final Component component;
+        private final HandlerRegistration beforeHideHndlrReg;
+
+        private ContainsErrorsOnHideDialog(IplantDisplayStrings messages, IplantErrorStrings errorMessages, Component component, HandlerRegistration beforeHideHndlrReg) {
+            super(messages.warning(), errorMessages.appContainsErrorsPromptToContinue());
+            this.component = component;
+            this.beforeHideHndlrReg = beforeHideHndlrReg;
+            setPredefinedButtons(PredefinedButton.YES, PredefinedButton.NO);
+            setIcon(MessageBox.ICONS.error());
+        }
+
+        @Override
+        protected void onButtonPressed(TextButton button) {
+            if (button == getButtonBar().getItemByItemId(PredefinedButton.YES.name())) {
+                // JDS Abort current AppTemplate and hide.
+                beforeHideHndlrReg.removeHandler();
+                component.hide();
+            } else if (button == getButtonBar().getItemByItemId(PredefinedButton.NO.name())) {
+                // Do nothing
+            }
+            hide();
+        }
+
+    }
+
+    /**
+     * This dialog is used when the user is attempting to edit a new AppTemplate, but the existing
+     * AppTemplate contains errors.
+     * 
+     * @author jstroot
+     * 
+     */
+    private final class ContainsErrorsOnSwitchDialog extends IplantInfoBox {
+        private final HasOneWidget container;
+        private final AppTemplate appTemplate;
+        private final RenameWindowHeaderCommand renameCmd;
+
+        private ContainsErrorsOnSwitchDialog(IplantDisplayStrings messages, IplantErrorStrings errorMessages, HasOneWidget container, AppTemplate appTemplate, RenameWindowHeaderCommand renameCmd) {
+            super(messages.warning(), errorMessages.appContainsErrorsPromptToContinue());
+            this.container = container;
+            this.appTemplate = appTemplate;
+            this.renameCmd = renameCmd;
+            setPredefinedButtons(PredefinedButton.YES, PredefinedButton.NO);
+            setIcon(MessageBox.ICONS.error());
+        }
+
+        @Override
+        protected void onButtonPressed(TextButton button) {
+            if (button == getButtonBar().getItemByItemId(PredefinedButton.YES.name())) {
+                // JDS Abort current AppTemplate and switch.
+                AppsIntegrationPresenterImpl.this.appTemplate = appTemplate;
+                AppsIntegrationPresenterImpl.this.go(container);
+                if (renameCmd != null) {
+                    renameCmd.execute();
+                }
+            } else if (button == getButtonBar().getItemByItemId(PredefinedButton.NO.name())) {
+                // Do nothing
+            }
+            hide();
+        }
+    }
+
+    /**
+     * This dialog is used when the user is attempting to edit a new AppTemplate, but the current
+     * AppTemplate has unsaved changes.
+     * 
+     * @author jstroot
+     * 
+     */
+    private final class PromptForSaveThenSwitchDialog extends IplantInfoBox {
+        private final HasOneWidget container;
+        private final AppTemplate appTemplate;
+        private final RenameWindowHeaderCommand renameCmd;
+
+        private PromptForSaveThenSwitchDialog(IplantDisplayStrings messages, HasOneWidget container, AppTemplate appTemplate, RenameWindowHeaderCommand renameCmd) {
+            super(messages.save(), messages.unsavedChanges());
+            setIcon(MessageBox.ICONS.question());
+            setPredefinedButtons(PredefinedButton.YES, PredefinedButton.NO, PredefinedButton.CANCEL);
+            this.container = container;
+            this.appTemplate = appTemplate;
+            this.renameCmd = renameCmd;
+        }
+
+        @Override
+        protected void onButtonPressed(TextButton button) {
+            if (button == getButtonBar().getItemByItemId(PredefinedButton.YES.name())) {
+                // Perform save, then switch.
+                doOnSaveClicked(new AsyncCallback<Void>() {
+
+                    @Override
+                    public void onSuccess(Void result) {
+                        AppsIntegrationPresenterImpl.this.appTemplate = appTemplate;
+                        AppsIntegrationPresenterImpl.this.go(container);
+                        if (renameCmd != null) {
+                            renameCmd.execute();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Throwable caught) {/* Do Nothing */}
+                });
+            } else if (button == getButtonBar().getItemByItemId(PredefinedButton.NO.name())) {
+                // JDS Abort current changes to AppTemplate and switch.
+                AppsIntegrationPresenterImpl.this.appTemplate = appTemplate;
+                AppsIntegrationPresenterImpl.this.go(container);
+                if (renameCmd != null) {
+                    renameCmd.execute();
+                }
+            } else if (button == getButtonBar().getItemByItemId(PredefinedButton.CANCEL.name())) {
+                // JDS Keep the current AppTemplate
+            }
+            hide();
+        }
+    }
+
+    /**
+     * This dialog is used when the user attempts to close the view or click "Save" when the current
+     * AppTemplate contains unsaved changes.
+     * 
+     * @author jstroot
+     * 
+     */
+    private final class PromptForSaveDialog extends IplantInfoBox {
+        private final Component component;
+        private final HandlerRegistration beforeHideHndlrReg;
+
+        private PromptForSaveDialog(IplantDisplayStrings messages, Component component, HandlerRegistration beforeHideHndlrReg) {
+            super(messages.save(), messages.unsavedChanges());
+            setIcon(MessageBox.ICONS.question());
+            setPredefinedButtons(PredefinedButton.YES, PredefinedButton.NO, PredefinedButton.CANCEL);
+            this.component = component;
+            this.beforeHideHndlrReg = beforeHideHndlrReg;
+        }
+
+        @Override
+        protected void onButtonPressed(TextButton button) {
+            if (button == getButtonBar().getItemByItemId(PredefinedButton.YES.name())) {
+                // JDS Do save and let window close
+                beforeHideHndlrReg.removeHandler();
+                doOnSaveClicked(null);
+                component.hide();
+            } else if (button == getButtonBar().getItemByItemId(PredefinedButton.NO.name())) {
+                // JDS Just let window close
+                beforeHideHndlrReg.removeHandler();
+                component.hide();
+            } else if (button == getButtonBar().getItemByItemId(PredefinedButton.CANCEL.name())) {
+                // JDS Do not hide the window
+
+            }
+            hide();
+        }
+    }
+
+    /**
+     * This callback is used to apply any necessary UUIDs to an AppTemplate's Arguments before
+     * updating/saving the AppTemplate.
+     * 
+     * @author jstroot
+     * 
+     */
+    private final class GetUuidThenDoSaveCallback implements AsyncCallback<List<String>> {
         private final List<Argument> argNeedUuid;
         private final AppTemplate toBeSaved;
+        private final AsyncCallback<Void> onSaveCallback;
 
-        private GetUuidCallback(List<Argument> argNeedUuid, AppTemplate toBeSaved) {
+        private GetUuidThenDoSaveCallback(List<Argument> argNeedUuid, AppTemplate toBeSaved, AsyncCallback<Void> onSaveCallback) {
             this.argNeedUuid = argNeedUuid;
             this.toBeSaved = toBeSaved;
+            this.onSaveCallback = onSaveCallback;
         }
 
         @Override
@@ -390,24 +589,23 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
             if ((result == null) || (result.size() != argNeedUuid.size())) {
                 return;
             }
-            // JDS Apply UUIDs
+            // Apply UUIDs
             for (Argument arg : argNeedUuid) {
                 arg.setId(result.remove(0));
             }
-            doSave(toBeSaved);
+            doSave(toBeSaved, onSaveCallback);
         }
 
         @Override
         public void onFailure(Throwable caught) {
-            // TODO JDS Notify user of failure via new notification widget (waiting on CORE-4126, CORE-4170)
             ErrorHandler.post(caught);
         }
     }
 
     /**
+     * Handles all selection events from this presenter's view.
      * 
      * @author jstroot
-     * 
      */
     private final class SelectionHandler implements ArgumentSelectedEventHandler, ArgumentGroupSelectedEventHandler, AppTemplateSelectedEventHandler {
         private final AppsIntegrationView view;
@@ -433,22 +631,6 @@ public class AppsIntegrationPresenterImpl implements AppsIntegrationView.Present
             IsWidget appTemplatePropertyEditor = event.getAppTemplatePropertyEditor();
             view.setEastWidget(appTemplatePropertyEditor);
         }
-    }
-
-    @Override
-    public void setBeforeHideHandlerRegistration(HandlerRegistration hr) {
-        this.beforeHideHandlerRegistration = hr;
-    }
-
-    @Override
-    public boolean isOnlyLabelEditMode() {
-        return onlyLabelEditMode;
-    }
-
-    @Override
-    public void setOnlyLabelEditMode(boolean onlyLabelEditMode) {
-        this.onlyLabelEditMode = onlyLabelEditMode;
-        view.setOnlyLabelEditMode(onlyLabelEditMode);
     }
 
 }
