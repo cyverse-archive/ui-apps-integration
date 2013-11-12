@@ -38,13 +38,17 @@ public class FileOutputPropertyEditor extends AbstractArgumentPropertyEditor {
     @UiField(provided = true)
     AppsWidgetsPropertyPanelLabels appLabels;
 
+    @UiField
+    @Path("name")
+    TextField argumentOption;
+
     @Ignore
     @UiField(provided = true)
     @Path("dataObject.dataSource")
     ComboBox<DataSource> dataSourceComboBox;
-
     @UiField
     FieldLabel dataSourceLabel, toolTipLabel, argumentOptionLabel;
+
     @UiField(provided = true)
     ArgumentEditorConverter<String> defaultValueEditor;
 
@@ -59,16 +63,12 @@ public class FileOutputPropertyEditor extends AbstractArgumentPropertyEditor {
 
     @UiField(provided = true)
     FileOutputLabels fileOutputLabels;
-
     @UiField
     @Path("dataObject.implicit")
     CheckBoxAdapter isImplicit;
-    @UiField
-    TextField label;
 
     @UiField
-    @Path("name")
-    TextField argumentOption;
+    TextField label;
     @UiField
     CheckBoxAdapter omitIfBlank, requiredEditor;
     @UiField
@@ -136,6 +136,18 @@ public class FileOutputPropertyEditor extends AbstractArgumentPropertyEditor {
     @Ignore
     protected ComboBox<FileInfoType> getFileInfoTypeComboBox() {
         return fileInfoTypeComboBox;
+    }
+
+    @Override
+    protected void initLabelOnlyEditMode(boolean isLabelOnlyEditMode) {
+        dataSourceComboBox.setEnabled(!isLabelOnlyEditMode);
+        defaultValueEditor.setEnabled(!isLabelOnlyEditMode);
+        doNotDisplay.setEnabled(!isLabelOnlyEditMode);
+        fileInfoTypeComboBox.setEnabled(!isLabelOnlyEditMode);
+        isImplicit.setEnabled(!isLabelOnlyEditMode);
+        argumentOption.setEnabled(!isLabelOnlyEditMode);
+        omitIfBlank.setEnabled(!isLabelOnlyEditMode);
+        requiredEditor.setEnabled(!isLabelOnlyEditMode);
     }
 
     @UiHandler("defaultValueEditor")

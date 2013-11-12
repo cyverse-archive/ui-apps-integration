@@ -122,6 +122,17 @@ public class MultiFileOutputPropertyEditor extends AbstractArgumentPropertyEdito
         return fileInfoTypeComboBox;
     }
 
+    @Override
+    protected void initLabelOnlyEditMode(boolean isLabelOnlyEditMode) {
+        argumentOption.setEnabled(!isLabelOnlyEditMode);
+        defaultValueEditor.setEnabled(!isLabelOnlyEditMode);
+        doNotDisplay.setEnabled(!isLabelOnlyEditMode);
+        fileInfoTypeComboBox.setEnabled(!isLabelOnlyEditMode);
+        isImplicit.setEnabled(!isLabelOnlyEditMode);
+        omitIfBlank.setEnabled(!isLabelOnlyEditMode);
+        requiredEditor.setEnabled(!isLabelOnlyEditMode);
+    }
+
     @UiHandler("defaultValueEditor")
     void onDefaultValueChange(ValueChangeEvent<Splittable> event) {
         // Forward defaultValue onto value.

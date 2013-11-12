@@ -193,6 +193,7 @@ public abstract class AbstractArgumentPropertyEditor extends Composite implement
     @Override
     public void setLabelOnlyEditMode(boolean labelOnlyEditMode) {
         this.labelOnlyEditMode = labelOnlyEditMode;
+        initLabelOnlyEditMode(labelOnlyEditMode);
     }
 
     protected ComboBox<DataSource> createDataSourceComboBox(AppMetadataServiceFacade appMetadataService) {
@@ -312,6 +313,8 @@ public abstract class AbstractArgumentPropertyEditor extends Composite implement
     protected ComboBox<FileInfoType> getFileInfoTypeComboBox() {
         return null;
     }
+
+    protected abstract void initLabelOnlyEditMode(boolean isLabelOnlyEditMode);
 
     @UiHandler("label")
     void onLabelChanged(ValueChangeEvent<String> event) {

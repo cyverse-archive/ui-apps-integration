@@ -14,6 +14,7 @@ import com.sencha.gxt.widget.core.client.container.AccordionLayoutContainer;
 
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup;
 import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm;
+import org.iplantc.core.uiapps.widgets.client.view.HasLabelOnlyEditMode;
 
 import java.util.List;
 
@@ -22,12 +23,14 @@ public final class ArgGrpListDragSource extends DragSource {
     private final AccordionLayoutContainer container;
     private ArgumentGroup dragArgGrp = null;
     private int dragArgGrpIndex = -1;
+    private final HasLabelOnlyEditMode hasLabelOnlyEditMode;
     private final ListEditor<ArgumentGroup, AppTemplateForm.ArgumentGroupEditor> listEditor;
 
-    public ArgGrpListDragSource(AccordionLayoutContainer container, ListEditor<ArgumentGroup, AppTemplateForm.ArgumentGroupEditor> listEditor) {
+    public ArgGrpListDragSource(AccordionLayoutContainer container, ListEditor<ArgumentGroup, AppTemplateForm.ArgumentGroupEditor> listEditor, HasLabelOnlyEditMode hasLabelOnlyEditMode) {
         super(container);
         this.container = container;
         this.listEditor = listEditor;
+        this.hasLabelOnlyEditMode = hasLabelOnlyEditMode;
     }
 
     /*
@@ -74,7 +77,7 @@ public final class ArgGrpListDragSource extends DragSource {
         IsWidget findWidget = container.findWidget(as);
         List<AppTemplateForm.ArgumentGroupEditor> editors = listEditor.getEditors();
         boolean contains = editors.contains(findWidget);
-        if ((findWidget != null) && contains && ((ContentPanel)findWidget.asWidget()).getHeader().getElement().isOrHasChild(as)) {
+        if ((findWidget != null) && contains && ((ContentPanel)findWidget.asWidget()).getHeader().getElement().isOrHasChild(as) && !hasLabelOnlyEditMode.isLabelOnlyEditMode()) {
             event.getStatusProxy().update(((ContentPanel)findWidget.asWidget()).getHeader().getElement().getString());
             event.setCancelled(false);
 

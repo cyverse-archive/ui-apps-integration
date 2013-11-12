@@ -393,6 +393,8 @@ public class AppsEditorViewImpl extends Composite implements AppsEditorView {
         if ((currArgumentPropEditor != null) && (event.getSource() instanceof ArgumentEditor)) {
             ArgumentEditor currArgEditor = (ArgumentEditor)event.getSource();
             currArgumentPropEditor.setBoundArgumentEditor(currArgEditor);
+
+            currArgumentPropEditor.setLabelOnlyEditMode(presenter.isLabelOnlyEditMode());
         }
 
     }

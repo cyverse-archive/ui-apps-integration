@@ -25,6 +25,7 @@ import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentType;
 import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;
 import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm;
+import org.iplantc.core.uiapps.widgets.client.view.HasLabelOnlyEditMode;
 import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 
 /**
@@ -39,17 +40,17 @@ public final class ArgumentWYSIWYGDeleteHandler implements MouseOverHandler, Mou
     private final AppTemplateWizardAppearance appearance;
     private final IconButton button;
     private HandlerManager handlerManager;
-    private final boolean labelOnlyEditMode;
+    private final HasLabelOnlyEditMode hasLabelOnlyEditMode;
     private final VerticalLayoutContainer layoutContainer;
     private final ListEditor<Argument, AppTemplateForm.ArgumentEditorFactory> listEditor;
 
     public ArgumentWYSIWYGDeleteHandler(AppTemplateWizardAppearance appearance, ListEditor<Argument, AppTemplateForm.ArgumentEditorFactory> listEditor, VerticalLayoutContainer layoutContainer,
-            IconButton button, boolean labelOnlyEditMode) {
+            IconButton button, HasLabelOnlyEditMode hasLabelOnlyEditMode) {
         this.appearance = appearance;
         this.listEditor = listEditor;
         this.layoutContainer = layoutContainer;
         this.button = button;
-        this.labelOnlyEditMode = labelOnlyEditMode;
+        this.hasLabelOnlyEditMode = hasLabelOnlyEditMode;
         layoutContainer.addDomHandler(this, MouseOverEvent.getType());
         layoutContainer.addDomHandler(this, MouseOutEvent.getType());
         layoutContainer.add(button);
@@ -89,7 +90,7 @@ public final class ArgumentWYSIWYGDeleteHandler implements MouseOverHandler, Mou
                 // Determine if button needs to be placed,
                 // if so, then place it.
                 Argument arg = listEditor.getList().get(j);
-                if (isOnlyLabelEditMode() && !arg.getType().equals(ArgumentType.Info)) {
+                if (hasLabelOnlyEditMode.isLabelOnlyEditMode() && !arg.getType().equals(ArgumentType.Info)) {
                     break;
                 }
 
@@ -111,7 +112,7 @@ public final class ArgumentWYSIWYGDeleteHandler implements MouseOverHandler, Mou
         if (currentItemIndex >= 0) {
             Argument arg = listEditor.getList().get(currentItemIndex);
 
-            if (isOnlyLabelEditMode() && !arg.getType().equals(ArgumentType.Info)) {
+            if (hasLabelOnlyEditMode.isLabelOnlyEditMode() && !arg.getType().equals(ArgumentType.Info)) {
                 return;
             }
             ensureHandlers().fireEvent(new DeleteArgumentEvent(arg));
@@ -147,7 +148,4 @@ public final class ArgumentWYSIWYGDeleteHandler implements MouseOverHandler, Mou
         return new HandlerManager(this);
     }
 
-    private boolean isOnlyLabelEditMode() {
-        return labelOnlyEditMode;
-    }
 }

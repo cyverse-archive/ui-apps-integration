@@ -81,5 +81,13 @@ public class TreeSelectionPropertyEditor extends AbstractArgumentPropertyEditor 
         return editorDriver;
     }
 
+    @Override
+    protected void initLabelOnlyEditMode(boolean isLabelOnlyEditMode) {
+        argumentOptionEditor.setEnabled(!isLabelOnlyEditMode);
+        doNotDisplay.setEnabled(!isLabelOnlyEditMode);
+        omitIfBlank.setEnabled(!isLabelOnlyEditMode);
+        requiredEditor.setEnabled(!isLabelOnlyEditMode);
+    }
+
 
 }

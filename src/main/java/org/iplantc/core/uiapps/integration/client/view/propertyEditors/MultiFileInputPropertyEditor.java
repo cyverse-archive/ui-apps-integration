@@ -91,4 +91,12 @@ public class MultiFileInputPropertyEditor extends AbstractArgumentPropertyEditor
         return fileInfoTypeComboBox;
     }
 
+    @Override
+    protected void initLabelOnlyEditMode(boolean isLabelOnlyEditMode) {
+        argumentOption.setEnabled(!isLabelOnlyEditMode);
+        fileInfoTypeComboBox.setEnabled(!isLabelOnlyEditMode);
+        requiredEditor.setEnabled(!isLabelOnlyEditMode);
+        omitIfBlank.setEnabled(!isLabelOnlyEditMode);
+    }
+
 }

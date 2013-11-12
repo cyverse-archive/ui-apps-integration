@@ -23,6 +23,7 @@ import org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup;
 import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm;
 import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm.ArgumentEditorFactory;
 import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm.ArgumentGroupEditor;
+import org.iplantc.core.uiapps.widgets.client.view.HasLabelOnlyEditMode;
 
 import java.util.List;
 
@@ -34,12 +35,12 @@ public class InitializeArgumentGroupEventManagement extends EditorVisitor {
 
     private final ArgumentGroupEditor argumentGroupEditor;
     private final AutoBean<ArgumentGroup> autoBean;
-    private final boolean labelOnlyEditMode;
+    private final HasLabelOnlyEditMode hasLabelOnlyEditMode;
 
-    public InitializeArgumentGroupEventManagement(AutoBean<ArgumentGroup> argumentGroupAutoBean, ArgumentGroupEditor argumentGroupEditor, boolean labelOnlyEditMode) {
+    public InitializeArgumentGroupEventManagement(AutoBean<ArgumentGroup> argumentGroupAutoBean, ArgumentGroupEditor argumentGroupEditor, HasLabelOnlyEditMode hasLabelOnlyEditMode) {
         this.argumentGroupEditor = argumentGroupEditor;
         this.autoBean = argumentGroupAutoBean;
-        this.labelOnlyEditMode = labelOnlyEditMode;
+        this.hasLabelOnlyEditMode = hasLabelOnlyEditMode;
         argumentGroupEditor.showWhenEmptyOrAllInvisible();
     }
 
@@ -51,8 +52,8 @@ public class InitializeArgumentGroupEventManagement extends EditorVisitor {
         if (editor instanceof AppTemplateForm) {
             AppTemplateForm appTemplateForm = (AppTemplateForm)editor;
             ListEditor<Argument, ArgumentEditorFactory> asEditor = argumentGroupEditor.argumentsEditor();
-            new ArgListEditorDragSource(argumentGroupEditor.getDndContainer(), asEditor);
-            ArgListEditorDropTarget argListEditorDropTarget = new ArgListEditorDropTarget(labelOnlyEditMode, argumentGroupEditor.getDndContainer(), asEditor, appTemplateForm.getDndContainer()
+            new ArgListEditorDragSource(argumentGroupEditor.getDndContainer(), asEditor, hasLabelOnlyEditMode);
+            ArgListEditorDropTarget argListEditorDropTarget = new ArgListEditorDropTarget(hasLabelOnlyEditMode, argumentGroupEditor.getDndContainer(), asEditor, appTemplateForm.getDndContainer()
                     .getElement());
             argListEditorDropTarget.setFeedback(BOTH);
             argListEditorDropTarget.setAllowSelfAsSource(true);

@@ -54,4 +54,9 @@ public class InfoPropertyEditor extends AbstractArgumentPropertyEditor {
         return editorDriver;
     }
 
+    @Override
+    protected void initLabelOnlyEditMode(boolean isLabelOnlyEditMode) {
+        // Do nothing
+    }
+
 }

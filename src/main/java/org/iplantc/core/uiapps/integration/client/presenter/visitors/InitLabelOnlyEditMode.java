@@ -7,12 +7,17 @@ import org.iplantc.core.uiapps.widgets.client.view.HasLabelOnlyEditMode;
 
 public class InitLabelOnlyEditMode extends EditorVisitor {
 
+    private final boolean onlyLabelEditMode;
+
+    public InitLabelOnlyEditMode(boolean onlyLabelEditMode) {
+        this.onlyLabelEditMode = onlyLabelEditMode;
+    }
+
     @Override
-    public <T> boolean visit(EditorContext<T> ctx) {
+    public <T> void endVisit(EditorContext<T> ctx) {
         if (ctx.getEditor() instanceof HasLabelOnlyEditMode) {
-            ((HasLabelOnlyEditMode)ctx.getEditor()).setLabelOnlyEditMode(true);
+            ((HasLabelOnlyEditMode)ctx.getEditor()).setLabelOnlyEditMode(onlyLabelEditMode);
         }
-        return ctx.asLeafValueEditor() == null;
     }
 
 }

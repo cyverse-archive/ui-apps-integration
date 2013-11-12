@@ -18,6 +18,7 @@ import static com.sencha.gxt.cell.core.client.form.ComboBoxCell.TriggerAction.AL
 import com.sencha.gxt.data.client.editor.ListStoreEditor;
 import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
+import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.button.ToolButton;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
@@ -70,14 +71,18 @@ public class IntegerSelectionPropertyEditor extends AbstractArgumentPropertyEdit
     @Path("visible")
     CheckBoxAdapter doNotDisplay;
 
+    @Ignore
+    @UiField
+    TextButton editSimpleListBtn;
+
     @UiField(provided = true)
     IntegerSelectionLabels integerSelectionLabels;
 
     @UiField
     TextField label;
-
     @UiField
     CheckBoxAdapter omitIfBlank, requiredEditor;
+
     final ListStoreEditor<SelectionItem> selectionItemsEditor;
 
     @UiField
@@ -139,6 +144,17 @@ public class IntegerSelectionPropertyEditor extends AbstractArgumentPropertyEdit
     @Ignore
     protected LeafValueEditor<Splittable> getDefaultValueEditor() {
         return defaultValueEditor;
+    }
+
+    @Override
+    protected void initLabelOnlyEditMode(boolean isLabelOnlyEditMode) {
+        argumentOption.setEnabled(!isLabelOnlyEditMode);
+        defaultValueEditor.setEnabled(!isLabelOnlyEditMode);
+        doNotDisplay.setEnabled(!isLabelOnlyEditMode);
+        omitIfBlank.setEnabled(!isLabelOnlyEditMode);
+        requiredEditor.setEnabled(!isLabelOnlyEditMode);
+        selectionItemsComboBox.setEnabled(!isLabelOnlyEditMode);
+        editSimpleListBtn.setEnabled(!isLabelOnlyEditMode);
     }
 
     @UiHandler("defaultValueEditor")

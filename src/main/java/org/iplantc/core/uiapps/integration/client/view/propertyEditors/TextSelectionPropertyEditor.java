@@ -18,6 +18,7 @@ import static com.sencha.gxt.cell.core.client.form.ComboBoxCell.TriggerAction.AL
 import com.sencha.gxt.data.client.editor.ListStoreEditor;
 import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
+import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.button.ToolButton;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
@@ -66,6 +67,10 @@ public class TextSelectionPropertyEditor extends AbstractArgumentPropertyEditor 
     @UiField
     @Path("visible")
     CheckBoxAdapter doNotDisplay;
+
+    @Ignore
+    @UiField
+    TextButton editSimpleListBtn;
 
     @UiField
     TextField label;
@@ -143,6 +148,17 @@ public class TextSelectionPropertyEditor extends AbstractArgumentPropertyEditor 
     @Ignore
     protected LeafValueEditor<Splittable> getDefaultValueEditor() {
         return defaultValueEditor;
+    }
+
+    @Override
+    protected void initLabelOnlyEditMode(boolean isLabelOnlyEditMode) {
+        argumentOptionEditor.setEnabled(!isLabelOnlyEditMode);
+        defaultValueEditor.setEnabled(!isLabelOnlyEditMode);
+        doNotDisplay.setEnabled(!isLabelOnlyEditMode);
+        omitIfBlank.setEnabled(!isLabelOnlyEditMode);
+        requiredEditor.setEnabled(!isLabelOnlyEditMode);
+        selectionItemsComboBox.setEnabled(!isLabelOnlyEditMode);
+        editSimpleListBtn.setEnabled(!isLabelOnlyEditMode);
     }
 
     @UiHandler("defaultValueEditor")

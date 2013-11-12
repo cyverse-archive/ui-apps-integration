@@ -115,6 +115,15 @@ public class TextInputPropertyEditor extends AbstractArgumentPropertyEditor {
         return defaultValueEditor;
     }
 
+    @Override
+    protected void initLabelOnlyEditMode(boolean isLabelOnlyEditMode) {
+        argumentOptionEditor.setEnabled(!isLabelOnlyEditMode);
+        defaultValueEditor.setEnabled(!isLabelOnlyEditMode);
+        doNotDisplay.setEnabled(!isLabelOnlyEditMode);
+        omitIfBlank.setEnabled(!isLabelOnlyEditMode);
+        requiredEditor.setEnabled(!isLabelOnlyEditMode);
+    }
+
     @UiHandler("defaultValueEditor")
     void onDefaultValueChange(ValueChangeEvent<Splittable> event) {
         // Forward defaultValue onto value.

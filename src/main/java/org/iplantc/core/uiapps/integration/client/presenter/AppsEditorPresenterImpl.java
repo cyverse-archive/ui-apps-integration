@@ -50,6 +50,7 @@ import org.iplantc.core.uiapps.widgets.client.events.ArgumentAddedEvent;
 import org.iplantc.core.uiapps.widgets.client.events.ArgumentAddedEvent.ArgumentAddedEventHandler;
 import org.iplantc.core.uiapps.widgets.client.events.ArgumentGroupAddedEvent;
 import org.iplantc.core.uiapps.widgets.client.events.ArgumentGroupAddedEvent.ArgumentGroupAddedEventHandler;
+import org.iplantc.core.uiapps.widgets.client.events.ArgumentSelectedEvent;
 import org.iplantc.core.uiapps.widgets.client.models.AppTemplate;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup;
@@ -347,23 +348,23 @@ public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, Delete
 
     @Override
     public void go(HasOneWidget container) {
-        setOnlyLabelEditMode(appTemplate.isPublic());
+        setLabelOnlyEditMode(appTemplate.isPublic());
         /*
          * JDS Make a copy so we can check for differences on exit.
          */
         this.lastSave = AppTemplateUtils.copyAppTemplate(appTemplate);
 
         view.getEditorDriver().edit(appTemplate);
+        view.onArgumentSelected(new ArgumentSelectedEvent(null));
         /*
          * JDS Set postEdit to true to enable handling of ArgumentGroupAddedEvents and
          * ArgumentAddedEvents
          */
         postEdit = true;
-        if (isOnlyLabelEditMode()) {
-            view.getEditorDriver().accept(new InitLabelOnlyEditMode());
-        }
-        view.getEditorDriver().accept(new InitializeDragAndDrop(isOnlyLabelEditMode()));
-        GatherAllEventProviders gatherAllEventProviders = new GatherAllEventProviders(appearance, isOnlyLabelEditMode(), this);
+        view.getEditorDriver().accept(new InitLabelOnlyEditMode(isLabelOnlyEditMode()));
+
+        view.getEditorDriver().accept(new InitializeDragAndDrop(this));
+        GatherAllEventProviders gatherAllEventProviders = new GatherAllEventProviders(appearance, this, this);
         view.getEditorDriver().accept(gatherAllEventProviders);
         view.getEditorDriver().accept(new RegisterEventHandlers(this, this, this, this, gatherAllEventProviders));
 
@@ -429,7 +430,7 @@ public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, Delete
     }
 
     @Override
-    public boolean isOnlyLabelEditMode() {
+    public boolean isLabelOnlyEditMode() {
         return onlyLabelEditMode;
     }
 
@@ -449,7 +450,7 @@ public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, Delete
         }
 
         AutoBean<ArgumentGroup> autoBean = AutoBeanUtils.getAutoBean(event.getArgumentGroup());
-        view.getEditorDriver().accept(new InitializeArgumentGroupEventManagement(autoBean, event.getArgumentGroupEditor(), onlyLabelEditMode));
+        view.getEditorDriver().accept(new InitializeArgumentGroupEventManagement(autoBean, event.getArgumentGroupEditor(), this));
         event.getArgumentGroupEditor().addArgumentAddedEventHandler(this);
         event.getArgumentGroupEditor().addArgumentGroupSelectedHandler(view);
     }
@@ -556,7 +557,7 @@ public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, Delete
     }
 
     @Override
-    public void setOnlyLabelEditMode(boolean onlyLabelEditMode) {
+    public void setLabelOnlyEditMode(boolean onlyLabelEditMode) {
         this.onlyLabelEditMode = onlyLabelEditMode;
         view.setOnlyLabelEditMode(onlyLabelEditMode);
     }
@@ -623,7 +624,7 @@ public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, Delete
             }
         };
 
-        if (isOnlyLabelEditMode()) {
+        if (isLabelOnlyEditMode()) {
             atService.updateAppLabels(lastSave, saveCallback);
         } else {
             atService.saveAndPublishAppTemplate(lastSave, saveCallback);

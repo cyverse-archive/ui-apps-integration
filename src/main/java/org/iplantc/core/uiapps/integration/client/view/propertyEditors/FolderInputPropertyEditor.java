@@ -31,20 +31,21 @@ public class FolderInputPropertyEditor extends AbstractArgumentPropertyEditor {
     @UiField(provided = true)
     AppsWidgetsPropertyPanelLabels appLabels;
 
+    @Path("name")
+    @UiField
+    TextField argumentOption;
+
     @UiField
     FieldLabel argumentOptionLabel, toolTipLabel, fileInfoTypeLabel;
-
     @Ignore
     @UiField(provided = true)
     @Path("dataObject.fileInfoType")
     ComboBox<FileInfoType> fileInfoTypeComboBox;
+
     @UiField(provided = true)
     FolderInputTypeLabels folderInputLabels;
-
     @UiField
     TextField label;
-    @UiField
-    TextField name;
     @UiField
     CheckBoxAdapter requiredEditor, omitIfBlank;
 
@@ -86,6 +87,14 @@ public class FolderInputPropertyEditor extends AbstractArgumentPropertyEditor {
     @Ignore
     protected ComboBox<FileInfoType> getFileInfoTypeComboBox() {
         return fileInfoTypeComboBox;
+    }
+
+    @Override
+    protected void initLabelOnlyEditMode(boolean isLabelOnlyEditMode) {
+        fileInfoTypeComboBox.setEnabled(!isLabelOnlyEditMode);
+        argumentOption.setEnabled(!isLabelOnlyEditMode);
+        requiredEditor.setEnabled(!isLabelOnlyEditMode);
+        omitIfBlank.setEnabled(!isLabelOnlyEditMode);
     }
 
 }

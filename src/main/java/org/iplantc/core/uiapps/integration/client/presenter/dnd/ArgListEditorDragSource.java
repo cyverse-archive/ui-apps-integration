@@ -18,18 +18,21 @@ import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;
 import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm;
 import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm.ArgumentEditorFactory;
+import org.iplantc.core.uiapps.widgets.client.view.HasLabelOnlyEditMode;
 
 public final class ArgListEditorDragSource extends DragSource {
 
     private final VerticalLayoutContainer container;
     private Argument dragArgument = null;
     private int dragArgumentIndex = -1;
+    private final HasLabelOnlyEditMode hasLabelOnlyEditMode;
     private final ListEditor<Argument, AppTemplateForm.ArgumentEditorFactory> listEditor;
 
-    public ArgListEditorDragSource(VerticalLayoutContainer container, ListEditor<Argument, AppTemplateForm.ArgumentEditorFactory> listEditor) {
+    public ArgListEditorDragSource(VerticalLayoutContainer container, ListEditor<Argument, AppTemplateForm.ArgumentEditorFactory> listEditor, HasLabelOnlyEditMode hasLabelOnlyEditMode) {
         super(container);
         this.container = container;
         this.listEditor = listEditor;
+        this.hasLabelOnlyEditMode = hasLabelOnlyEditMode;
     }
 
     /*
@@ -85,7 +88,7 @@ public final class ArgListEditorDragSource extends DragSource {
 
         // Only want to allow drag start when we are over a child
         IsWidget findWidget = container.findWidget(as);
-        if (findWidget instanceof SimpleContainer) {
+        if ((findWidget instanceof SimpleContainer) && !hasLabelOnlyEditMode.isLabelOnlyEditMode()) {
             Widget widget2 = ((SimpleContainer)findWidget).getWidget();
             for (ArgumentEditorFactory aef : listEditor.getEditors()) {
                 if (aef.getSubEditor() == widget2) {

@@ -37,12 +37,16 @@ public class FolderOutputPropertyEditor extends AbstractArgumentPropertyEditor {
     @UiField(provided = true)
     AppsWidgetsPropertyPanelLabels appLabels;
 
+    @UiField
+    @Path("name")
+    TextField argumentOption;
+
     @UiField(provided = true)
     ArgumentEditorConverter<String> defaultValueEditor;
-
     @UiField
     @Path("visible")
     CheckBoxAdapter doNotDisplay;
+
     @Ignore
     @UiField(provided = true)
     @Path("dataObject.fileInfoType")
@@ -54,10 +58,6 @@ public class FolderOutputPropertyEditor extends AbstractArgumentPropertyEditor {
     @UiField
     @Path("dataObject.implicit")
     CheckBoxAdapter isImplicit;
-
-    @UiField
-    @Path("name")
-    TextField argumentOption;
     @UiField
     TextField label;
     @UiField
@@ -121,6 +121,17 @@ public class FolderOutputPropertyEditor extends AbstractArgumentPropertyEditor {
     @Ignore
     protected ComboBox<FileInfoType> getFileInfoTypeComboBox() {
         return fileInfoTypeComboBox;
+    }
+
+    @Override
+    protected void initLabelOnlyEditMode(boolean isLabelOnlyEditMode) {
+        defaultValueEditor.setEnabled(!isLabelOnlyEditMode);
+        doNotDisplay.setEnabled(!isLabelOnlyEditMode);
+        fileInfoTypeComboBox.setEnabled(!isLabelOnlyEditMode);
+        isImplicit.setEnabled(!isLabelOnlyEditMode);
+        argumentOption.setEnabled(!isLabelOnlyEditMode);
+        omitIfBlank.setEnabled(!isLabelOnlyEditMode);
+        requiredEditor.setEnabled(!isLabelOnlyEditMode);
     }
 
     @UiHandler("defaultValueEditor")

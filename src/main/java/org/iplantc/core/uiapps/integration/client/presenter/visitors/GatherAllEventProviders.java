@@ -22,6 +22,7 @@ import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm.ArgumentEdito
 import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm.ArgumentGroupEditor;
 import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm.HasDisableValidations;
 import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm.HasDisabledOnNotVisible;
+import org.iplantc.core.uiapps.widgets.client.view.HasLabelOnlyEditMode;
 import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 import org.iplantc.core.uidiskresource.client.views.widgets.DiskResourceSelector.HasDisableBrowseButtons;
 
@@ -48,12 +49,12 @@ public class GatherAllEventProviders extends EditorVisitor {
     private final List<HasArgumentRequiredChangedHandlers> hasArgumentRequiredChangedHandlers = Lists.newArrayList();
     private final List<HasDeleteArgumentGroupEventHandlers> hasDeleteArgGrpHandlers = Lists.newArrayList();
     private final List<HasDeleteArgumentEventHandlers> hasDeleteArgumentHandlers = Lists.newArrayList();
+    private final HasLabelOnlyEditMode hasLabelOnlyEditMode;
     private final Map<String, List<HasValueChangeHandlers<?>>> hasValChangeHandlerMap = Maps.newHashMap();
-    private final boolean labelOnlyEditMode;
 
-    public GatherAllEventProviders(AppTemplateWizardAppearance appearance, boolean labelOnlyEditMode, DeleteArgumentEventHandler delArgHandler) {
+    public GatherAllEventProviders(AppTemplateWizardAppearance appearance, HasLabelOnlyEditMode hasLabelOnlyEditMode, DeleteArgumentEventHandler delArgHandler) {
         this.appearance = appearance;
-        this.labelOnlyEditMode = labelOnlyEditMode;
+        this.hasLabelOnlyEditMode = hasLabelOnlyEditMode;
         this.delArgHandler = delArgHandler;
     }
 
@@ -120,7 +121,7 @@ public class GatherAllEventProviders extends EditorVisitor {
             argumentGroupEditor.showWhenEmptyOrAllInvisible();
             argumentGroupEditor.asWidget().sinkEvents(Event.ONCLICK | Event.MOUSEEVENTS);
             ArgumentWYSIWYGDeleteHandler argumentWYSIWYGDeleteHandler = new ArgumentWYSIWYGDeleteHandler(appearance, argumentGroupEditor.argumentsEditor(), argumentGroupEditor.getDndContainer(),
-                    appearance.getArgListDeleteButton(), labelOnlyEditMode);
+                    appearance.getArgListDeleteButton(), hasLabelOnlyEditMode);
             getHasDeleteArgumentHandlers().add(argumentWYSIWYGDeleteHandler);
             getHasArgSelectedHandlers().add(argumentWYSIWYGDeleteHandler);
             argumentWYSIWYGDeleteHandler.addDeleteArgumentEventHandler(delArgHandler);

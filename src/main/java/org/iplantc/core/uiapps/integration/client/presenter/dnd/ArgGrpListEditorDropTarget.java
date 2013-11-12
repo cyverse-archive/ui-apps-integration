@@ -1,6 +1,17 @@
 package org.iplantc.core.uiapps.integration.client.presenter.dnd;
 
-import java.util.List;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.editor.client.adapters.ListEditor;
+import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.ui.IsWidget;
+import com.google.web.bindery.autobean.shared.AutoBeanUtils;
+
+import com.sencha.gxt.core.client.dom.XElement;
+import com.sencha.gxt.dnd.core.client.DndDropEvent;
+import com.sencha.gxt.widget.core.client.ContentPanel;
+import com.sencha.gxt.widget.core.client.Header;
+import com.sencha.gxt.widget.core.client.container.AccordionLayoutContainer;
 
 import org.iplantc.core.resources.client.messages.I18N;
 import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
@@ -8,19 +19,10 @@ import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup;
 import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;
 import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm;
+import org.iplantc.core.uiapps.widgets.client.view.HasLabelOnlyEditMode;
 import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.EventTarget;
-import com.google.gwt.editor.client.adapters.ListEditor;
-import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.ui.IsWidget;
-import com.google.web.bindery.autobean.shared.AutoBeanUtils;
-import com.sencha.gxt.core.client.dom.XElement;
-import com.sencha.gxt.dnd.core.client.DndDropEvent;
-import com.sencha.gxt.widget.core.client.ContentPanel;
-import com.sencha.gxt.widget.core.client.Header;
-import com.sencha.gxt.widget.core.client.container.AccordionLayoutContainer;
+import java.util.List;
 
 /**
  * This <code>DropTarget</code> is responsible for handling
@@ -39,13 +41,13 @@ public final class ArgGrpListEditorDropTarget extends ContainerDropTarget<Accord
     private final AppTemplateWizardAppearance appearance = AppTemplateWizardAppearance.INSTANCE;
     private final AppsWidgetsPropertyPanelLabels appsWidgetsDisplay = I18N.APPS_LABELS;
     private int grpCountInt = 2;
+    private final HasLabelOnlyEditMode hasLabelOnlyEditMode;
     private Header header;
-    private final boolean labelOnlyEditMode;
     private final ListEditor<ArgumentGroup, AppTemplateForm.ArgumentGroupEditor> listEditor;
 
-    public ArgGrpListEditorDropTarget(boolean labelOnlyEditMode, AccordionLayoutContainer container, ListEditor<ArgumentGroup, AppTemplateForm.ArgumentGroupEditor> editor) {
+    public ArgGrpListEditorDropTarget(HasLabelOnlyEditMode hasLabelOnlyEditMode, AccordionLayoutContainer container, ListEditor<ArgumentGroup, AppTemplateForm.ArgumentGroupEditor> editor) {
         super(container);
-        this.labelOnlyEditMode = labelOnlyEditMode;
+        this.hasLabelOnlyEditMode = hasLabelOnlyEditMode;
         this.listEditor = editor;
     }
 
@@ -63,17 +65,14 @@ public final class ArgGrpListEditorDropTarget extends ContainerDropTarget<Accord
         }
 
         if (list != null) {
-//            setFireSelectedOnAdd(true);
             list.add(insertIndex, newArgGrp);
-            // presenter.onArgumentPropertyValueChange();
         }
 
-        // Not sure if that should occur here, or elsewhere.
     }
 
     @Override
     protected boolean verifyDragData(Object dragData) {
-        return (dragData instanceof ArgumentGroup) && super.verifyDragData(dragData) && !labelOnlyEditMode;
+        return (dragData instanceof ArgumentGroup) && super.verifyDragData(dragData) && !hasLabelOnlyEditMode.isLabelOnlyEditMode();
     }
 
     @Override

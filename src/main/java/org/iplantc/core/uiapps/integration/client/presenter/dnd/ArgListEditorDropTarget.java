@@ -1,20 +1,22 @@
 package org.iplantc.core.uiapps.integration.client.presenter.dnd;
 
-import java.util.List;
+import com.google.common.base.Strings;
+import com.google.gwt.editor.client.adapters.ListEditor;
+import com.google.web.bindery.autobean.shared.AutoBean;
+import com.google.web.bindery.autobean.shared.AutoBeanUtils;
+
+import com.sencha.gxt.core.client.dom.XElement;
+import com.sencha.gxt.dnd.core.client.DndDropEvent;
+import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentType;
 import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;
 import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm;
+import org.iplantc.core.uiapps.widgets.client.view.HasLabelOnlyEditMode;
 import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 
-import com.google.common.base.Strings;
-import com.google.gwt.editor.client.adapters.ListEditor;
-import com.google.web.bindery.autobean.shared.AutoBean;
-import com.google.web.bindery.autobean.shared.AutoBeanUtils;
-import com.sencha.gxt.core.client.dom.XElement;
-import com.sencha.gxt.dnd.core.client.DndDropEvent;
-import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
+import java.util.List;
 
 /**
  * A drop target class which handles the addition of new arguments to this editor's ListEditor.
@@ -26,12 +28,13 @@ public final class ArgListEditorDropTarget extends ContainerDropTarget<VerticalL
 
     private final AppTemplateWizardAppearance appearance = AppTemplateWizardAppearance.INSTANCE;
     private int argCountInt = 1;
-    private final boolean labelOnlyEditMode;
+    private final HasLabelOnlyEditMode hasLabelOnlyEditMode;
     private final ListEditor<Argument, AppTemplateForm.ArgumentEditorFactory> listEditor;
 
-    public ArgListEditorDropTarget(boolean labelOnlyEditMode, VerticalLayoutContainer container, ListEditor<Argument, AppTemplateForm.ArgumentEditorFactory> editor, XElement scrollElement) {
+    public ArgListEditorDropTarget(HasLabelOnlyEditMode hasLabelOnlyEditMode, VerticalLayoutContainer container, ListEditor<Argument, AppTemplateForm.ArgumentEditorFactory> editor,
+            XElement scrollElement) {
         super(container, scrollElement);
-        this.labelOnlyEditMode = labelOnlyEditMode;
+        this.hasLabelOnlyEditMode = hasLabelOnlyEditMode;
         this.listEditor = editor;
         setScrollDelay(appearance.getAutoScrollDelay());
         setScrollRegionHeight(appearance.getAutoScrollRegionHeight());
@@ -57,7 +60,6 @@ public final class ArgListEditorDropTarget extends ContainerDropTarget<VerticalL
         if (list != null) {
             // JDS Protect against OBOB issues (caused by argument delete button, which is actually a
             // child of the argumentsContainer
-//            setFireSelectedOnAdd(true);
             if (insertIndex >= list.size()) {
                 list.add(data);
             } else {
@@ -77,12 +79,12 @@ public final class ArgListEditorDropTarget extends ContainerDropTarget<VerticalL
                     list.remove(argToRemove);
                 }
             }
-            // presenter.onArgumentPropertyValueChange();
         }
     }
 
     @Override
     protected boolean verifyDragData(Object dragData) {
+        boolean labelOnlyEditMode = hasLabelOnlyEditMode.isLabelOnlyEditMode();
         // Only accept drag data which is an Argument
         return (dragData instanceof Argument) && super.verifyDragData(dragData)
  && (!labelOnlyEditMode || (labelOnlyEditMode && ((Argument)dragData).getType().equals(ArgumentType.Info)));

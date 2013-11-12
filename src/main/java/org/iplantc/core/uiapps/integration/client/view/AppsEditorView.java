@@ -17,6 +17,7 @@ import org.iplantc.core.uiapps.widgets.client.models.AppTemplate;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.view.AppLaunchView.RenameWindowHeaderCommand;
 import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm;
+import org.iplantc.core.uiapps.widgets.client.view.HasLabelOnlyEditMode;
 
 /**
  * @author jstroot
@@ -27,7 +28,8 @@ public interface AppsEditorView extends IsWidget, Editor<AppTemplate>, ArgumentS
     interface EditorDriver extends SimpleBeanEditorDriver<AppTemplate, AppsEditorView> {
     }
 
-    public interface Presenter extends org.iplantc.core.uiapps.widgets.client.view.AppLaunchView.BasePresenter, AppEditorToolbar.Presenter, BeforeHideHandler, UpdateCommandLinePreviewEventHandler {
+    public interface Presenter extends org.iplantc.core.uiapps.widgets.client.view.AppLaunchView.BasePresenter, AppEditorToolbar.Presenter, BeforeHideHandler, UpdateCommandLinePreviewEventHandler,
+            HasLabelOnlyEditMode {
 
         /**
          * This constant is used to key into an Autobean's tag map
@@ -36,8 +38,6 @@ public interface AppsEditorView extends IsWidget, Editor<AppTemplate>, ArgumentS
         void go(final HasOneWidget container, final AppTemplate appTemplate, final RenameWindowHeaderCommand renameCmd);
 
         boolean isEditorDirty();
-
-        boolean isOnlyLabelEditMode();
 
         /**
          * Checks if the given argument should be ordered in order to be used by an App at launch.
@@ -48,8 +48,6 @@ public interface AppsEditorView extends IsWidget, Editor<AppTemplate>, ArgumentS
         boolean orderingRequired(Argument arg);
 
         void setBeforeHideHandlerRegistration(HandlerRegistration hr);
-
-        void setOnlyLabelEditMode(boolean onlyLabelEditMode);
 
     }
 
