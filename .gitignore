@@ -4,6 +4,9 @@
 .settings
 bin
 
+*.eml
+*.iml
+
 # the Mac .DS_Store directory
 .DS_Store
 
@@ -26,3 +29,4 @@ war
 # IntelliJ Idea files
 .idea
 *.iml
+*.eml

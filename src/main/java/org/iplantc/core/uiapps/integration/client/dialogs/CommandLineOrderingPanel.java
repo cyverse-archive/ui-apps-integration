@@ -1,18 +1,12 @@
 package org.iplantc.core.uiapps.integration.client.dialogs;
 
-import java.util.List;
-
-import org.iplantc.core.resources.client.uiapps.integration.AppIntegrationMessages;
-import org.iplantc.core.uiapps.integration.client.view.AppsIntegrationView;
-import org.iplantc.core.uiapps.widgets.client.models.Argument;
-import org.iplantc.core.uiapps.widgets.client.models.ArgumentProperties;
-
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Widget;
+
 import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.data.shared.SortDir;
@@ -27,23 +21,32 @@ import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 
+import org.iplantc.core.resources.client.uiapps.integration.AppIntegrationMessages;
+import org.iplantc.core.uiapps.integration.client.view.AppsEditorView;
+import org.iplantc.core.uiapps.widgets.client.models.Argument;
+import org.iplantc.core.uiapps.widgets.client.models.ArgumentProperties;
+
+import java.util.List;
+
 /**
- * TODO JDS Update grid re-ordering on drag drop
- * 
  * @author jstroot
  * 
  */
 public class CommandLineOrderingPanel extends Composite {
 
-    private static CommandLineOrderingPanelUiBinder BINDER = GWT.create(CommandLineOrderingPanelUiBinder.class);
+    interface CommandLineOrderingPanelUiBinder extends UiBinder<Widget, CommandLineOrderingPanel> {}
 
     private final class ArgNameValueProvider implements ValueProvider<Argument, String> {
+        @Override
+        public String getPath() {
+            return "name"; //$NON-NLS-1$
+        }
+
         @Override
         public String getValue(Argument object) {
             String retVal = object.getName();
             if (Strings.isNullOrEmpty(retVal)) {
                 retVal = object.getLabel();
-                // FIXME JDS Need to add more robust label concatenation logic.
             }
             return retVal;
         }
@@ -51,33 +54,35 @@ public class CommandLineOrderingPanel extends Composite {
         @Override
         public void setValue(Argument object, String value) {
         }
+    }
 
+    private final class DropHandler implements DndDropHandler {
         @Override
-        public String getPath() {
-            return "name"; //$NON-NLS-1$
+        public void onDrop(DndDropEvent event) {
+            updateArgumentOrdering();
         }
     }
 
-    interface CommandLineOrderingPanelUiBinder extends UiBinder<Widget, CommandLineOrderingPanel> {}
+    private static CommandLineOrderingPanelUiBinder BINDER = GWT.create(CommandLineOrderingPanelUiBinder.class);
 
     @UiField(provided = true)
     ColumnModel<Argument> cm;
 
-    @UiField(provided = true)
-    ListStore<Argument> orderedStore;
-
     @UiField
     Grid<Argument> orderedGrid;
 
-    private final StoreSortInfo<Argument> orderStoreSortInfo;
-
-    private final AppsIntegrationView.Presenter presenter;
+    @UiField(provided = true)
+    ListStore<Argument> orderedStore;
 
     private final ArgumentProperties argProps;
 
     private final AppIntegrationMessages messages;
 
-    public CommandLineOrderingPanel(List<Argument> arguments, AppsIntegrationView.Presenter presenter, AppIntegrationMessages messages) {
+    private final StoreSortInfo<Argument> orderStoreSortInfo;
+
+    private final AppsEditorView.Presenter presenter;
+
+    public CommandLineOrderingPanel(List<Argument> arguments, AppsEditorView.Presenter presenter, AppIntegrationMessages messages) {
         this.presenter = presenter;
         this.messages = messages;
         argProps = GWT.create(ArgumentProperties.class);
@@ -151,14 +156,6 @@ public class CommandLineOrderingPanel extends Composite {
         // store during DnD.
         orderedStore.clearSortInfo();
 
-    }
-
-    private final class DropHandler implements DndDropHandler {
-        @Override
-        public void onDrop(DndDropEvent event) {
-            updateArgumentOrdering();
-            presenter.onAppTemplateChanged();
-        }
     }
 
 }
