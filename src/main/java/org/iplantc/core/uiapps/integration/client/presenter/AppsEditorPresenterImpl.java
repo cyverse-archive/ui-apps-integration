@@ -21,8 +21,6 @@ import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
 import com.sencha.gxt.widget.core.client.box.MessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.BeforeHideEvent;
-import com.sencha.gxt.widget.core.client.event.HideEvent;
-import com.sencha.gxt.widget.core.client.event.HideEvent.HideHandler;
 
 import org.iplantc.core.jsonutil.JsonUtil;
 import org.iplantc.core.resources.client.messages.I18N;
@@ -457,26 +455,31 @@ public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, Delete
 
     @Override
     public void onArgumentOrderClicked() {
-        IPlantDialog dlg = new IPlantDialog();
-        dlg.setPredefinedButtons(PredefinedButton.OK);
-        dlg.setHeadingText(appIntMessages.commandLineOrder());
-        dlg.setModal(true);
-        dlg.setOkButtonText(messages.done());
-        dlg.setAutoHide(false);
     
         AppTemplate flushRawApp = view.getEditorDriver().flush();
-        CommandLineOrderingPanel clop = new CommandLineOrderingPanel(
-                getAllTemplateArguments(flushRawApp), this, appIntMessages);
-        clop.setSize("640", "480");
-        dlg.add(clop);
-        dlg.addHideHandler(new HideHandler() {
+        final List<Argument> allTemplateArguments = getAllTemplateArguments(flushRawApp);
+        uuidService.getUUIDs(allTemplateArguments.size(), new AsyncCallback<List<String>>() {
+
             @Override
-            public void onHide(HideEvent event) {
-                // TODO CORE-4806 Tell view to refresh since we may have changed values.
-                // view.onAppTemplateChanged();
+            public void onSuccess(List<String> result) {
+
+                final IPlantDialog dlg = new IPlantDialog();
+                dlg.setPredefinedButtons(PredefinedButton.OK);
+                dlg.setHeadingText(appIntMessages.commandLineOrder());
+                dlg.setModal(true);
+                dlg.setOkButtonText(messages.done());
+                dlg.setAutoHide(false);
+                CommandLineOrderingPanel clop = new CommandLineOrderingPanel(allTemplateArguments, AppsEditorPresenterImpl.this, appIntMessages, result);
+                clop.setSize("640", "480");
+                dlg.add(clop);
+                dlg.show();
+            }
+
+            @Override
+            public void onFailure(Throwable caught) {
+                ErrorHandler.post(caught);
             }
         });
-        dlg.show();
     }
 
     @Override

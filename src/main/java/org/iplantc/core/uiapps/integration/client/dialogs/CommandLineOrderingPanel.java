@@ -82,9 +82,12 @@ public class CommandLineOrderingPanel extends Composite {
 
     private final AppsEditorView.Presenter presenter;
 
-    public CommandLineOrderingPanel(List<Argument> arguments, AppsEditorView.Presenter presenter, AppIntegrationMessages messages) {
+    private final List<String> uuids;
+
+    public CommandLineOrderingPanel(List<Argument> arguments, AppsEditorView.Presenter presenter, AppIntegrationMessages messages, List<String> uuids) {
         this.presenter = presenter;
         this.messages = messages;
+        this.uuids = uuids;
         argProps = GWT.create(ArgumentProperties.class);
         orderStoreSortInfo = new StoreSortInfo<Argument>(argProps.order(), SortDir.ASC);
         initColumnModels();
@@ -120,6 +123,11 @@ public class CommandLineOrderingPanel extends Composite {
     private void initListStores(List<Argument> arguments) {
         orderedStore = new ListStore<Argument>(argProps.id());
         for (Argument arg : arguments) {
+            if (Strings.isNullOrEmpty(arg.getId())) {
+                if (!uuids.isEmpty()) {
+                    arg.setId(uuids.remove(0));
+                }
+            }
             if (presenter.orderingRequired(arg)) {
                 Integer order = arg.getOrder();
 
