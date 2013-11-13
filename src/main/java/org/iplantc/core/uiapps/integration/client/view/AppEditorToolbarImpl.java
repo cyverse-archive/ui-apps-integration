@@ -7,32 +7,33 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Widget;
+
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.menu.Item;
 import com.sencha.gxt.widget.core.client.menu.MenuItem;
 
-public class AppIntegrationToolbarImpl implements AppIntegrationToolbar {
+public class AppEditorToolbarImpl implements AppEditorToolbar {
 
     @UiTemplate("AppIntegrationToolbar.ui.xml")
-    interface AppIntegrationToolBarUiBinder extends UiBinder<Widget, AppIntegrationToolbarImpl> {}
+    interface AppIntegrationToolBarUiBinder extends UiBinder<Widget, AppEditorToolbarImpl> {}
 
     private static AppIntegrationToolBarUiBinder BINDER = GWT.create(AppIntegrationToolBarUiBinder.class);
 
     @UiField
-    TextButton saveButton;
+    TextButton argumentOrderButton;
 
     @UiField
     MenuItem previewUiMenuItem, previewJsonMenuItem;
 
     @UiField
-    TextButton argumentOrderButton;
+    TextButton saveButton;
 
-    private AppIntegrationToolbar.Presenter presenter;
+    private AppEditorToolbar.Presenter presenter;
 
     private final Widget widget;
 
-    public AppIntegrationToolbarImpl() {
+    public AppEditorToolbarImpl() {
         widget = BINDER.createAndBindUi(this);
     }
 
@@ -42,28 +43,28 @@ public class AppIntegrationToolbarImpl implements AppIntegrationToolbar {
     }
 
     @Override
-    public void setPresenter(AppIntegrationToolbar.Presenter presenter) {
+    public void setPresenter(AppEditorToolbar.Presenter presenter) {
         this.presenter = presenter;
     }
 
-    @UiHandler("saveButton")
-    void onSaveButtonClicked(SelectEvent event) {
-        presenter.onSaveClicked();
-    }
-
-    @UiHandler("previewUiMenuItem")
-    void onPreviewUiClicked(SelectionEvent<Item> event) {
-        presenter.onPreviewUiClicked();
+    @UiHandler("argumentOrderButton")
+    void onArgumentOrderButtonClicked(@SuppressWarnings("unused") SelectEvent event) {
+        presenter.onArgumentOrderClicked();
     }
 
     @UiHandler("previewJsonMenuItem")
-    void onPreviewJsonClicked(SelectionEvent<Item> event) {
+    void onPreviewJsonClicked(@SuppressWarnings("unused") SelectionEvent<Item> event) {
         presenter.onPreviewJsonClicked();
     }
 
-    @UiHandler("argumentOrderButton")
-    void onArgumentOrderButtonClicked(SelectEvent event) {
-        presenter.onArgumentOrderClicked();
+    @UiHandler("previewUiMenuItem")
+    void onPreviewUiClicked(@SuppressWarnings("unused") SelectionEvent<Item> event) {
+        presenter.onPreviewUiClicked();
+    }
+
+    @UiHandler("saveButton")
+    void onSaveButtonClicked(@SuppressWarnings("unused") SelectEvent event) {
+        presenter.onSaveClicked();
     }
 
 }

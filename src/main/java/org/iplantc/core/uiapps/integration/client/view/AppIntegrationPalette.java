@@ -52,29 +52,29 @@ import com.sencha.gxt.widget.core.client.tree.Tree.CheckCascade;
  */
 class AppIntegrationPalette extends Composite {
 
-    private static AppIntegrationPaletteUiBinder uiBinder = GWT.create(AppIntegrationPaletteUiBinder.class);
     interface AppIntegrationPaletteUiBinder extends UiBinder<Widget, AppIntegrationPalette> {}
-
-    private final AppTemplateAutoBeanFactory factory = GWT.create(AppTemplateAutoBeanFactory.class);
-
-    @UiField
-    Image flag, environmentVariable, multiFileSelector, fileInput, group, integerInput, treeSelection, singleSelect, multiLineText, text;
-
-    @UiField
-    Image info, folderInput, integerSelection, doubleSelection, doubleInput, fileOutput, folderOutput, multiFileOutput, referenceGenome, referenceSequence, referenceAnnotation;
+    private static AppIntegrationPaletteUiBinder uiBinder = GWT.create(AppIntegrationPaletteUiBinder.class);
 
     @UiField
     ToolButton fileFolderCategoryHelpBtn, listsCategoryHelpBtn, textNumericalInputCategoryHelpBtn, outputCategoryHelpBtn, referenceGenomeCategoryHelpBtn;
 
+    @UiField
+    Image flag, environmentVariable, multiFileSelector, fileInput, group, integerInput, treeSelection, singleSelect, multiLineText, text;
+
     // Expose group drag source for special case handling in AppsIntegrationViewImpl
     DragSource grpDragSource;
 
+    @UiField
+    Image info, folderInput, integerSelection, doubleSelection, doubleInput, fileOutput, folderOutput, multiFileOutput, referenceGenome, referenceSequence, referenceAnnotation;
+
+    private final AppTemplateWizardAppearance appearance = AppTemplateWizardAppearance.INSTANCE;
+
+    private final AppsWidgetsDefaultLabels defaultLabels = GWT.create(AppsWidgetsDefaultLabels.class);
+
     private final Map<ArgumentType, DragSource> dragSourceMap = Maps.newHashMap();
 
+    private final AppTemplateAutoBeanFactory factory = GWT.create(AppTemplateAutoBeanFactory.class);
     private boolean onlyLabelEditMode;
-
-    private final AppTemplateWizardAppearance appearance = GWT.create(AppTemplateWizardAppearance.class);
-    private final AppsWidgetsDefaultLabels defaultLabels = GWT.create(AppsWidgetsDefaultLabels.class);
     private final IplantContextualHelpAccessStyle style = IplantResources.RESOURCES.getContxtualHelpStyle();
 
     public AppIntegrationPalette() {
@@ -124,6 +124,10 @@ class AppIntegrationPalette extends Composite {
 
     }
 
+    public void setOnlyLabelEditMode(boolean onlyLabelEditMode) {
+        this.onlyLabelEditMode = onlyLabelEditMode;
+    }
+
     @UiFactory
     ToolButton createToolButton() {
         return new ToolButton(style.contextualHelp());
@@ -139,22 +143,6 @@ class AppIntegrationPalette extends Composite {
         popup.setWidth(450);
         popup.add(new HTML(getCategoryContextHelp(btn)));
         popup.showAt(btn.getAbsoluteLeft(), btn.getAbsoluteTop() + 15);
-    }
-
-    private SafeHtml getCategoryContextHelp(ToolButton btn) {
-        SafeHtml ret = null;
-        if (btn == fileFolderCategoryHelpBtn) {
-            ret = appearance.getContextHelpMessages().appCategoryFileInput();
-        } else if (btn == listsCategoryHelpBtn) {
-            ret = appearance.getContextHelpMessages().appCategoryLists();
-        } else if (btn == textNumericalInputCategoryHelpBtn) {
-            ret = appearance.getContextHelpMessages().appCategoryTextInput();
-        } else if (btn == outputCategoryHelpBtn) {
-            ret = appearance.getContextHelpMessages().appCategoryOutput();
-        } else if (btn == referenceGenomeCategoryHelpBtn) {
-            ret = appearance.getContextHelpMessages().appCategoryReferenceGenome();
-        }
-        return ret;
     }
 
     private void createDragSource(final Image widget, final ArgumentType type) {
@@ -191,17 +179,6 @@ class AppIntegrationPalette extends Composite {
         }
     }
 
-    private ArgumentGroup createNewArgumentGroup() {
-        AutoBean<ArgumentGroup> argGrpAb = factory.argumentGroup();
-        // JDS Annotate as a newly created autobean
-        argGrpAb.setTag(ArgumentGroup.IS_NEW, "--");
-
-        ArgumentGroup ag = argGrpAb.as();
-        ag.setArguments(Lists.<Argument> newArrayList());
-        ag.setLabel("DEFAULT");
-        return ag;
-    }
-
     private Argument createNewArgument(ArgumentType type) {
         AutoBean<Argument> argAb = factory.argument();
         // JDS Annotate as a newly created autobean.
@@ -235,14 +212,12 @@ class AppIntegrationPalette extends Composite {
         }
         // Special handling to initialize new arguments, for specific ArgumentTypes.
         switch (type) {
-            case Selection:
             case TextSelection:
                 argument.setLabel(defaultLabels.defTextSelection());
                 break;
             case IntegerSelection:
                 argument.setLabel(defaultLabels.defIntegerSelection());
                 break;
-            case ValueSelection:
             case DoubleSelection:
                 argument.setLabel(defaultLabels.defDoubleSelection());
                 break;
@@ -322,8 +297,31 @@ class AppIntegrationPalette extends Composite {
         return argument;
     }
 
-    public void setOnlyLabelEditMode(boolean onlyLabelEditMode) {
-        this.onlyLabelEditMode = onlyLabelEditMode;
+    private ArgumentGroup createNewArgumentGroup() {
+        AutoBean<ArgumentGroup> argGrpAb = factory.argumentGroup();
+        // JDS Annotate as a newly created autobean
+        argGrpAb.setTag(ArgumentGroup.IS_NEW, "--");
+
+        ArgumentGroup ag = argGrpAb.as();
+        ag.setArguments(Lists.<Argument> newArrayList());
+        ag.setLabel("DEFAULT");
+        return ag;
+    }
+
+    private SafeHtml getCategoryContextHelp(ToolButton btn) {
+        SafeHtml ret = null;
+        if (btn == fileFolderCategoryHelpBtn) {
+            ret = appearance.getContextHelpMessages().appCategoryFileInput();
+        } else if (btn == listsCategoryHelpBtn) {
+            ret = appearance.getContextHelpMessages().appCategoryLists();
+        } else if (btn == textNumericalInputCategoryHelpBtn) {
+            ret = appearance.getContextHelpMessages().appCategoryTextInput();
+        } else if (btn == outputCategoryHelpBtn) {
+            ret = appearance.getContextHelpMessages().appCategoryOutput();
+        } else if (btn == referenceGenomeCategoryHelpBtn) {
+            ret = appearance.getContextHelpMessages().appCategoryReferenceGenome();
+        }
+        return ret;
     }
 
 }
