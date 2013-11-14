@@ -1,5 +1,17 @@
 package org.iplantc.core.uiapps.integration.client.view.propertyEditors;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
+import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
+import org.iplantc.core.resources.client.uiapps.widgets.argumentTypes.CheckboxInputLabels;
+import org.iplantc.core.uiapps.widgets.client.models.Argument;
+import org.iplantc.core.uiapps.widgets.client.view.editors.arguments.converters.ArgumentEditorConverter;
+import org.iplantc.core.uiapps.widgets.client.view.editors.arguments.converters.SplittableToBooleanConverter;
+import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.core.uiapps.widgets.client.view.editors.widgets.CheckBoxAdapter;
+
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
@@ -19,25 +31,12 @@ import com.google.gwt.user.client.TakesValue;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.autobean.shared.Splittable;
-
 import com.sencha.gxt.widget.core.client.event.InvalidEvent;
 import com.sencha.gxt.widget.core.client.event.InvalidEvent.InvalidHandler;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.form.Validator;
 import com.sencha.gxt.widget.core.client.form.error.DefaultEditorError;
-
-import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
-import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
-import org.iplantc.core.resources.client.uiapps.widgets.argumentTypes.CheckboxInputLabels;
-import org.iplantc.core.uiapps.widgets.client.models.Argument;
-import org.iplantc.core.uiapps.widgets.client.view.editors.arguments.converters.ArgumentEditorConverter;
-import org.iplantc.core.uiapps.widgets.client.view.editors.arguments.converters.SplittableToBooleanConverter;
-import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
-import org.iplantc.core.uiapps.widgets.client.view.editors.widgets.CheckBoxAdapter;
-
-import java.util.LinkedList;
-import java.util.List;
 
 public class FlagArgumentPropertyEditor extends AbstractArgumentPropertyEditor {
 
@@ -52,7 +51,7 @@ public class FlagArgumentPropertyEditor extends AbstractArgumentPropertyEditor {
             @Override
             public List<EditorError> validate(Editor<String> editor, String value) {
                 if (Strings.isNullOrEmpty(value) && Strings.isNullOrEmpty(otherArgOption.getValue())) {
-                    return Lists.<EditorError> newArrayList(new DefaultEditorError(editor, "You can't do that! Dumbass!", value));
+                    return Lists.<EditorError> newArrayList(new DefaultEditorError(editor, "An argument value cannot be defined without a corresponding argument option.", value));
                 }
                 return null;
             }
@@ -68,8 +67,7 @@ public class FlagArgumentPropertyEditor extends AbstractArgumentPropertyEditor {
             @Override
             public List<EditorError> validate(Editor<String> editor, String value) {
                 if (!Strings.isNullOrEmpty(value) && Strings.isNullOrEmpty(argOption.getValue())) {
-                    // ERROR
-                    return Lists.<EditorError> newArrayList(new DefaultEditorError(editor, "", value));
+                    return Lists.<EditorError> newArrayList(new DefaultEditorError(editor, "At least one argument option must be defined.", value));
                 }
                 return null;
             }
@@ -102,15 +100,15 @@ public class FlagArgumentPropertyEditor extends AbstractArgumentPropertyEditor {
             // Split value
             LinkedList<String> newLinkedList = Lists.newLinkedList(Splitter.on(",").omitEmptyStrings().trimResults().split(Strings.nullToEmpty(value)));
             if (newLinkedList.peek() != null) {
-                setCheckedFields(newLinkedList.pop());
-                setUncheckedFields(newLinkedList.pop());
+                setCheckedFields(newLinkedList.removeFirst());
+                setUncheckedFields(newLinkedList.removeFirst());
             }
         }
 
         private void setUncheckedFields(String pop) {
-            LinkedList<String> newLinkedList = Lists.newLinkedList(Splitter.onPattern("\\s").omitEmptyStrings().trimResults().split(pop));
-            checkedArgOption1.setValue(newLinkedList.pop());
-            checkedValue1.setValue(newLinkedList.pop());
+            LinkedList<String> newLinkedList = Lists.newLinkedList(Splitter.on(" ").omitEmptyStrings().trimResults().split(pop));
+            checkedArgOption1.setValue(newLinkedList.removeFirst());
+            checkedValue1.setValue(newLinkedList.removeFirst());
         }
 
         private void setCheckedFields(String pop) {
@@ -119,9 +117,9 @@ public class FlagArgumentPropertyEditor extends AbstractArgumentPropertyEditor {
                 unCheckedValue1.clear();
                 return;
             }
-            LinkedList<String> newLinkedList = Lists.newLinkedList(Splitter.onPattern("\\s").omitEmptyStrings().trimResults().split(pop));
-            unCheckedArgOption1.setValue(newLinkedList.pop());
-            unCheckedValue1.setValue(newLinkedList.pop());
+            LinkedList<String> newLinkedList = Lists.newLinkedList(Splitter.on(" ").omitEmptyStrings().trimResults().split(pop));
+            unCheckedArgOption1.setValue(newLinkedList.removeFirst());
+            unCheckedValue1.setValue(newLinkedList.removeFirst());
         }
 
         @Override
