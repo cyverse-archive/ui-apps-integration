@@ -51,6 +51,8 @@ public interface AppsEditorView extends IsWidget, Editor<AppTemplate>, ArgumentS
 
     }
 
+    AppTemplate flush();
+
     /**
      * Exposed to satisfy Editor contract
      * 
@@ -70,6 +72,8 @@ public interface AppsEditorView extends IsWidget, Editor<AppTemplate>, ArgumentS
     EditorDriver getEditorDriver();
 
     AppEditorToolbar getToolbar();
+
+    boolean hasErrors();
 
     void setCmdLinePreview(String cmdLinePreview);
 

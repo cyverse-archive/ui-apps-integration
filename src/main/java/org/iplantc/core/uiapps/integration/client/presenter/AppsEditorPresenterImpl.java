@@ -74,9 +74,6 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * TODO CORE-4806 Will have to obtain errors from property editors.
- * TODO CORE-4806 Need to audit editor dirty state logic
- * 
  * @author jstroot
  * 
  */
@@ -461,6 +458,11 @@ public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, Delete
         uuidService.getUUIDs(allTemplateArguments.size(), new AsyncCallback<List<String>>() {
 
             @Override
+            public void onFailure(Throwable caught) {
+                ErrorHandler.post(caught);
+            }
+
+            @Override
             public void onSuccess(List<String> result) {
 
                 final IPlantDialog dlg = new IPlantDialog();
@@ -473,11 +475,6 @@ public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, Delete
                 clop.setSize("640", "480");
                 dlg.add(clop);
                 dlg.show();
-            }
-
-            @Override
-            public void onFailure(Throwable caught) {
-                ErrorHandler.post(caught);
             }
         });
     }
@@ -636,7 +633,7 @@ public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, Delete
     }
 
     private AppTemplate flushViewAndClean() {
-        return AppTemplateUtils.removeEmptyGroupArguments(view.getEditorDriver().flush());
+        return AppTemplateUtils.removeEmptyGroupArguments(view.flush());
     }
 
     private List<Argument> getAllTemplateArguments(AppTemplate at) {
@@ -652,7 +649,7 @@ public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, Delete
 
     private boolean isViewValid() {
         flushViewAndClean();
-        return !view.getEditorDriver().hasErrors();
+        return !view.hasErrors();
     }
 
     private void updateCommandLinePreview(final AppTemplate at) {

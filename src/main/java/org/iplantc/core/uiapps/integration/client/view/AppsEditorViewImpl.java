@@ -54,6 +54,7 @@ import org.iplantc.core.uiapps.integration.client.view.widgets.AppTemplateProper
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent;
 import org.iplantc.core.uiapps.widgets.client.events.ArgumentGroupSelectedEvent;
 import org.iplantc.core.uiapps.widgets.client.events.ArgumentSelectedEvent;
+import org.iplantc.core.uiapps.widgets.client.models.AppTemplate;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentType;
@@ -185,6 +186,15 @@ public class AppsEditorViewImpl extends Composite implements AppsEditorView {
     }
 
     @Override
+    public AppTemplate flush() {
+        if (currArgumentPropEditor != null) {
+            currArgumentPropEditor.getEditorDriver().flush();
+        }
+        AppTemplate flushed = editorDriver.flush();
+        return flushed;
+    }
+
+    @Override
     public AppTemplateForm getAppTemplateForm() {
         return wizard;
     }
@@ -202,6 +212,19 @@ public class AppsEditorViewImpl extends Composite implements AppsEditorView {
     @Override
     public AppEditorToolbar getToolbar() {
         return toolbar;
+    }
+
+    @Override
+    public boolean hasErrors() {
+        boolean argGrpPropertyEditorHasErrors = false;
+        boolean currArgPropEditorHasErrors = false;
+        if (currArgumentPropEditor != null) {
+            currArgPropEditorHasErrors = currArgumentPropEditor.getEditorDriver().hasErrors();
+        }
+        if (argGrpPropertyEditor != null) {
+            argGrpPropertyEditorHasErrors = argGrpPropertyEditor.getEditorDriver().hasErrors();
+        }
+        return editorDriver.hasErrors() || currArgPropEditorHasErrors || argGrpPropertyEditorHasErrors;
     }
 
     @Override

@@ -67,8 +67,11 @@ public abstract class AbstractArgumentPropertyEditor extends Composite implement
 
             private void doBinding() {
                 vcPpropEditor.getEditorDriver().flush();
-                vcPpropEditor.getBoundEditorDelegate().accept(new Refresher());
-                vcPpropEditor.asWidget().fireEvent(new UpdateCommandLinePreviewEvent());
+                AbstractEditorDelegate<Argument, ? extends Editor<Argument>> boundEditorDelegate = vcPpropEditor.getBoundEditorDelegate();
+                if (boundEditorDelegate != null) {
+                    boundEditorDelegate.accept(new Refresher());
+                    vcPpropEditor.asWidget().fireEvent(new UpdateCommandLinePreviewEvent());
+                }
             }
 
         }
@@ -170,7 +173,7 @@ public abstract class AbstractArgumentPropertyEditor extends Composite implement
     @SuppressWarnings("unchecked")
     @Override
     public AbstractEditorDelegate<Argument, ? extends Editor<Argument>> getBoundEditorDelegate() {
-        return (AbstractEditorDelegate<Argument, ? extends Editor<Argument>>)argumentEditor.getEditorDelegate();
+        return (argumentEditor != null) ? (AbstractEditorDelegate<Argument, ? extends Editor<Argument>>)argumentEditor.getEditorDelegate() : null;
     }
 
     @Override
