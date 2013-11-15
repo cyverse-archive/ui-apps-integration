@@ -2,21 +2,41 @@ package org.iplantc.core.uiapps.integration.client.view.propertyEditors;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.google.web.bindery.autobean.shared.AutoBean;
+import com.google.web.bindery.autobean.shared.AutoBeanUtils;
 
+import com.sencha.gxt.core.client.dom.ScrollSupport.ScrollMode;
+import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
+import com.sencha.gxt.widget.core.client.button.TextButton;
+import com.sencha.gxt.widget.core.client.button.ToolButton;
+import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
+import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
+import com.sencha.gxt.widget.core.client.event.SelectEvent;
+import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
 import com.sencha.gxt.widget.core.client.form.TextField;
 
+import org.iplantc.core.resources.client.IplantResources;
+import org.iplantc.core.resources.client.messages.I18N;
 import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
 import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
 import org.iplantc.core.resources.client.uiapps.widgets.argumentTypes.TreeSelectionLabels;
+import org.iplantc.core.uiapps.integration.client.view.propertyEditors.widgets.SelectionItemTreePropertyEditor;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
+import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItem;
+import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItemGroup;
 import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 import org.iplantc.core.uiapps.widgets.client.view.editors.widgets.CheckBoxAdapter;
+import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IPlantDialog;
+import org.iplantc.core.uicommons.client.widgets.ContextualHelpPopup;
 
 public class TreeSelectionPropertyEditor extends AbstractArgumentPropertyEditor {
 
@@ -40,6 +60,7 @@ public class TreeSelectionPropertyEditor extends AbstractArgumentPropertyEditor 
 
     @UiField
     CheckBoxAdapter omitIfBlank, requiredEditor;
+
     @UiField
     @Path("description")
     TextField toolTipEditor;
@@ -48,6 +69,10 @@ public class TreeSelectionPropertyEditor extends AbstractArgumentPropertyEditor 
     FieldLabel toolTipTextLabel, argumentOptionLabel;
     @UiField(provided = true)
     TreeSelectionLabels treeSelectionLabels;
+
+    @Ignore
+    @UiField
+    TextButton editTreeListBtn;
 
     private final EditorDriver editorDriver = GWT.create(EditorDriver.class);
 
@@ -68,6 +93,56 @@ public class TreeSelectionPropertyEditor extends AbstractArgumentPropertyEditor 
 
         editorDriver.initialize(this);
         editorDriver.accept(new InitializeTwoWayBinding(this));
+    }
+
+    @UiHandler("editTreeListBtn")
+    void onEditTreeListSelected(SelectEvent event) {
+        IPlantDialog dlg = new IPlantDialog();
+        dlg.setPredefinedButtons(PredefinedButton.OK, PredefinedButton.CANCEL);
+        dlg.setHeadingText(appearance.getPropertyPanelLabels().singleSelectionCreateLabel());
+        dlg.setModal(true);
+        dlg.setOkButtonText(I18N.DISPLAY.done());
+        dlg.setAutoHide(false);
+        final SelectionItemTreePropertyEditor selectionItemTreeEditor = new SelectionItemTreePropertyEditor(model.getSelectionItems());
+        dlg.setSize("640", "480");
+        VerticalLayoutContainer vlc = new VerticalLayoutContainer();
+        vlc.setScrollMode(ScrollMode.AUTOY);
+        vlc.add(selectionItemTreeEditor, new VerticalLayoutData(1.0, 1.0));
+        dlg.add(vlc);
+        dlg.addOkButtonSelectHandler(new SelectHandler() {
+
+            @Override
+            public void onSelect(SelectEvent event) {
+                // Manually grab values
+                model.getSelectionItems().clear();
+
+                /*
+                 * JDS Grab the AutoBean tag for items which should be removed. This is to communicate to
+                 * the center tree store that some items should be removed from the store.
+                 */
+                final AutoBean<SelectionItemGroup> values = selectionItemTreeEditor.getValues();
+                AutoBeanUtils.getAutoBean(model).setTag(SelectionItem.TO_BE_REMOVED, values.getTag(SelectionItem.TO_BE_REMOVED));
+                values.setTag(SelectionItem.TO_BE_REMOVED, null);
+                model.getSelectionItems().add(values.as());
+                // presenter.onArgumentPropertyValueChange(ArgumentPropertyEditor.this);
+                ValueChangeEvent.fire(TreeSelectionPropertyEditor.this, null);
+            }
+        });
+
+        final ToolButton toolBtn = new ToolButton(IplantResources.RESOURCES.getContxtualHelpStyle().contextualHelp());
+        toolBtn.addSelectHandler(new SelectHandler() {
+
+            @Override
+            public void onSelect(SelectEvent event) {
+                ContextualHelpPopup popup = new ContextualHelpPopup();
+                popup.setWidth(450);
+                popup.add(new HTML(appearance.getContextHelpMessages().treeSelectionCreateTree()));
+                popup.showAt(toolBtn.getAbsoluteLeft(), toolBtn.getAbsoluteTop() + 15);
+            }
+        });
+        dlg.addTool(toolBtn);
+
+        dlg.show();
     }
 
     @Override
