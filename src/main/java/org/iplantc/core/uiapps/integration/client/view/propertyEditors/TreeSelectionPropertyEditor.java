@@ -96,7 +96,7 @@ public class TreeSelectionPropertyEditor extends AbstractArgumentPropertyEditor 
     }
 
     @UiHandler("editTreeListBtn")
-    void onEditTreeListSelected(SelectEvent event) {
+    void onEditTreeListSelected(@SuppressWarnings("unused") SelectEvent event) {
         IPlantDialog dlg = new IPlantDialog();
         dlg.setPredefinedButtons(PredefinedButton.OK, PredefinedButton.CANCEL);
         dlg.setHeadingText(appearance.getPropertyPanelLabels().singleSelectionCreateLabel());
@@ -124,8 +124,11 @@ public class TreeSelectionPropertyEditor extends AbstractArgumentPropertyEditor 
                 AutoBeanUtils.getAutoBean(model).setTag(SelectionItem.TO_BE_REMOVED, values.getTag(SelectionItem.TO_BE_REMOVED));
                 values.setTag(SelectionItem.TO_BE_REMOVED, null);
                 model.getSelectionItems().add(values.as());
-                // presenter.onArgumentPropertyValueChange(ArgumentPropertyEditor.this);
-                ValueChangeEvent.fire(TreeSelectionPropertyEditor.this, null);
+                /*
+                 * Fire value change on an arbitrary LeafValueEditor which is bound in the
+                 * InitializeTwoWayBinding visitor
+                 */
+                ValueChangeEvent.fire(toolTipEditor, model.getDescription());
             }
         });
 
