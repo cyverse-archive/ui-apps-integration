@@ -338,7 +338,7 @@ public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, Delete
 
     @Override
     public AppTemplate getAppTemplate() {
-        return appTemplate;
+        return appTemplate != null ? flushViewAndClean() : null;
     }
 
     @Override
