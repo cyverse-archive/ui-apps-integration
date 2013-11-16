@@ -190,6 +190,9 @@ public class AppsEditorViewImpl extends Composite implements AppsEditorView {
         if (currArgumentPropEditor != null) {
             currArgumentPropEditor.getEditorDriver().flush();
         }
+        if (argGrpPropertyEditor != null) {
+            argGrpPropertyEditor.getEditorDriver().flush();
+        }
         AppTemplate flushed = editorDriver.flush();
         return flushed;
     }
