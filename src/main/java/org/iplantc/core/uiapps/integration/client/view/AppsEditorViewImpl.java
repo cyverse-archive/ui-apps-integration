@@ -244,6 +244,7 @@ public class AppsEditorViewImpl extends Composite implements AppsEditorView {
 
         if (argGrpPropertyEditor == null) {
             argGrpPropertyEditor = argGrpPropEditorProvider.get();
+            argGrpPropertyEditor.addDeleteArgumentGroupEventHandler(presenter);
         }
 
         argGrpPropertyEditor.edit(selectedArgumentGroup, event.getAbsoluteEditorPath());

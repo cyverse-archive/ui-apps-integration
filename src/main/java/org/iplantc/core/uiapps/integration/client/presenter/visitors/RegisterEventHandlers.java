@@ -14,8 +14,6 @@ import com.google.web.bindery.autobean.shared.AutoBeanUtils;
 
 import org.iplantc.core.uiapps.integration.client.events.DeleteArgumentEvent.DeleteArgumentEventHandler;
 import org.iplantc.core.uiapps.integration.client.events.DeleteArgumentEvent.HasDeleteArgumentEventHandlers;
-import org.iplantc.core.uiapps.integration.client.events.DeleteArgumentGroupEvent.DeleteArgumentGroupEventHandler;
-import org.iplantc.core.uiapps.integration.client.events.DeleteArgumentGroupEvent.HasDeleteArgumentGroupEventHandlers;
 import org.iplantc.core.uiapps.integration.client.view.AppsEditorView;
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent.AppTemplateSelectedEventHandler;
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent.HasAppTemplateSelectedEventHandlers;
@@ -61,18 +59,16 @@ public class RegisterEventHandlers extends EditorVisitor {
     private final List<HasArgumentGroupAddedEventHandlers> hasArgGrpAddedHandlers;
     private final List<HasArgumentGroupSelectedHandlers> hasArgGrpSelectedHandlers;
     private final List<HasArgumentSelectedEventHandlers> hasArgSelectedHandlers;
-    private final List<HasDeleteArgumentGroupEventHandlers> hasDeleteArgGrpHandlers;
     private final List<HasDeleteArgumentEventHandlers> hasDeleteArgHandlers;
     private final Map<String, List<HasValueChangeHandlers<?>>> hasValChangeHandlerMap;
 
-    public RegisterEventHandlers(DeleteArgumentGroupEventHandler deleteArgumentGroupEventHandler, DeleteArgumentEventHandler deleteArgumentEventHandler,
+    public RegisterEventHandlers(DeleteArgumentEventHandler deleteArgumentEventHandler,
             ArgumentGroupAddedEventHandler argumentGroupAddedEventHandler, ArgumentAddedEventHandler argumentAddedEventHandler, GatherAllEventProviders eventProviders) {
 
         this.hasAppTemplateSelectedHandlers = eventProviders.getHasAppTemplateSelectedHandlers();
 
         this.hasArgGrpAddedHandlers = eventProviders.getHasArgGrpAddedHandlers();
         this.hasArgGrpSelectedHandlers = eventProviders.getHasArgGrpSelectedHandlers();
-        this.hasDeleteArgGrpHandlers = eventProviders.getHasDeleteArgGrpHandlers();
 
         this.hasArgAddedHandlers = eventProviders.getHasArgumentAddedHandlers();
         this.hasArgSelectedHandlers = eventProviders.getHasArgSelectedHandlers();
@@ -81,9 +77,6 @@ public class RegisterEventHandlers extends EditorVisitor {
 
         for (HasArgumentGroupAddedEventHandlers hasHandlers : hasArgGrpAddedHandlers) {
             hasHandlers.addArgumentGroupAddedEventHandler(argumentGroupAddedEventHandler);
-        }
-        for (HasDeleteArgumentGroupEventHandlers hasHandlers : hasDeleteArgGrpHandlers) {
-            hasHandlers.addDeleteArgumentGroupEventHandler(deleteArgumentGroupEventHandler);
         }
         for (HasArgumentAddedEventHandlers hasHandlers : hasArgAddedHandlers) {
             hasHandlers.addArgumentAddedEventHandler(argumentAddedEventHandler);
@@ -125,12 +118,6 @@ public class RegisterEventHandlers extends EditorVisitor {
             for (HasArgumentGroupSelectedHandlers hasArgGrpSelHndlr : hasArgGrpSelectedHandlers) {
                 HandlerRegistration argumentGroupSelectedReg = hasArgGrpSelHndlr.addArgumentGroupSelectedHandler((ArgumentGroupSelectedEventHandler)editorAsHandler);
                 getAutobeanHandlers(autoBean).add(argumentGroupSelectedReg);
-            }
-        }
-        if (editorAsHandler instanceof DeleteArgumentGroupEventHandler) {
-            for(HasDeleteArgumentGroupEventHandlers hasHandlers : hasDeleteArgGrpHandlers){
-                HandlerRegistration hr = hasHandlers.addDeleteArgumentGroupEventHandler((DeleteArgumentGroupEventHandler)editorAsHandler);
-                getAutobeanHandlers(autoBean).add(hr);                
             }
         }
 

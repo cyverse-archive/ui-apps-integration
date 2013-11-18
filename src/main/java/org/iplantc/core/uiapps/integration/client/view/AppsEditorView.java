@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.IsWidget;
 
 import com.sencha.gxt.widget.core.client.event.BeforeHideEvent.BeforeHideHandler;
 
+import org.iplantc.core.uiapps.integration.client.events.DeleteArgumentGroupEvent.DeleteArgumentGroupEventHandler;
 import org.iplantc.core.uiapps.integration.client.events.UpdateCommandLinePreviewEvent.UpdateCommandLinePreviewEventHandler;
 import org.iplantc.core.uiapps.integration.client.view.widgets.AppTemplatePropertyEditor;
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent.AppTemplateSelectedEventHandler;
@@ -29,7 +30,7 @@ public interface AppsEditorView extends IsWidget, Editor<AppTemplate>, ArgumentS
     }
 
     public interface Presenter extends org.iplantc.core.uiapps.widgets.client.view.AppLaunchView.BasePresenter, AppEditorToolbar.Presenter, BeforeHideHandler, UpdateCommandLinePreviewEventHandler,
-            HasLabelOnlyEditMode {
+            HasLabelOnlyEditMode, DeleteArgumentGroupEventHandler {
 
         /**
          * This constant is used to key into an Autobean's tag map

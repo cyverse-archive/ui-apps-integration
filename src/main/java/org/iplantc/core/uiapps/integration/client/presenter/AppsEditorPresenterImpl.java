@@ -33,7 +33,6 @@ import org.iplantc.core.uiapps.integration.client.dialogs.CommandLineOrderingPan
 import org.iplantc.core.uiapps.integration.client.events.DeleteArgumentEvent;
 import org.iplantc.core.uiapps.integration.client.events.DeleteArgumentEvent.DeleteArgumentEventHandler;
 import org.iplantc.core.uiapps.integration.client.events.DeleteArgumentGroupEvent;
-import org.iplantc.core.uiapps.integration.client.events.DeleteArgumentGroupEvent.DeleteArgumentGroupEventHandler;
 import org.iplantc.core.uiapps.integration.client.events.UpdateCommandLinePreviewEvent;
 import org.iplantc.core.uiapps.integration.client.gin.AppsEditorInjector;
 import org.iplantc.core.uiapps.integration.client.presenter.visitors.DeleteArgumentGroup;
@@ -77,7 +76,7 @@ import java.util.List;
  * @author jstroot
  * 
  */
-public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, DeleteArgumentEventHandler, DeleteArgumentGroupEventHandler, ArgumentAddedEventHandler, ArgumentGroupAddedEventHandler {
+public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, DeleteArgumentEventHandler, ArgumentAddedEventHandler, ArgumentGroupAddedEventHandler {
 
     /**
      * This dialog is used when the user attempts to close the view when the current AppTemplate contains
@@ -361,7 +360,7 @@ public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, Delete
         view.getEditorDriver().accept(new InitializeDragAndDrop(this));
         GatherAllEventProviders gatherAllEventProviders = new GatherAllEventProviders(appearance, this, this);
         view.getEditorDriver().accept(gatherAllEventProviders);
-        view.getEditorDriver().accept(new RegisterEventHandlers(this, this, this, this, gatherAllEventProviders));
+        view.getEditorDriver().accept(new RegisterEventHandlers(this, this, this, gatherAllEventProviders));
 
         updateCommandLinePreview(lastSave);
         if (container.getWidget() == null) {
