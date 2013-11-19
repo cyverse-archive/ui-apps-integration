@@ -16,6 +16,7 @@ import com.sencha.gxt.widget.core.client.form.ComboBox;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
 import com.sencha.gxt.widget.core.client.form.TextField;
 
+import org.iplantc.core.resources.client.messages.I18N;
 import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
 import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
 import org.iplantc.core.resources.client.uiapps.widgets.argumentTypes.ReferenceSelectorLabels;
@@ -74,6 +75,8 @@ public class ReferenceAnnotationPropertyEditor extends AbstractArgumentPropertyE
         this.appLabels = appLabels;
         this.referenceAnnotationSelectorLabels = appLabels;
         ComboBox<ReferenceGenome> comboBox = createReferenceGenomeStore(appMetadataService);
+        comboBox.setEmptyText(I18N.APPS_MESSAGES.emptyListSelectionText());
+        comboBox.setMinChars(1);
         ClearComboBoxSelectionKeyDownHandler handler = new ClearComboBoxSelectionKeyDownHandler(comboBox);
         comboBox.addKeyDownHandler(handler);
         defaultValueEditor = new ArgumentEditorConverter<ReferenceGenome>(comboBox, new SplittableToReferenceGenomeConverter());

@@ -61,6 +61,7 @@ public class IntegerSelectionPropertyEditor extends AbstractArgumentPropertyEdit
     @UiField
     @Path("name")
     TextField argumentOption;
+
     @UiField
     FieldLabel argumentOptionLabel, toolTipLabel, selectionItemDefaultValueLabel;
 
@@ -80,6 +81,7 @@ public class IntegerSelectionPropertyEditor extends AbstractArgumentPropertyEdit
 
     @UiField
     TextField label;
+
     @UiField
     CheckBoxAdapter omitIfBlank, requiredEditor;
 
@@ -108,6 +110,7 @@ public class IntegerSelectionPropertyEditor extends AbstractArgumentPropertyEdit
         selectionItemsComboBox = new ComboBox<SelectionItem>(selectionItemsEditor.getStore(), props.displayLabel());
         selectionItemsComboBox.setEmptyText(appsWidgetsMessages.emptyListSelectionText());
         selectionItemsComboBox.setTriggerAction(ALL);
+        selectionItemsComboBox.setMinChars(1);
         ClearComboBoxSelectionKeyDownHandler handler = new ClearComboBoxSelectionKeyDownHandler(selectionItemsComboBox);
         selectionItemsComboBox.addKeyDownHandler(handler);
 
