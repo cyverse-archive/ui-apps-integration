@@ -591,6 +591,10 @@ public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, Delete
         // JDS Make a copy so we can check for differences on exit
         lastSave = AppTemplateUtils.copyAppTemplate(toBeSaved);
 
+        // Remove id if it is a new app.
+        if (lastSave.getId().equals("NEW_APP_TEMPLATE")) {
+            lastSave.setId("");
+        }
         AsyncCallback<String> saveCallback = new AsyncCallback<String>() {
     
             @Override

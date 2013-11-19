@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.autobean.shared.Splittable;
 
+import com.sencha.gxt.widget.core.client.form.ComboBox;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
 import com.sencha.gxt.widget.core.client.form.TextField;
 
@@ -20,6 +21,7 @@ import org.iplantc.core.resources.client.uiapps.widgets.argumentTypes.ReferenceS
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.metadata.ReferenceGenome;
 import org.iplantc.core.uiapps.widgets.client.services.AppMetadataServiceFacade;
+import org.iplantc.core.uiapps.widgets.client.view.editors.arguments.ClearComboBoxSelectionKeyDownHandler;
 import org.iplantc.core.uiapps.widgets.client.view.editors.arguments.converters.ArgumentEditorConverter;
 import org.iplantc.core.uiapps.widgets.client.view.editors.arguments.converters.SplittableToReferenceGenomeConverter;
 import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
@@ -66,7 +68,10 @@ public class ReferenceSequencePropertyEditor extends AbstractArgumentPropertyEdi
         this.appLabels = appLabels;
         this.referenceSequenceSelectorLabels = appLabels;
 
-        defaultValueEditor = new ArgumentEditorConverter<ReferenceGenome>(createReferenceGenomeStore(appMetadataService), new SplittableToReferenceGenomeConverter());
+        ComboBox<ReferenceGenome> comboBox = createReferenceGenomeStore(appMetadataService);
+        ClearComboBoxSelectionKeyDownHandler handler = new ClearComboBoxSelectionKeyDownHandler(comboBox);
+        comboBox.addKeyDownHandler(handler);
+        defaultValueEditor = new ArgumentEditorConverter<ReferenceGenome>(comboBox, new SplittableToReferenceGenomeConverter());
 
         initWidget(uiBinder.createAndBindUi(this));
 

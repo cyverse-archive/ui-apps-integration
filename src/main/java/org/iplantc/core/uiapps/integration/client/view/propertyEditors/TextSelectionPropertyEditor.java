@@ -112,7 +112,6 @@ public class TextSelectionPropertyEditor extends AbstractArgumentPropertyEditor 
         selectionItemsComboBox.setTriggerAction(ALL);
         ClearComboBoxSelectionKeyDownHandler handler = new ClearComboBoxSelectionKeyDownHandler(selectionItemsComboBox);
         selectionItemsComboBox.addKeyDownHandler(handler);
-        selectionItemsComboBox.addBeforeSelectionHandler(handler);
 
         defaultValueEditor = new ArgumentEditorConverter<SelectionItem>(selectionItemsComboBox, new SplittableToSelectionArgConverter());
 

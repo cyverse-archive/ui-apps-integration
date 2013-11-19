@@ -112,7 +112,6 @@ public class DecimalSelectionPropertyEditor extends AbstractArgumentPropertyEdit
         selectionItemsComboBox.setTriggerAction(ALL);
         ClearComboBoxSelectionKeyDownHandler handler = new ClearComboBoxSelectionKeyDownHandler(selectionItemsComboBox);
         selectionItemsComboBox.addKeyDownHandler(handler);
-        selectionItemsComboBox.addBeforeSelectionHandler(handler);
         defaultValueEditor = new ArgumentEditorConverter<SelectionItem>(selectionItemsComboBox, new SplittableToSelectionArgConverter());
 
         initWidget(uiBinder.createAndBindUi(this));

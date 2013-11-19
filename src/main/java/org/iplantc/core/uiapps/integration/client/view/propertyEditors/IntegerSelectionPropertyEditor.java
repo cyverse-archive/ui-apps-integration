@@ -110,7 +110,6 @@ public class IntegerSelectionPropertyEditor extends AbstractArgumentPropertyEdit
         selectionItemsComboBox.setTriggerAction(ALL);
         ClearComboBoxSelectionKeyDownHandler handler = new ClearComboBoxSelectionKeyDownHandler(selectionItemsComboBox);
         selectionItemsComboBox.addKeyDownHandler(handler);
-        selectionItemsComboBox.addBeforeSelectionHandler(handler);
 
         defaultValueEditor = new ArgumentEditorConverter<SelectionItem>(selectionItemsComboBox, new SplittableToSelectionArgConverter());
 
