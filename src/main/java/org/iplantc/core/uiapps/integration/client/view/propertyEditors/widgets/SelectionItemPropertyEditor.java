@@ -282,7 +282,6 @@ public class SelectionItemPropertyEditor extends Composite implements HasValueCh
 
                 // JDS Set up a default id to satisfy ListStore's ModelKeyProvider
                 sa.setId(result.get(0));
-                sa.setDefault(false);
                 sa.setValue("Value " + selectionItemCount++);
                 sa.setDisplay("" + selectionItemCount);
                 sa.setName("Default" + selectionItemCount);

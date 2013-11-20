@@ -1,6 +1,7 @@
 package org.iplantc.core.uiapps.integration.client.view.propertyEditors;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.editor.client.LeafValueEditor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
@@ -11,15 +12,18 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.autobean.shared.Splittable;
 
+import com.sencha.gxt.widget.core.client.form.ComboBox;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
 import com.sencha.gxt.widget.core.client.form.TextField;
 
+import org.iplantc.core.resources.client.messages.I18N;
 import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
 import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
 import org.iplantc.core.resources.client.uiapps.widgets.argumentTypes.ReferenceSelectorLabels;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.metadata.ReferenceGenome;
 import org.iplantc.core.uiapps.widgets.client.services.AppMetadataServiceFacade;
+import org.iplantc.core.uiapps.widgets.client.view.editors.arguments.ClearComboBoxSelectionKeyDownHandler;
 import org.iplantc.core.uiapps.widgets.client.view.editors.arguments.converters.ArgumentEditorConverter;
 import org.iplantc.core.uiapps.widgets.client.view.editors.arguments.converters.SplittableToReferenceGenomeConverter;
 import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
@@ -38,13 +42,17 @@ public class ReferenceSequencePropertyEditor extends AbstractArgumentPropertyEdi
     @UiField
     @Path("name")
     TextField argumentOptionEditor;
+
     @UiField(provided = true)
     ArgumentEditorConverter<ReferenceGenome> defaultValueEditor;
+
     @UiField
     @Path("visible")
     CheckBoxAdapter doNotDisplay;
+
     @UiField
     TextField label;
+
     @UiField
     CheckBoxAdapter omitIfBlank, requiredEditor;
 
@@ -54,6 +62,7 @@ public class ReferenceSequencePropertyEditor extends AbstractArgumentPropertyEdi
     @UiField
     @Path("description")
     TextField toolTipEditor;
+
     @UiField
     FieldLabel toolTipLabel, argumentOptionLabel, selectionItemDefaultValueLabel;
 
@@ -66,7 +75,12 @@ public class ReferenceSequencePropertyEditor extends AbstractArgumentPropertyEdi
         this.appLabels = appLabels;
         this.referenceSequenceSelectorLabels = appLabels;
 
-        defaultValueEditor = new ArgumentEditorConverter<ReferenceGenome>(createReferenceGenomeStore(appMetadataService), new SplittableToReferenceGenomeConverter());
+        ComboBox<ReferenceGenome> comboBox = createReferenceGenomeStore(appMetadataService);
+        comboBox.setEmptyText(I18N.APPS_MESSAGES.emptyListSelectionText());
+        comboBox.setMinChars(1);
+        ClearComboBoxSelectionKeyDownHandler handler = new ClearComboBoxSelectionKeyDownHandler(comboBox);
+        comboBox.addKeyDownHandler(handler);
+        defaultValueEditor = new ArgumentEditorConverter<ReferenceGenome>(comboBox, new SplittableToReferenceGenomeConverter());
 
         initWidget(uiBinder.createAndBindUi(this));
 
@@ -94,6 +108,12 @@ public class ReferenceSequencePropertyEditor extends AbstractArgumentPropertyEdi
     @Override
     public com.google.gwt.editor.client.EditorDriver<Argument> getEditorDriver() {
         return editorDriver;
+    }
+
+    @Override
+    @Ignore
+    protected LeafValueEditor<Splittable> getDefaultValueEditor() {
+        return defaultValueEditor;
     }
 
     @Override

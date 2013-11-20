@@ -52,7 +52,6 @@ public class ArgumentGroupPropertyEditor extends Composite implements Editor<Arg
 
     private String absoluteEditorPath;
 
-
     private ArgumentGroupEditor argumentGroupEditor;
 
     private final EditorDriver editorDriver = GWT.create(EditorDriver.class);
@@ -87,6 +86,11 @@ public class ArgumentGroupPropertyEditor extends Composite implements Editor<Arg
         return absoluteEditorPath;
     }
 
+    @Ignore
+    public com.google.gwt.editor.client.EditorDriver<ArgumentGroup> getEditorDriver() {
+        return editorDriver;
+    }
+
     @Override
     public boolean isLabelOnlyEditMode() {
         return labelOnlyEditMode;
@@ -109,13 +113,6 @@ public class ArgumentGroupPropertyEditor extends Composite implements Editor<Arg
     ContentPanel createContentPanel() {
         return new ContentPanel(new AppTemplateWizardPropertyContentPanelAppearance());
     }
-
-    // @Override
-    // public void setValue(ArgumentGroup value) {
-    // if (isLabelOnlyEditMode()) {
-    // deleteButton.disable();
-    // }
-    // }
 
     /**
      * @param event

@@ -10,7 +10,6 @@ import com.google.gwt.user.client.Event;
 
 import org.iplantc.core.uiapps.integration.client.events.DeleteArgumentEvent.DeleteArgumentEventHandler;
 import org.iplantc.core.uiapps.integration.client.events.DeleteArgumentEvent.HasDeleteArgumentEventHandlers;
-import org.iplantc.core.uiapps.integration.client.events.DeleteArgumentGroupEvent.HasDeleteArgumentGroupEventHandlers;
 import org.iplantc.core.uiapps.integration.client.presenter.dnd.ArgumentWYSIWYGDeleteHandler;
 import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent.HasAppTemplateSelectedEventHandlers;
 import org.iplantc.core.uiapps.widgets.client.events.ArgumentAddedEvent.HasArgumentAddedEventHandlers;
@@ -47,7 +46,6 @@ public class GatherAllEventProviders extends EditorVisitor {
     private final List<HasArgumentAddedEventHandlers> hasArgumentAddedHandlers = Lists.newArrayList();
 
     private final List<HasArgumentRequiredChangedHandlers> hasArgumentRequiredChangedHandlers = Lists.newArrayList();
-    private final List<HasDeleteArgumentGroupEventHandlers> hasDeleteArgGrpHandlers = Lists.newArrayList();
     private final List<HasDeleteArgumentEventHandlers> hasDeleteArgumentHandlers = Lists.newArrayList();
     private final HasLabelOnlyEditMode hasLabelOnlyEditMode;
     private final Map<String, List<HasValueChangeHandlers<?>>> hasValChangeHandlerMap = Maps.newHashMap();
@@ -81,10 +79,6 @@ public class GatherAllEventProviders extends EditorVisitor {
 
     public List<HasArgumentRequiredChangedHandlers> getHasArgumentRequiredChangedHandlers() {
         return hasArgumentRequiredChangedHandlers;
-    }
-
-    public List<HasDeleteArgumentGroupEventHandlers> getHasDeleteArgGrpHandlers() {
-        return hasDeleteArgGrpHandlers;
     }
 
     public List<HasDeleteArgumentEventHandlers> getHasDeleteArgumentHandlers() {
@@ -140,10 +134,6 @@ public class GatherAllEventProviders extends EditorVisitor {
         if (editor instanceof HasArgumentGroupSelectedHandlers) {
             HasArgumentGroupSelectedHandlers hasArgumentGroupSelectHandlers = (HasArgumentGroupSelectedHandlers)editor;
             hasArgGrpSelectedHandlers.add(hasArgumentGroupSelectHandlers);
-        }
-        if (editor instanceof HasDeleteArgumentGroupEventHandlers) {
-            HasDeleteArgumentGroupEventHandlers hasHandlers = (HasDeleteArgumentGroupEventHandlers)editor;
-            hasDeleteArgGrpHandlers.add(hasHandlers);
         }
 
         // Store Argument-related event providers

@@ -33,7 +33,6 @@ import org.iplantc.core.uiapps.integration.client.dialogs.CommandLineOrderingPan
 import org.iplantc.core.uiapps.integration.client.events.DeleteArgumentEvent;
 import org.iplantc.core.uiapps.integration.client.events.DeleteArgumentEvent.DeleteArgumentEventHandler;
 import org.iplantc.core.uiapps.integration.client.events.DeleteArgumentGroupEvent;
-import org.iplantc.core.uiapps.integration.client.events.DeleteArgumentGroupEvent.DeleteArgumentGroupEventHandler;
 import org.iplantc.core.uiapps.integration.client.events.UpdateCommandLinePreviewEvent;
 import org.iplantc.core.uiapps.integration.client.gin.AppsEditorInjector;
 import org.iplantc.core.uiapps.integration.client.presenter.visitors.DeleteArgumentGroup;
@@ -74,13 +73,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * TODO CORE-4806 Will have to obtain errors from property editors.
- * TODO CORE-4806 Need to audit editor dirty state logic
- * 
  * @author jstroot
  * 
  */
-public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, DeleteArgumentEventHandler, DeleteArgumentGroupEventHandler, ArgumentAddedEventHandler, ArgumentGroupAddedEventHandler {
+public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, DeleteArgumentEventHandler, ArgumentAddedEventHandler, ArgumentGroupAddedEventHandler {
 
     /**
      * This dialog is used when the user attempts to close the view when the current AppTemplate contains
@@ -341,7 +337,7 @@ public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, Delete
 
     @Override
     public AppTemplate getAppTemplate() {
-        return appTemplate;
+        return appTemplate != null ? flushViewAndClean() : null;
     }
 
     @Override
@@ -364,7 +360,7 @@ public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, Delete
         view.getEditorDriver().accept(new InitializeDragAndDrop(this));
         GatherAllEventProviders gatherAllEventProviders = new GatherAllEventProviders(appearance, this, this);
         view.getEditorDriver().accept(gatherAllEventProviders);
-        view.getEditorDriver().accept(new RegisterEventHandlers(this, this, this, this, gatherAllEventProviders));
+        view.getEditorDriver().accept(new RegisterEventHandlers(this, this, this, gatherAllEventProviders));
 
         updateCommandLinePreview(lastSave);
         if (container.getWidget() == null) {
@@ -461,6 +457,11 @@ public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, Delete
         uuidService.getUUIDs(allTemplateArguments.size(), new AsyncCallback<List<String>>() {
 
             @Override
+            public void onFailure(Throwable caught) {
+                ErrorHandler.post(caught);
+            }
+
+            @Override
             public void onSuccess(List<String> result) {
 
                 final IPlantDialog dlg = new IPlantDialog();
@@ -473,11 +474,6 @@ public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, Delete
                 clop.setSize("640", "480");
                 dlg.add(clop);
                 dlg.show();
-            }
-
-            @Override
-            public void onFailure(Throwable caught) {
-                ErrorHandler.post(caught);
             }
         });
     }
@@ -595,6 +591,10 @@ public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, Delete
         // JDS Make a copy so we can check for differences on exit
         lastSave = AppTemplateUtils.copyAppTemplate(toBeSaved);
 
+        // Remove id if it is a new app.
+        if (lastSave.getId().equals("NEW_APP_TEMPLATE")) {
+            lastSave.setId("");
+        }
         AsyncCallback<String> saveCallback = new AsyncCallback<String>() {
     
             @Override
@@ -636,7 +636,7 @@ public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, Delete
     }
 
     private AppTemplate flushViewAndClean() {
-        return AppTemplateUtils.removeEmptyGroupArguments(view.getEditorDriver().flush());
+        return AppTemplateUtils.removeEmptyGroupArguments(view.flush());
     }
 
     private List<Argument> getAllTemplateArguments(AppTemplate at) {
@@ -652,7 +652,7 @@ public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, Delete
 
     private boolean isViewValid() {
         flushViewAndClean();
-        return !view.getEditorDriver().hasErrors();
+        return !view.hasErrors();
     }
 
     private void updateCommandLinePreview(final AppTemplate at) {

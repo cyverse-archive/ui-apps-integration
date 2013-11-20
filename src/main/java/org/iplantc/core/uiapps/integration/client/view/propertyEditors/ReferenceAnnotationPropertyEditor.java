@@ -12,15 +12,18 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.autobean.shared.Splittable;
 
+import com.sencha.gxt.widget.core.client.form.ComboBox;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
 import com.sencha.gxt.widget.core.client.form.TextField;
 
+import org.iplantc.core.resources.client.messages.I18N;
 import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
 import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
 import org.iplantc.core.resources.client.uiapps.widgets.argumentTypes.ReferenceSelectorLabels;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.metadata.ReferenceGenome;
 import org.iplantc.core.uiapps.widgets.client.services.AppMetadataServiceFacade;
+import org.iplantc.core.uiapps.widgets.client.view.editors.arguments.ClearComboBoxSelectionKeyDownHandler;
 import org.iplantc.core.uiapps.widgets.client.view.editors.arguments.converters.ArgumentEditorConverter;
 import org.iplantc.core.uiapps.widgets.client.view.editors.arguments.converters.SplittableToReferenceGenomeConverter;
 import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
@@ -71,7 +74,12 @@ public class ReferenceAnnotationPropertyEditor extends AbstractArgumentPropertyE
         super(appearance);
         this.appLabels = appLabels;
         this.referenceAnnotationSelectorLabels = appLabels;
-        defaultValueEditor = new ArgumentEditorConverter<ReferenceGenome>(createReferenceGenomeStore(appMetadataService), new SplittableToReferenceGenomeConverter());
+        ComboBox<ReferenceGenome> comboBox = createReferenceGenomeStore(appMetadataService);
+        comboBox.setEmptyText(I18N.APPS_MESSAGES.emptyListSelectionText());
+        comboBox.setMinChars(1);
+        ClearComboBoxSelectionKeyDownHandler handler = new ClearComboBoxSelectionKeyDownHandler(comboBox);
+        comboBox.addKeyDownHandler(handler);
+        defaultValueEditor = new ArgumentEditorConverter<ReferenceGenome>(comboBox, new SplittableToReferenceGenomeConverter());
 
         initWidget(uiBinder.createAndBindUi(this));
 
