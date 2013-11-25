@@ -152,11 +152,6 @@
   </build>
   <repositories>
         <repository>
-            <id>iplantCollaborative</id>
-            <name>iPlant Collaborative local repository</name>
-            <url>http://projects.iplantcollaborative.org/archiva/repository/internal/</url>
-        </repository>
-        <repository>
             <id>sencha-commercial-release</id>
             <name>Commercially licensed Sencha artifacts</name>
             <url>https://maven.sencha.com/repo/support-commercial-release/</url>
