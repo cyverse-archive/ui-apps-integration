@@ -185,6 +185,7 @@ public class TextSelectionPropertyEditor extends AbstractArgumentPropertyEditor 
             public void onSelect(SelectEvent event) {
                 model.getSelectionItems().clear();
                 Collection<? extends SelectionItem> values = selectionItemListEditor.getValues();
+                selectionItemsEditor.getStore().clear();
                 selectionItemsEditor.getStore().addAll(values);
                 model.getSelectionItems().addAll(values);
                 /*
