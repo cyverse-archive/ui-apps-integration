@@ -150,4 +150,11 @@
         </plugins>
     </pluginManagement>
   </build>
+  <repositories>
+        <repository>
+            <id>sencha-commercial-release</id>
+            <name>Commercially licensed Sencha artifacts</name>
+            <url>https://maven.sencha.com/repo/support-commercial-release/</url>
+        </repository>
+    </repositories>
 </project>
