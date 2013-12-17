@@ -58,11 +58,7 @@ public class DecimalSelectionPropertyEditor extends AbstractArgumentPropertyEdit
     AppsWidgetsPropertyPanelLabels appLabels;
 
     @UiField
-    @Path("name")
-    TextField argumentOption;
-
-    @UiField
-    FieldLabel argumentOptionLabel, toolTipLabel, selectionItemDefaultValueLabel;
+    FieldLabel toolTipLabel, selectionItemDefaultValueLabel;
 
     @UiField(provided = true)
     ArgumentEditorConverter<SelectionItem> defaultValueEditor;
@@ -121,7 +117,6 @@ public class DecimalSelectionPropertyEditor extends AbstractArgumentPropertyEdit
         omitIfBlank.setHTML(new SafeHtmlBuilder().appendHtmlConstant("&nbsp;")
                 .append(appearance.createContextualHelpLabelNoFloat(appLabels.excludeWhenEmpty(), help.singleSelectExcludeArgument())).toSafeHtml());
         toolTipLabel.setHTML(appearance.createContextualHelpLabel(appLabels.toolTipText(), help.toolTip()));
-        argumentOptionLabel.setHTML(appearance.createContextualHelpLabel(appLabels.argumentOption(), help.argumentOption()));
         doNotDisplay.setHTML(new SafeHtmlBuilder().appendHtmlConstant("&nbsp;").append(appLabels.doNotDisplay()).toSafeHtml());
 
         requiredEditor.setHTML(new SafeHtmlBuilder().appendHtmlConstant("&nbsp;").append(appLabels.isRequired()).toSafeHtml());
@@ -149,7 +144,6 @@ public class DecimalSelectionPropertyEditor extends AbstractArgumentPropertyEdit
     @Override
     protected void initLabelOnlyEditMode(boolean isLabelOnlyEditMode) {
         defaultValueEditor.setEnabled(!isLabelOnlyEditMode);
-        argumentOption.setEnabled(!isLabelOnlyEditMode);
         doNotDisplay.setEnabled(!isLabelOnlyEditMode);
         omitIfBlank.setEnabled(!isLabelOnlyEditMode);
         requiredEditor.setEnabled(!isLabelOnlyEditMode);

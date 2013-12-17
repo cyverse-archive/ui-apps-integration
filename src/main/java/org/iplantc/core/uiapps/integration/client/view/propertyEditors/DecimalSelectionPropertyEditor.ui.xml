@@ -51,15 +51,6 @@
 	                </form:widget>
 	            </form:FieldLabel>
 	        </con:child>
-	        <con:child layoutData="{fieldLayoutData}">
-	            <form:FieldLabel ui:field="argumentOptionLabel"
-	                             labelAlign="TOP">
-	                <form:widget>
-	                    <form:TextField ui:field="argumentOption"
-	                                    emptyText="{appLabels.argumentOptionEmptyText}"/>
-	                </form:widget>
-	            </form:FieldLabel>
-	        </con:child>
 	        
 		    <!-- DefaultValue Editors -->
 		    <con:child layoutData="{fieldLayoutData}">

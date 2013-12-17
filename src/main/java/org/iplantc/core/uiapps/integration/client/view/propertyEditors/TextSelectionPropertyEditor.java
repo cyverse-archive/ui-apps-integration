@@ -57,10 +57,6 @@ public class TextSelectionPropertyEditor extends AbstractArgumentPropertyEditor 
     @UiField(provided = true)
     AppsWidgetsPropertyPanelLabels appLabels;
 
-    @UiField
-    @Path("name")
-    TextField argumentOptionEditor;
-
     @UiField(provided = true)
     ArgumentEditorConverter<SelectionItem> defaultValueEditor;
 
@@ -88,7 +84,7 @@ public class TextSelectionPropertyEditor extends AbstractArgumentPropertyEditor 
     TextField toolTipEditor;
 
     @UiField
-    FieldLabel toolTipLabel, argumentOptionLabel, selectionItemDefaultValueLabel;
+    FieldLabel toolTipLabel, selectionItemDefaultValueLabel;
 
     private final EditorDriver editorDriver = GWT.create(EditorDriver.class);
 
@@ -121,7 +117,6 @@ public class TextSelectionPropertyEditor extends AbstractArgumentPropertyEditor 
         selectionItemDefaultValueLabel.setHTML(appearance.createContextualHelpLabel(appLabels.singleSelectionDefaultValue(), help.singleSelectDefaultItem()));
 
         toolTipLabel.setHTML(appearance.createContextualHelpLabel(appLabels.toolTipText(), help.toolTip()));
-        argumentOptionLabel.setHTML(appearance.createContextualHelpLabel(appLabels.argumentOption(), help.argumentOption()));
         doNotDisplay.setHTML(new SafeHtmlBuilder().appendHtmlConstant("&nbsp;").append(appLabels.doNotDisplay()).toSafeHtml());
 
         requiredEditor.setHTML(new SafeHtmlBuilder().appendHtmlConstant("&nbsp;").append(appLabels.isRequired()).toSafeHtml());
@@ -152,7 +147,6 @@ public class TextSelectionPropertyEditor extends AbstractArgumentPropertyEditor 
 
     @Override
     protected void initLabelOnlyEditMode(boolean isLabelOnlyEditMode) {
-        argumentOptionEditor.setEnabled(!isLabelOnlyEditMode);
         defaultValueEditor.setEnabled(!isLabelOnlyEditMode);
         doNotDisplay.setEnabled(!isLabelOnlyEditMode);
         omitIfBlank.setEnabled(!isLabelOnlyEditMode);
