@@ -49,9 +49,6 @@ public class TreeSelectionPropertyEditor extends AbstractArgumentPropertyEditor 
     AppsWidgetsPropertyPanelLabels appLabels;
 
     @UiField
-    @Path("name")
-    TextField argumentOptionEditor;
-    @UiField
     @Path("visible")
     CheckBoxAdapter doNotDisplay;
 
@@ -66,7 +63,7 @@ public class TreeSelectionPropertyEditor extends AbstractArgumentPropertyEditor 
     TextField toolTipEditor;
 
     @UiField
-    FieldLabel toolTipTextLabel, argumentOptionLabel;
+    FieldLabel toolTipTextLabel;
     @UiField(provided = true)
     TreeSelectionLabels treeSelectionLabels;
 
@@ -84,7 +81,6 @@ public class TreeSelectionPropertyEditor extends AbstractArgumentPropertyEditor 
         initWidget(uiBinder.createAndBindUi(this));
 
         toolTipTextLabel.setHTML(appearance.createContextualHelpLabel(appLabels.toolTipText(), help.toolTip()));
-        argumentOptionLabel.setHTML(appearance.createContextualHelpLabel(appLabels.argumentOption(), help.argumentOption()));
         doNotDisplay.setHTML(new SafeHtmlBuilder().appendHtmlConstant("&nbsp;").append(appLabels.doNotDisplay()).toSafeHtml());
 
         requiredEditor.setHTML(new SafeHtmlBuilder().appendHtmlConstant("&nbsp;").append(appLabels.isRequired()).toSafeHtml());
@@ -161,7 +157,6 @@ public class TreeSelectionPropertyEditor extends AbstractArgumentPropertyEditor 
 
     @Override
     protected void initLabelOnlyEditMode(boolean isLabelOnlyEditMode) {
-        argumentOptionEditor.setEnabled(!isLabelOnlyEditMode);
         doNotDisplay.setEnabled(!isLabelOnlyEditMode);
         omitIfBlank.setEnabled(!isLabelOnlyEditMode);
         requiredEditor.setEnabled(!isLabelOnlyEditMode);

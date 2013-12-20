@@ -59,11 +59,7 @@ public class IntegerSelectionPropertyEditor extends AbstractArgumentPropertyEdit
     AppsWidgetsPropertyPanelLabels appLabels;
 
     @UiField
-    @Path("name")
-    TextField argumentOption;
-
-    @UiField
-    FieldLabel argumentOptionLabel, toolTipLabel, selectionItemDefaultValueLabel;
+    FieldLabel toolTipLabel, selectionItemDefaultValueLabel;
 
     @UiField(provided = true)
     ArgumentEditorConverter<SelectionItem> defaultValueEditor;
@@ -119,7 +115,6 @@ public class IntegerSelectionPropertyEditor extends AbstractArgumentPropertyEdit
         initWidget(uiBinder.createAndBindUi(this));
 
         toolTipLabel.setHTML(appearance.createContextualHelpLabel(appLabels.toolTipText(), help.toolTip()));
-        argumentOptionLabel.setHTML(appearance.createContextualHelpLabel(appLabels.argumentOption(), help.argumentOption()));
         doNotDisplay.setHTML(new SafeHtmlBuilder().appendHtmlConstant("&nbsp;").append(appLabels.doNotDisplay()).toSafeHtml());
 
         requiredEditor.setHTML(new SafeHtmlBuilder().appendHtmlConstant("&nbsp;").append(appLabels.isRequired()).toSafeHtml());
@@ -150,7 +145,6 @@ public class IntegerSelectionPropertyEditor extends AbstractArgumentPropertyEdit
 
     @Override
     protected void initLabelOnlyEditMode(boolean isLabelOnlyEditMode) {
-        argumentOption.setEnabled(!isLabelOnlyEditMode);
         defaultValueEditor.setEnabled(!isLabelOnlyEditMode);
         doNotDisplay.setEnabled(!isLabelOnlyEditMode);
         omitIfBlank.setEnabled(!isLabelOnlyEditMode);
