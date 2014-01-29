@@ -30,3 +30,6 @@ war
 .idea
 *.iml
 *.eml
+
+# ignore gradle build directory
+build/
