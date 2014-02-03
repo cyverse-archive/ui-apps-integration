@@ -16,9 +16,9 @@ import com.google.web.bindery.autobean.shared.Splittable;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
 import com.sencha.gxt.widget.core.client.form.TextField;
 
-import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
-import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
-import org.iplantc.core.resources.client.uiapps.widgets.argumentTypes.EnvironmentVariableLabels;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
+import org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.EnvironmentVariableLabels;
 import org.iplantc.core.uiapps.integration.client.view.propertyEditors.util.EnvironmentVariableNameValidator;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;

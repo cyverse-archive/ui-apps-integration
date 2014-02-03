@@ -4,8 +4,8 @@ import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 
-import org.iplantc.core.resources.client.messages.IplantErrorStrings;
-import org.iplantc.core.resources.client.uiapps.integration.AppIntegrationErrorMessages;
+import org.iplantc.de.resources.client.messages.IplantErrorStrings;
+import org.iplantc.de.resources.client.uiapps.integration.AppIntegrationErrorMessages;
 import org.iplantc.core.uiapps.integration.client.presenter.AppsEditorPresenterImpl;
 import org.iplantc.core.uiapps.integration.client.view.AppEditorToolbar;
 import org.iplantc.core.uiapps.integration.client.view.AppEditorToolbarImpl;

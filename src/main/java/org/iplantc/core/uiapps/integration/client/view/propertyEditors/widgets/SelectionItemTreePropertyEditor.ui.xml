@@ -8,11 +8,11 @@
              xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button">
              
     <ui:with field="display"
-             type="org.iplantc.core.resources.client.messages.IplantDisplayStrings"/>
+             type="org.iplantc.de.resources.client.messages.IplantDisplayStrings"/>
     <ui:with field="appWidgetStrings"
-             type="org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsDisplayMessages"/> 
+             type="org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsDisplayMessages"/>
     <ui:with field="res"
-             type="org.iplantc.core.resources.client.IplantResources"/>
+             type="org.iplantc.de.resources.client.IplantResources"/>
     
     <ui:with field="margins"
              type="com.sencha.gxt.core.client.util.Margins">

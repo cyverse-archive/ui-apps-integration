@@ -34,9 +34,9 @@ import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.form.Validator;
 import com.sencha.gxt.widget.core.client.form.error.DefaultEditorError;
 
-import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
-import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
-import org.iplantc.core.resources.client.uiapps.widgets.argumentTypes.CheckboxInputLabels;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
+import org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.CheckboxInputLabels;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.view.editors.arguments.converters.ArgumentEditorConverter;
 import org.iplantc.core.uiapps.widgets.client.view.editors.arguments.converters.SplittableToBooleanConverter;

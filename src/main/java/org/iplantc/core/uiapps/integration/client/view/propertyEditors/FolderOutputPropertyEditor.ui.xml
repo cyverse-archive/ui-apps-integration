@@ -6,9 +6,9 @@
 	         xmlns:fields="urn:import:org.iplantc.core.uiapps.widgets.client.view.editors.widgets"
              xmlns:converter="urn:import:org.iplantc.core.uiapps.widgets.client.view.editors.arguments.converters">
 	<ui:with field="appLabels"
-             type="org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels" /> 
+             type="org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels" />
 	<ui:with field="folderOutputLabels"
-             type="org.iplantc.core.resources.client.uiapps.widgets.argumentTypes.FolderOutputLabels" /> 
+             type="org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.FolderOutputLabels" />
     <ui:with field="margins"
              type="com.sencha.gxt.core.client.util.Margins">
       <ui:attributes top="10"

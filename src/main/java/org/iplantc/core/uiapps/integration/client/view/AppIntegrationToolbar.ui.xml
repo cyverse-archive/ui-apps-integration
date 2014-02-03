@@ -6,11 +6,11 @@
              xmlns:menu="urn:import:com.sencha.gxt.widget.core.client.menu">
    
    <ui:with field="res"
-            type="org.iplantc.core.resources.client.IplantResources"/>
+            type="org.iplantc.de.resources.client.IplantResources"/>
    <ui:with field="display"
-            type="org.iplantc.core.resources.client.messages.IplantDisplayStrings"/>
+            type="org.iplantc.de.resources.client.messages.IplantDisplayStrings"/>
    <ui:with field="appIntStrings"
-            type="org.iplantc.core.resources.client.uiapps.integration.AppIntegrationMessages"/>
+            type="org.iplantc.de.resources.client.uiapps.integration.AppIntegrationMessages"/>
 
    <toolbar:ToolBar>
       <!-- Save button -->

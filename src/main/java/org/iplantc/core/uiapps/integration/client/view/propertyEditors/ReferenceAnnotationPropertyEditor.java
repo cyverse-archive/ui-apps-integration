@@ -16,10 +16,10 @@ import com.sencha.gxt.widget.core.client.form.ComboBox;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
 import com.sencha.gxt.widget.core.client.form.TextField;
 
-import org.iplantc.core.resources.client.messages.I18N;
-import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
-import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
-import org.iplantc.core.resources.client.uiapps.widgets.argumentTypes.ReferenceSelectorLabels;
+import org.iplantc.de.resources.client.messages.I18N;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
+import org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.ReferenceSelectorLabels;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.metadata.ReferenceGenome;
 import org.iplantc.core.uiapps.widgets.client.services.AppMetadataServiceFacade;

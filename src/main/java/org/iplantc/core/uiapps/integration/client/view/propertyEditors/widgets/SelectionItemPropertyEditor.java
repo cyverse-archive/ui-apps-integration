@@ -40,8 +40,8 @@ import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent.Selecti
 import com.sencha.gxt.widget.core.client.tips.ToolTip;
 import com.sencha.gxt.widget.core.client.tips.ToolTipConfig;
 
-import org.iplantc.core.resources.client.messages.I18N;
-import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
+import org.iplantc.de.resources.client.messages.I18N;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
 import org.iplantc.core.uiapps.widgets.client.models.AppTemplateAutoBeanFactory;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentType;
 import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItem;

@@ -5,7 +5,7 @@
              xmlns:grid="urn:import:com.sencha.gxt.widget.core.client.grid">
 
     <ui:with field="appIntStrings"
-             type="org.iplantc.core.resources.client.uiapps.integration.AppIntegrationMessages"/>
+             type="org.iplantc.de.resources.client.uiapps.integration.AppIntegrationMessages"/>
              
     <ui:with type="com.sencha.gxt.widget.core.client.grid.ColumnModel" 
              field="cm"/>

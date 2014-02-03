@@ -5,9 +5,9 @@
 	         xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form"
 	         xmlns:fields="urn:import:org.iplantc.core.uiapps.widgets.client.view.editors.widgets">
 	<ui:with field="appLabels"
-             type="org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels" /> 
+             type="org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels" />
 	<ui:with field="multiFileInputLabels"
-             type="org.iplantc.core.resources.client.uiapps.widgets.argumentTypes.MultiFileInputLabels" /> 
+             type="org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.MultiFileInputLabels" />
     <ui:with field="margins"
              type="com.sencha.gxt.core.client.util.Margins">
       <ui:attributes top="10"

@@ -10,7 +10,7 @@
              
              
    <ui:with field="appIntStrings"
-            type="org.iplantc.core.resources.client.uiapps.integration.AppIntegrationMessages"/>
+            type="org.iplantc.de.resources.client.uiapps.integration.AppIntegrationMessages"/>
 
     <!-- Border Layout Data -->
    <ui:with field="westMargins"

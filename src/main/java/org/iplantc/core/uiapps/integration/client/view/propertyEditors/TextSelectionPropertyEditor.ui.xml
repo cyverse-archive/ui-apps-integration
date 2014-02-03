@@ -9,9 +9,9 @@
 	         xmlns:converters="urn:import:org.iplantc.core.uiapps.widgets.client.view.editors.arguments.converters">
 	         
 	<ui:with field="appLabels"
-             type="org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels" /> 
+             type="org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels" />
 	<ui:with field="textSelectionLabels"
-             type="org.iplantc.core.resources.client.uiapps.widgets.argumentTypes.TextSelectionLabels" /> 
+             type="org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.TextSelectionLabels" />
     <ui:with field="margins"
              type="com.sencha.gxt.core.client.util.Margins">
       <ui:attributes top="10"

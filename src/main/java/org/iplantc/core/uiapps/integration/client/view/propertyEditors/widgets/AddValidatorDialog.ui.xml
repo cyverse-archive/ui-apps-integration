@@ -3,7 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:con="urn:import:com.sencha.gxt.widget.core.client.container"
 	xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form">
     <ui:with field="appWidgetValidationStrings"
-             type="org.iplantc.core.resources.client.uiapps.widgets.ArgumentValidatorMessages"/>
+             type="org.iplantc.de.resources.client.uiapps.widgets.ArgumentValidatorMessages"/>
 	<ui:with
 		type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData"
 		field="layoutData">

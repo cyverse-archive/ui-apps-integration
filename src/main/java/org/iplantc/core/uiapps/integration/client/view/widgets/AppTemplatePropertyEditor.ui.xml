@@ -8,9 +8,9 @@
              xmlns:srh="urn:import:org.iplantc.core.uiapps.widgets.client.view.deployedComponents"
              xmlns:viewWidgets="urn:import:org.iplantc.core.uiapps.integration.client.view.widgets">
     <ui:with field="icons"
-        type="org.iplantc.core.resources.client.IplantResources" />
+        type="org.iplantc.de.resources.client.IplantResources" />
     <ui:with field="labels"
-        type="org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels" />         
+        type="org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels" />
     <ui:with field="margins"
             type="com.sencha.gxt.core.client.util.Margins">
       <ui:attributes top="5"

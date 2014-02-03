@@ -18,9 +18,9 @@ import com.sencha.gxt.widget.core.client.form.NumberPropertyEditor;
 import com.sencha.gxt.widget.core.client.form.SpinnerField;
 import com.sencha.gxt.widget.core.client.form.TextField;
 
-import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
-import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
-import org.iplantc.core.resources.client.uiapps.widgets.argumentTypes.DoubleInputLabels;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
+import org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.DoubleInputLabels;
 import org.iplantc.core.uiapps.integration.client.view.propertyEditors.widgets.ArgumentValidatorEditor;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentValidator;

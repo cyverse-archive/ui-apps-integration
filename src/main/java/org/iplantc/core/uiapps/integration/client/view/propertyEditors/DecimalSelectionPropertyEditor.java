@@ -26,12 +26,12 @@ import com.sencha.gxt.widget.core.client.form.ComboBox;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
 import com.sencha.gxt.widget.core.client.form.TextField;
 
-import org.iplantc.core.resources.client.IplantResources;
-import org.iplantc.core.resources.client.messages.I18N;
-import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
-import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsDisplayMessages;
-import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
-import org.iplantc.core.resources.client.uiapps.widgets.argumentTypes.DoubleSelectionLabels;
+import org.iplantc.de.resources.client.IplantResources;
+import org.iplantc.de.resources.client.messages.I18N;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsDisplayMessages;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
+import org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.DoubleSelectionLabels;
 import org.iplantc.core.uiapps.integration.client.view.propertyEditors.widgets.SelectionItemPropertyEditor;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItem;

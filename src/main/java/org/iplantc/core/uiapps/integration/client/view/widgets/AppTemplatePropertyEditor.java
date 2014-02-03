@@ -23,7 +23,7 @@ import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.form.validator.MaxLengthValidator;
 import com.sencha.gxt.widget.core.client.tips.QuickTip;
 
-import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
 import org.iplantc.core.uiapps.integration.client.events.UpdateCommandLinePreviewEvent;
 import org.iplantc.core.uiapps.integration.client.events.UpdateCommandLinePreviewEvent.HasUpdateCommandLinePreviewEventHandlers;
 import org.iplantc.core.uiapps.integration.client.events.UpdateCommandLinePreviewEvent.UpdateCommandLinePreviewEventHandler;

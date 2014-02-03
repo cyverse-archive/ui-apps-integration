@@ -2,9 +2,9 @@ package org.iplantc.core.uiapps.integration.client.view;
 
 import java.util.Map;
 
-import org.iplantc.core.resources.client.IplantContextualHelpAccessStyle;
-import org.iplantc.core.resources.client.IplantResources;
-import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsDefaultLabels;
+import org.iplantc.de.resources.client.IplantContextualHelpAccessStyle;
+import org.iplantc.de.resources.client.IplantResources;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsDefaultLabels;
 import org.iplantc.core.uiapps.widgets.client.models.AppTemplateAutoBeanFactory;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup;

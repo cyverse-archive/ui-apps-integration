@@ -23,10 +23,10 @@ import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 import com.sencha.gxt.widget.core.client.form.TextArea;
 
-import org.iplantc.core.resources.client.IplantContextualHelpAccessStyle;
-import org.iplantc.core.resources.client.IplantResources;
-import org.iplantc.core.resources.client.messages.I18N;
-import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
+import org.iplantc.de.resources.client.IplantContextualHelpAccessStyle;
+import org.iplantc.de.resources.client.IplantResources;
+import org.iplantc.de.resources.client.messages.I18N;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
 import org.iplantc.core.uiapps.integration.client.view.propertyEditors.ArgumentGroupPropertyEditor;
 import org.iplantc.core.uiapps.integration.client.view.propertyEditors.ArgumentPropertyEditor;
 import org.iplantc.core.uiapps.integration.client.view.propertyEditors.DecimalInputPropertyEditor;

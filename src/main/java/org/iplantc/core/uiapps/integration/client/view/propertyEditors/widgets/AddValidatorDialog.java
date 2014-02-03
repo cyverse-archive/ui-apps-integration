@@ -36,7 +36,7 @@ import com.sencha.gxt.widget.core.client.form.NumberPropertyEditor;
 import com.sencha.gxt.widget.core.client.form.SpinnerField;
 import com.sencha.gxt.widget.core.client.form.TextField;
 
-import org.iplantc.core.resources.client.uiapps.widgets.ArgumentValidatorMessages;
+import org.iplantc.de.resources.client.uiapps.widgets.ArgumentValidatorMessages;
 import org.iplantc.core.uiapps.widgets.client.models.AppTemplateAutoBeanFactory;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentValidator;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentValidatorType;

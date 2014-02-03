@@ -6,7 +6,7 @@
              xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form"
              xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button">
     <ui:with field="labels"
-        type="org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels" /> 
+        type="org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels" />
     <ui:with field="margins"
             type="com.sencha.gxt.core.client.util.Margins">
       <ui:attributes top="5"

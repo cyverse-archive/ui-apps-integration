@@ -23,11 +23,11 @@ import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.BeforeHideEvent;
 
 import org.iplantc.core.jsonutil.JsonUtil;
-import org.iplantc.core.resources.client.messages.I18N;
-import org.iplantc.core.resources.client.messages.IplantDisplayStrings;
-import org.iplantc.core.resources.client.messages.IplantErrorStrings;
-import org.iplantc.core.resources.client.uiapps.integration.AppIntegrationErrorMessages;
-import org.iplantc.core.resources.client.uiapps.integration.AppIntegrationMessages;
+import org.iplantc.de.resources.client.messages.I18N;
+import org.iplantc.de.resources.client.messages.IplantDisplayStrings;
+import org.iplantc.de.resources.client.messages.IplantErrorStrings;
+import org.iplantc.de.resources.client.uiapps.integration.AppIntegrationErrorMessages;
+import org.iplantc.de.resources.client.uiapps.integration.AppIntegrationMessages;
 import org.iplantc.core.uiapps.client.events.AppUpdatedEvent;
 import org.iplantc.core.uiapps.integration.client.dialogs.CommandLineOrderingPanel;
 import org.iplantc.core.uiapps.integration.client.events.DeleteArgumentEvent;

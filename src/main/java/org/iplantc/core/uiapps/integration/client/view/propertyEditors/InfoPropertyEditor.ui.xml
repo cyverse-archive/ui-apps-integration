@@ -4,7 +4,7 @@
 	         xmlns:con="urn:import:com.sencha.gxt.widget.core.client.container"
 	         xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form">
     <ui:with field="infoLabels"
-             type="org.iplantc.core.resources.client.uiapps.widgets.argumentTypes.InfoTypeLabels" />  
+             type="org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.InfoTypeLabels" />
     <ui:with field="margins"
              type="com.sencha.gxt.core.client.util.Margins">
       <ui:attributes top="10"

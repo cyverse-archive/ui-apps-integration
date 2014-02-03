@@ -21,7 +21,7 @@ import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 
-import org.iplantc.core.resources.client.uiapps.integration.AppIntegrationMessages;
+import org.iplantc.de.resources.client.uiapps.integration.AppIntegrationMessages;
 import org.iplantc.core.uiapps.integration.client.view.AppsEditorView;
 import org.iplantc.core.uiapps.widgets.client.models.Argument;
 import org.iplantc.core.uiapps.widgets.client.models.ArgumentProperties;
