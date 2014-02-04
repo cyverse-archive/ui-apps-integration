@@ -43,8 +43,8 @@ import org.iplantc.de.apps.widgets.client.view.editors.AppTemplateFormImpl;
 import org.iplantc.de.apps.widgets.client.view.editors.ArgumentEditorFactoryImpl;
 import org.iplantc.de.apps.widgets.client.view.editors.LaunchAnalysisViewImpl;
 import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
-import org.iplantc.core.uicommons.client.events.EventBus;
-import org.iplantc.core.uicommons.client.models.UserSettings;
+import org.iplantc.de.commons.client.events.EventBus;
+import org.iplantc.de.commons.client.models.UserSettings;
 
 /**
  * @author jstroot

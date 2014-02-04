@@ -45,7 +45,7 @@ import org.iplantc.de.apps.widgets.client.services.AppMetadataServiceFacade;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentEditor;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.IArgumentEditorConverter;
 import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
-import org.iplantc.core.uicommons.client.ErrorHandler;
+import org.iplantc.de.commons.client.ErrorHandler;
 
 import java.util.List;
 public abstract class AbstractArgumentPropertyEditor extends Composite implements ArgumentPropertyEditor {

@@ -16,7 +16,7 @@ import org.iplantc.de.apps.widgets.client.models.selection.SelectionItem;
 import org.iplantc.de.apps.widgets.client.models.selection.SelectionItemGroup;
 import org.iplantc.de.apps.widgets.client.models.util.AppTemplateUtils;
 import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
-import org.iplantc.core.uicommons.client.widgets.ContextualHelpPopup;
+import org.iplantc.de.commons.client.widgets.ContextualHelpPopup;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;

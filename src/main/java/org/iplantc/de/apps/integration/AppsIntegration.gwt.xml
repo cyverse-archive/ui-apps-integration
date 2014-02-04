@@ -7,7 +7,7 @@
   "http://google-web-toolkit.googlecode.com/svn/tags/2.5.0/distro-source/core/src/gwt-module.dtd">
 <module>
   <!-- iPlant Modules -->
-  <inherits name="org.iplantc.core.ui-commons" />
+  <inherits name="org.iplantc.de.commons.ui-commons" />
   <inherits name="org.iplantc.de.apps.widgets.Widgets"/>
   
   <!-- Deferred-Binding Rules -->

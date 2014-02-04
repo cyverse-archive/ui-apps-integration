@@ -61,7 +61,7 @@ import org.iplantc.de.apps.widgets.client.models.ArgumentType;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentEditor;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentGroupEditor;
-import org.iplantc.core.uicommons.client.widgets.ContextualHelpPopup;
+import org.iplantc.de.commons.client.widgets.ContextualHelpPopup;
 
 import java.util.Map;
 

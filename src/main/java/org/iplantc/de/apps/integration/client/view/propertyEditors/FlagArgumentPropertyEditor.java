@@ -42,7 +42,7 @@ import org.iplantc.de.apps.widgets.client.view.editors.arguments.converters.Argu
 import org.iplantc.de.apps.widgets.client.view.editors.arguments.converters.SplittableToBooleanConverter;
 import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 import org.iplantc.de.apps.widgets.client.view.editors.widgets.CheckBoxAdapter;
-import org.iplantc.core.uicommons.client.validators.CmdLineArgCharacterValidator;
+import org.iplantc.de.commons.client.validators.CmdLineArgCharacterValidator;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

@@ -54,8 +54,8 @@ import org.iplantc.de.apps.widgets.client.models.selection.SelectionItem;
 import org.iplantc.de.apps.widgets.client.models.selection.SelectionItemGroup;
 import org.iplantc.de.apps.widgets.client.models.selection.SelectionItemProperties;
 import org.iplantc.de.apps.widgets.client.view.util.SelectionItemTreeStoreEditor;
-import org.iplantc.core.uicommons.client.ErrorHandler;
-import org.iplantc.core.uicommons.client.validators.CmdLineArgCharacterValidator;
+import org.iplantc.de.commons.client.ErrorHandler;
+import org.iplantc.de.commons.client.validators.CmdLineArgCharacterValidator;
 import org.iplantc.de.client.UUIDService;
 import org.iplantc.de.client.UUIDServiceAsync;
 

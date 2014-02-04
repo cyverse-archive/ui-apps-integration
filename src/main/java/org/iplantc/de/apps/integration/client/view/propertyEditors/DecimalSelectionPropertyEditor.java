@@ -41,8 +41,8 @@ import org.iplantc.de.apps.widgets.client.view.editors.arguments.converters.Argu
 import org.iplantc.de.apps.widgets.client.view.editors.arguments.converters.SplittableToSelectionArgConverter;
 import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 import org.iplantc.de.apps.widgets.client.view.editors.widgets.CheckBoxAdapter;
-import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IPlantDialog;
-import org.iplantc.core.uicommons.client.widgets.ContextualHelpPopup;
+import org.iplantc.de.commons.client.views.gxt3.dialogs.IPlantDialog;
+import org.iplantc.de.commons.client.widgets.ContextualHelpPopup;
 import org.iplantc.de.client.UUIDServiceAsync;
 
 import java.util.Collection;

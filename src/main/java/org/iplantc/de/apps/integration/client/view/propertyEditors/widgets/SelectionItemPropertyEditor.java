@@ -47,8 +47,8 @@ import org.iplantc.de.apps.widgets.client.models.ArgumentType;
 import org.iplantc.de.apps.widgets.client.models.selection.SelectionItem;
 import org.iplantc.de.apps.widgets.client.models.selection.SelectionItemProperties;
 import org.iplantc.de.apps.widgets.client.view.util.SelectionItemValueChangeStoreHandler.HasEventSuppression;
-import org.iplantc.core.uicommons.client.ErrorHandler;
-import org.iplantc.core.uicommons.client.validators.CmdLineArgCharacterValidator;
+import org.iplantc.de.commons.client.ErrorHandler;
+import org.iplantc.de.commons.client.validators.CmdLineArgCharacterValidator;
 import org.iplantc.de.client.UUIDServiceAsync;
 
 import java.util.Collection;

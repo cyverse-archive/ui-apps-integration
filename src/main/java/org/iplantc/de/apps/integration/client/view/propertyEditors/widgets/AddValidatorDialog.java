@@ -41,7 +41,7 @@ import org.iplantc.de.apps.widgets.client.models.AppTemplateAutoBeanFactory;
 import org.iplantc.de.apps.widgets.client.models.ArgumentValidator;
 import org.iplantc.de.apps.widgets.client.models.ArgumentValidatorType;
 import org.iplantc.de.apps.widgets.client.view.editors.arguments.AbstractArgumentEditor;
-import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IPlantDialog;
+import org.iplantc.de.commons.client.views.gxt3.dialogs.IPlantDialog;
 
 import java.util.Map;
 import java.util.Set;
