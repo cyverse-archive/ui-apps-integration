@@ -42,11 +42,11 @@ import com.sencha.gxt.widget.core.client.tips.ToolTipConfig;
 
 import org.iplantc.de.resources.client.messages.I18N;
 import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
-import org.iplantc.core.uiapps.widgets.client.models.AppTemplateAutoBeanFactory;
-import org.iplantc.core.uiapps.widgets.client.models.ArgumentType;
-import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItem;
-import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItemProperties;
-import org.iplantc.core.uiapps.widgets.client.view.util.SelectionItemValueChangeStoreHandler.HasEventSuppression;
+import org.iplantc.de.apps.widgets.client.models.AppTemplateAutoBeanFactory;
+import org.iplantc.de.apps.widgets.client.models.ArgumentType;
+import org.iplantc.de.apps.widgets.client.models.selection.SelectionItem;
+import org.iplantc.de.apps.widgets.client.models.selection.SelectionItemProperties;
+import org.iplantc.de.apps.widgets.client.view.util.SelectionItemValueChangeStoreHandler.HasEventSuppression;
 import org.iplantc.core.uicommons.client.ErrorHandler;
 import org.iplantc.core.uicommons.client.validators.CmdLineArgCharacterValidator;
 import org.iplantc.de.client.UUIDServiceAsync;

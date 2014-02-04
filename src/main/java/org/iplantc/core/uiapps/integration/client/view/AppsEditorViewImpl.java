@@ -51,16 +51,16 @@ import org.iplantc.core.uiapps.integration.client.view.propertyEditors.TextSelec
 import org.iplantc.core.uiapps.integration.client.view.propertyEditors.TreeSelectionPropertyEditor;
 import org.iplantc.core.uiapps.integration.client.view.propertyEditors.style.AppTemplateWizardPropertyContentPanelAppearance;
 import org.iplantc.core.uiapps.integration.client.view.widgets.AppTemplatePropertyEditor;
-import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent;
-import org.iplantc.core.uiapps.widgets.client.events.ArgumentGroupSelectedEvent;
-import org.iplantc.core.uiapps.widgets.client.events.ArgumentSelectedEvent;
-import org.iplantc.core.uiapps.widgets.client.models.AppTemplate;
-import org.iplantc.core.uiapps.widgets.client.models.Argument;
-import org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup;
-import org.iplantc.core.uiapps.widgets.client.models.ArgumentType;
-import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm;
-import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm.ArgumentEditor;
-import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm.ArgumentGroupEditor;
+import org.iplantc.de.apps.widgets.client.events.AppTemplateSelectedEvent;
+import org.iplantc.de.apps.widgets.client.events.ArgumentGroupSelectedEvent;
+import org.iplantc.de.apps.widgets.client.events.ArgumentSelectedEvent;
+import org.iplantc.de.apps.widgets.client.models.AppTemplate;
+import org.iplantc.de.apps.widgets.client.models.Argument;
+import org.iplantc.de.apps.widgets.client.models.ArgumentGroup;
+import org.iplantc.de.apps.widgets.client.models.ArgumentType;
+import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
+import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentEditor;
+import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentGroupEditor;
 import org.iplantc.core.uicommons.client.widgets.ContextualHelpPopup;
 
 import java.util.Map;

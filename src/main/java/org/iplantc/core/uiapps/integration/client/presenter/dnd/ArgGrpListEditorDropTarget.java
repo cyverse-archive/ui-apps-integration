@@ -15,21 +15,21 @@ import com.sencha.gxt.widget.core.client.container.AccordionLayoutContainer;
 
 import org.iplantc.de.resources.client.messages.I18N;
 import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
-import org.iplantc.core.uiapps.widgets.client.models.Argument;
-import org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup;
-import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;
-import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm;
-import org.iplantc.core.uiapps.widgets.client.view.HasLabelOnlyEditMode;
-import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.de.apps.widgets.client.models.Argument;
+import org.iplantc.de.apps.widgets.client.models.ArgumentGroup;
+import org.iplantc.de.apps.widgets.client.models.util.AppTemplateUtils;
+import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
+import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
+import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 
 import java.util.List;
 
 /**
  * This <code>DropTarget</code> is responsible for handling
- * {@link org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup} additions to the
+ * {@link org.iplantc.de.apps.widgets.client.models.ArgumentGroup} additions to the
  * given {@link com.google.gwt.editor.client.adapters.ListEditor}, as well as handling the auto-expansion
  * of a child <code>ContentPanel</code>s when a drag move containing an
- * {@link org.iplantc.core.uiapps.widgets.client.models.Argument} is detected over a
+ * {@link org.iplantc.de.apps.widgets.client.models.Argument} is detected over a
  * <code>ContentPanel</code>'s header.
  * 
  * TODO JDS Handle DnD Argument additions when drop occurs on a ContentPanel header.

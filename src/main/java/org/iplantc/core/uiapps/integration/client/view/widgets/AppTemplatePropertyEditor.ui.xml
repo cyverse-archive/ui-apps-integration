@@ -5,7 +5,7 @@
              xmlns:con="urn:import:com.sencha.gxt.widget.core.client.container"
              xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button"
              xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form"
-             xmlns:srh="urn:import:org.iplantc.core.uiapps.widgets.client.view.deployedComponents"
+             xmlns:srh="urn:import:org.iplantc.de.apps.widgets.client.view.deployedComponents"
              xmlns:viewWidgets="urn:import:org.iplantc.core.uiapps.integration.client.view.widgets">
     <ui:with field="icons"
         type="org.iplantc.de.resources.client.IplantResources" />

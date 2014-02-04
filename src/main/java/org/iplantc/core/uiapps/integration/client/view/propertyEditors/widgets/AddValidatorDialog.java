@@ -37,10 +37,10 @@ import com.sencha.gxt.widget.core.client.form.SpinnerField;
 import com.sencha.gxt.widget.core.client.form.TextField;
 
 import org.iplantc.de.resources.client.uiapps.widgets.ArgumentValidatorMessages;
-import org.iplantc.core.uiapps.widgets.client.models.AppTemplateAutoBeanFactory;
-import org.iplantc.core.uiapps.widgets.client.models.ArgumentValidator;
-import org.iplantc.core.uiapps.widgets.client.models.ArgumentValidatorType;
-import org.iplantc.core.uiapps.widgets.client.view.editors.arguments.AbstractArgumentEditor;
+import org.iplantc.de.apps.widgets.client.models.AppTemplateAutoBeanFactory;
+import org.iplantc.de.apps.widgets.client.models.ArgumentValidator;
+import org.iplantc.de.apps.widgets.client.models.ArgumentValidatorType;
+import org.iplantc.de.apps.widgets.client.view.editors.arguments.AbstractArgumentEditor;
 import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IPlantDialog;
 
 import java.util.Map;

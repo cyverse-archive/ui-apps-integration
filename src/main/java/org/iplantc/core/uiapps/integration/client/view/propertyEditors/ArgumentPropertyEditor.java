@@ -10,9 +10,9 @@ import com.google.web.bindery.autobean.shared.Splittable;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 
 import org.iplantc.core.uiapps.integration.client.events.UpdateCommandLinePreviewEvent.HasUpdateCommandLinePreviewEventHandlers;
-import org.iplantc.core.uiapps.widgets.client.models.Argument;
-import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm.ArgumentEditor;
-import org.iplantc.core.uiapps.widgets.client.view.HasLabelOnlyEditMode;
+import org.iplantc.de.apps.widgets.client.models.Argument;
+import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentEditor;
+import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
 
 public interface ArgumentPropertyEditor extends Editor<Argument>, IsWidget, HasValueChangeHandlers<Splittable>, HasLabelOnlyEditMode, HasUpdateCommandLinePreviewEventHandlers {
 

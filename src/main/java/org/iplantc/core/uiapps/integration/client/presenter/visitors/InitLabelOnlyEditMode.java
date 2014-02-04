@@ -3,7 +3,7 @@ package org.iplantc.core.uiapps.integration.client.presenter.visitors;
 import com.google.gwt.editor.client.EditorContext;
 import com.google.gwt.editor.client.EditorVisitor;
 
-import org.iplantc.core.uiapps.widgets.client.view.HasLabelOnlyEditMode;
+import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
 
 public class InitLabelOnlyEditMode extends EditorVisitor {
 

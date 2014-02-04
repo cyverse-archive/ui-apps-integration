@@ -3,7 +3,7 @@
              xmlns:con="urn:import:com.sencha.gxt.widget.core.client.container"
              xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client"
              xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form"
-             xmlns:appTemplate="urn:import:org.iplantc.core.uiapps.widgets.client.view"
+             xmlns:appTemplate="urn:import:org.iplantc.de.apps.widgets.client.view"
              xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button"
              xmlns:appsInt="urn:import:org.iplantc.core.uiapps.integration.client.view"
              xmlns:appTemplatePropertyEditor="urn:import:org.iplantc.core.uiapps.integration.client.view.widgets">

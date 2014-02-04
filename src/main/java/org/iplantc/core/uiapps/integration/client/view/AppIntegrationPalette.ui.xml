@@ -6,7 +6,7 @@
 	         xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button"
 	         xmlns:comWidgets="urn:import:org.iplantc.core.uicommons.client.widgets">
 	<ui:with field="res"
-	         type="org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance"/>
+	         type="org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance"/>
     <ui:with field="icons"
              type="org.iplantc.de.resources.client.IplantResources" />
     <ui:with field="strings"

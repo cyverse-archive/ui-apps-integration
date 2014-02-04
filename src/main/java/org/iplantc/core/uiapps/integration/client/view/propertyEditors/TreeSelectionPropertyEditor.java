@@ -30,11 +30,11 @@ import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsContextualHelpM
 import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
 import org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.TreeSelectionLabels;
 import org.iplantc.core.uiapps.integration.client.view.propertyEditors.widgets.SelectionItemTreePropertyEditor;
-import org.iplantc.core.uiapps.widgets.client.models.Argument;
-import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItem;
-import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItemGroup;
-import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
-import org.iplantc.core.uiapps.widgets.client.view.editors.widgets.CheckBoxAdapter;
+import org.iplantc.de.apps.widgets.client.models.Argument;
+import org.iplantc.de.apps.widgets.client.models.selection.SelectionItem;
+import org.iplantc.de.apps.widgets.client.models.selection.SelectionItemGroup;
+import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.de.apps.widgets.client.view.editors.widgets.CheckBoxAdapter;
 import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IPlantDialog;
 import org.iplantc.core.uicommons.client.widgets.ContextualHelpPopup;
 

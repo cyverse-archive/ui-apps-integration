@@ -9,12 +9,12 @@ import com.sencha.gxt.core.client.dom.XElement;
 import com.sencha.gxt.dnd.core.client.DndDropEvent;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 
-import org.iplantc.core.uiapps.widgets.client.models.Argument;
-import org.iplantc.core.uiapps.widgets.client.models.ArgumentType;
-import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;
-import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm;
-import org.iplantc.core.uiapps.widgets.client.view.HasLabelOnlyEditMode;
-import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.de.apps.widgets.client.models.Argument;
+import org.iplantc.de.apps.widgets.client.models.ArgumentType;
+import org.iplantc.de.apps.widgets.client.models.util.AppTemplateUtils;
+import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
+import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
+import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 
 import java.util.List;
 

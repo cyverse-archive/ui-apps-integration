@@ -34,15 +34,15 @@ import org.iplantc.core.uiapps.integration.client.view.propertyEditors.TextInput
 import org.iplantc.core.uiapps.integration.client.view.propertyEditors.TextSelectionPropertyEditor;
 import org.iplantc.core.uiapps.integration.client.view.propertyEditors.TreeSelectionPropertyEditor;
 import org.iplantc.core.uiapps.integration.client.view.propertyEditors.widgets.ArgumentValidatorEditor;
-import org.iplantc.core.uiapps.widgets.client.presenter.AppLaunchPresenterImpl;
-import org.iplantc.core.uiapps.widgets.client.view.AppLaunchView;
-import org.iplantc.core.uiapps.widgets.client.view.AppLaunchViewImpl;
-import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm;
-import org.iplantc.core.uiapps.widgets.client.view.LaunchAnalysisView;
-import org.iplantc.core.uiapps.widgets.client.view.editors.AppTemplateFormImpl;
-import org.iplantc.core.uiapps.widgets.client.view.editors.ArgumentEditorFactoryImpl;
-import org.iplantc.core.uiapps.widgets.client.view.editors.LaunchAnalysisViewImpl;
-import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.de.apps.widgets.client.presenter.AppLaunchPresenterImpl;
+import org.iplantc.de.apps.widgets.client.view.AppLaunchView;
+import org.iplantc.de.apps.widgets.client.view.AppLaunchViewImpl;
+import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
+import org.iplantc.de.apps.widgets.client.view.LaunchAnalysisView;
+import org.iplantc.de.apps.widgets.client.view.editors.AppTemplateFormImpl;
+import org.iplantc.de.apps.widgets.client.view.editors.ArgumentEditorFactoryImpl;
+import org.iplantc.de.apps.widgets.client.view.editors.LaunchAnalysisViewImpl;
+import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 import org.iplantc.core.uicommons.client.events.EventBus;
 import org.iplantc.core.uicommons.client.models.UserSettings;
 

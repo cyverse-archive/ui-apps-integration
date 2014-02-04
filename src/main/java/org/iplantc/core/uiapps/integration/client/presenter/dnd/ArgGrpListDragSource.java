@@ -12,9 +12,9 @@ import com.sencha.gxt.dnd.core.client.DragSource;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.container.AccordionLayoutContainer;
 
-import org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup;
-import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm;
-import org.iplantc.core.uiapps.widgets.client.view.HasLabelOnlyEditMode;
+import org.iplantc.de.apps.widgets.client.models.ArgumentGroup;
+import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
+import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
 
 import java.util.List;
 

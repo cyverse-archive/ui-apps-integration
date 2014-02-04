@@ -13,8 +13,8 @@ import com.sencha.gxt.widget.core.client.form.TextArea;
 import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
 import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
 import org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.InfoTypeLabels;
-import org.iplantc.core.uiapps.widgets.client.models.Argument;
-import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.de.apps.widgets.client.models.Argument;
+import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 
 public class InfoPropertyEditor extends AbstractArgumentPropertyEditor {
 

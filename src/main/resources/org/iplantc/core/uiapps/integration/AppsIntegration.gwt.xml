@@ -8,7 +8,7 @@
 <module>
   <!-- iPlant Modules -->
   <inherits name="org.iplantc.core.ui-commons" />
-  <inherits name="org.iplantc.core.uiapps.widgets.Widgets"/>
+  <inherits name="org.iplantc.de.apps.widgets.Widgets"/>
   
   <!-- Deferred-Binding Rules -->
   <replace-with class="org.iplantc.core.uiapps.integration.client.presenter.AppsIntegrationPresenterImpl">

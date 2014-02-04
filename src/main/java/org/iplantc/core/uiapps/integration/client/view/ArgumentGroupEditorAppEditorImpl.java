@@ -4,9 +4,9 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 
 import org.iplantc.core.uiapps.integration.client.view.widgets.AppGroupContentPanelAppearance;
-import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm;
-import org.iplantc.core.uiapps.widgets.client.view.editors.ArgumentGroupEditorImpl;
-import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
+import org.iplantc.de.apps.widgets.client.view.editors.ArgumentGroupEditorImpl;
+import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 
 public class ArgumentGroupEditorAppEditorImpl extends ArgumentGroupEditorImpl {
 

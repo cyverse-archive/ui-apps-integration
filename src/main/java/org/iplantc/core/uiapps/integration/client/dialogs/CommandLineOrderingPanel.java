@@ -23,8 +23,8 @@ import com.sencha.gxt.widget.core.client.grid.Grid;
 
 import org.iplantc.de.resources.client.uiapps.integration.AppIntegrationMessages;
 import org.iplantc.core.uiapps.integration.client.view.AppsEditorView;
-import org.iplantc.core.uiapps.widgets.client.models.Argument;
-import org.iplantc.core.uiapps.widgets.client.models.ArgumentProperties;
+import org.iplantc.de.apps.widgets.client.models.Argument;
+import org.iplantc.de.apps.widgets.client.models.ArgumentProperties;
 
 import java.util.List;
 

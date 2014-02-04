@@ -49,11 +49,11 @@ import com.sencha.gxt.widget.core.client.treegrid.TreeGrid;
 
 import org.iplantc.de.resources.client.messages.I18N;
 import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
-import org.iplantc.core.uiapps.widgets.client.models.AppTemplateAutoBeanFactory;
-import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItem;
-import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItemGroup;
-import org.iplantc.core.uiapps.widgets.client.models.selection.SelectionItemProperties;
-import org.iplantc.core.uiapps.widgets.client.view.util.SelectionItemTreeStoreEditor;
+import org.iplantc.de.apps.widgets.client.models.AppTemplateAutoBeanFactory;
+import org.iplantc.de.apps.widgets.client.models.selection.SelectionItem;
+import org.iplantc.de.apps.widgets.client.models.selection.SelectionItemGroup;
+import org.iplantc.de.apps.widgets.client.models.selection.SelectionItemProperties;
+import org.iplantc.de.apps.widgets.client.view.util.SelectionItemTreeStoreEditor;
 import org.iplantc.core.uicommons.client.ErrorHandler;
 import org.iplantc.core.uicommons.client.validators.CmdLineArgCharacterValidator;
 import org.iplantc.de.client.UUIDService;

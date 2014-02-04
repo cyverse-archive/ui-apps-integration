@@ -15,11 +15,11 @@ import com.sencha.gxt.widget.core.client.form.TextField;
 import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
 import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
 import org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.FolderInputTypeLabels;
-import org.iplantc.core.uiapps.widgets.client.models.Argument;
-import org.iplantc.core.uiapps.widgets.client.models.metadata.FileInfoType;
-import org.iplantc.core.uiapps.widgets.client.services.AppMetadataServiceFacade;
-import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
-import org.iplantc.core.uiapps.widgets.client.view.editors.widgets.CheckBoxAdapter;
+import org.iplantc.de.apps.widgets.client.models.Argument;
+import org.iplantc.de.apps.widgets.client.models.metadata.FileInfoType;
+import org.iplantc.de.apps.widgets.client.services.AppMetadataServiceFacade;
+import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.de.apps.widgets.client.view.editors.widgets.CheckBoxAdapter;
 
 public class FolderInputPropertyEditor extends AbstractArgumentPropertyEditor {
 

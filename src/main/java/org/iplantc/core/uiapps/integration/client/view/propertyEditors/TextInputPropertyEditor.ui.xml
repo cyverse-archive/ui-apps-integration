@@ -4,8 +4,8 @@
 	         xmlns:con="urn:import:com.sencha.gxt.widget.core.client.container"
 	         xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form"
 	         xmlns:validation="urn:import:org.iplantc.core.uiapps.integration.client.view.propertyEditors.widgets"
-	         xmlns:fields="urn:import:org.iplantc.core.uiapps.widgets.client.view.editors.widgets"
-             xmlns:converter="urn:import:org.iplantc.core.uiapps.widgets.client.view.editors.arguments.converters">
+	         xmlns:fields="urn:import:org.iplantc.de.apps.widgets.client.view.editors.widgets"
+             xmlns:converter="urn:import:org.iplantc.de.apps.widgets.client.view.editors.arguments.converters">
 	<ui:with field="appLabels"
              type="org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels" />
 	<ui:with field="textInputLabels"

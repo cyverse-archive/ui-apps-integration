@@ -14,16 +14,16 @@ import static org.iplantc.core.uiapps.integration.client.view.AppsEditorView.Pre
 
 import org.iplantc.core.uiapps.integration.client.presenter.dnd.ArgListEditorDragSource;
 import org.iplantc.core.uiapps.integration.client.presenter.dnd.ArgListEditorDropTarget;
-import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent.HasAppTemplateSelectedEventHandlers;
-import org.iplantc.core.uiapps.widgets.client.events.ArgumentGroupSelectedEvent.ArgumentGroupSelectedEventHandler;
-import org.iplantc.core.uiapps.widgets.client.events.ArgumentGroupSelectedEvent.HasArgumentGroupSelectedHandlers;
-import org.iplantc.core.uiapps.widgets.client.events.ArgumentSelectedEvent.HasArgumentSelectedEventHandlers;
-import org.iplantc.core.uiapps.widgets.client.models.Argument;
-import org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup;
-import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm;
-import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm.ArgumentEditorFactory;
-import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm.ArgumentGroupEditor;
-import org.iplantc.core.uiapps.widgets.client.view.HasLabelOnlyEditMode;
+import org.iplantc.de.apps.widgets.client.events.AppTemplateSelectedEvent.HasAppTemplateSelectedEventHandlers;
+import org.iplantc.de.apps.widgets.client.events.ArgumentGroupSelectedEvent.ArgumentGroupSelectedEventHandler;
+import org.iplantc.de.apps.widgets.client.events.ArgumentGroupSelectedEvent.HasArgumentGroupSelectedHandlers;
+import org.iplantc.de.apps.widgets.client.events.ArgumentSelectedEvent.HasArgumentSelectedEventHandlers;
+import org.iplantc.de.apps.widgets.client.models.Argument;
+import org.iplantc.de.apps.widgets.client.models.ArgumentGroup;
+import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
+import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentEditorFactory;
+import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentGroupEditor;
+import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
 
 import java.util.List;
 

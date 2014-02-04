@@ -1,7 +1,7 @@
 package org.iplantc.core.uiapps.integration.client.gin;
 
 import org.iplantc.core.uiapps.integration.client.view.AppsEditorView;
-import org.iplantc.core.uiapps.widgets.client.view.AppLaunchPreviewViewImpl;
+import org.iplantc.de.apps.widgets.client.view.AppLaunchPreviewViewImpl;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.inject.client.GinModules;

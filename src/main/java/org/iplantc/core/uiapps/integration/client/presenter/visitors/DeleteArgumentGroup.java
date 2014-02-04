@@ -4,11 +4,11 @@ import com.google.gwt.editor.client.EditorContext;
 import com.google.gwt.editor.client.EditorVisitor;
 import com.google.gwt.editor.client.adapters.ListEditor;
 
-import org.iplantc.core.uiapps.widgets.client.events.ArgumentGroupSelectedEvent;
-import org.iplantc.core.uiapps.widgets.client.models.ArgumentGroup;
-import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm;
-import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm.ArgumentGroupEditor;
-import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.de.apps.widgets.client.events.ArgumentGroupSelectedEvent;
+import org.iplantc.de.apps.widgets.client.models.ArgumentGroup;
+import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
+import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentGroupEditor;
+import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 
 /**
  * This class is responsible for completely removing a given ArgumentGroup from an editor hierarchy.

@@ -7,10 +7,10 @@ import com.google.gwt.user.client.Event;
 import com.sencha.gxt.core.client.dom.XElement;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 
-import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent;
-import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent.AppTemplateSelectedEventHandler;
-import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent.HasAppTemplateSelectedEventHandlers;
-import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.de.apps.widgets.client.events.AppTemplateSelectedEvent;
+import org.iplantc.de.apps.widgets.client.events.AppTemplateSelectedEvent.AppTemplateSelectedEventHandler;
+import org.iplantc.de.apps.widgets.client.events.AppTemplateSelectedEvent.HasAppTemplateSelectedEventHandlers;
+import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 
 public final class AppTemplateContentPanel extends ContentPanel implements HasAppTemplateSelectedEventHandlers {
 

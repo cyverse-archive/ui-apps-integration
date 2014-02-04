@@ -11,14 +11,14 @@ import com.sencha.gxt.widget.core.client.event.BeforeHideEvent.BeforeHideHandler
 import org.iplantc.core.uiapps.integration.client.events.DeleteArgumentGroupEvent.DeleteArgumentGroupEventHandler;
 import org.iplantc.core.uiapps.integration.client.events.UpdateCommandLinePreviewEvent.UpdateCommandLinePreviewEventHandler;
 import org.iplantc.core.uiapps.integration.client.view.widgets.AppTemplatePropertyEditor;
-import org.iplantc.core.uiapps.widgets.client.events.AppTemplateSelectedEvent.AppTemplateSelectedEventHandler;
-import org.iplantc.core.uiapps.widgets.client.events.ArgumentGroupSelectedEvent.ArgumentGroupSelectedEventHandler;
-import org.iplantc.core.uiapps.widgets.client.events.ArgumentSelectedEvent.ArgumentSelectedEventHandler;
-import org.iplantc.core.uiapps.widgets.client.models.AppTemplate;
-import org.iplantc.core.uiapps.widgets.client.models.Argument;
-import org.iplantc.core.uiapps.widgets.client.view.AppLaunchView.RenameWindowHeaderCommand;
-import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm;
-import org.iplantc.core.uiapps.widgets.client.view.HasLabelOnlyEditMode;
+import org.iplantc.de.apps.widgets.client.events.AppTemplateSelectedEvent.AppTemplateSelectedEventHandler;
+import org.iplantc.de.apps.widgets.client.events.ArgumentGroupSelectedEvent.ArgumentGroupSelectedEventHandler;
+import org.iplantc.de.apps.widgets.client.events.ArgumentSelectedEvent.ArgumentSelectedEventHandler;
+import org.iplantc.de.apps.widgets.client.models.AppTemplate;
+import org.iplantc.de.apps.widgets.client.models.Argument;
+import org.iplantc.de.apps.widgets.client.view.AppLaunchView.RenameWindowHeaderCommand;
+import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
+import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
 
 /**
  * @author jstroot
@@ -29,7 +29,7 @@ public interface AppsEditorView extends IsWidget, Editor<AppTemplate>, ArgumentS
     interface EditorDriver extends SimpleBeanEditorDriver<AppTemplate, AppsEditorView> {
     }
 
-    public interface Presenter extends org.iplantc.core.uiapps.widgets.client.view.AppLaunchView.BasePresenter, AppEditorToolbar.Presenter, BeforeHideHandler, UpdateCommandLinePreviewEventHandler,
+    public interface Presenter extends org.iplantc.de.apps.widgets.client.view.AppLaunchView.BasePresenter, AppEditorToolbar.Presenter, BeforeHideHandler, UpdateCommandLinePreviewEventHandler,
             HasLabelOnlyEditMode, DeleteArgumentGroupEventHandler {
 
         /**

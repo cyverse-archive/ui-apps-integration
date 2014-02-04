@@ -35,11 +35,11 @@ import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent.Selecti
 import com.sencha.gxt.widget.core.client.tips.QuickTip;
 
 import org.iplantc.de.resources.client.uiapps.widgets.ArgumentValidatorMessages;
-import org.iplantc.core.uiapps.widgets.client.models.Argument;
-import org.iplantc.core.uiapps.widgets.client.models.ArgumentValidator;
-import org.iplantc.core.uiapps.widgets.client.models.ArgumentValidatorType;
-import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;
-import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.de.apps.widgets.client.models.Argument;
+import org.iplantc.de.apps.widgets.client.models.ArgumentValidator;
+import org.iplantc.de.apps.widgets.client.models.ArgumentValidatorType;
+import org.iplantc.de.apps.widgets.client.models.util.AppTemplateUtils;
+import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 
 import java.util.List;
 import java.util.Set;

@@ -14,11 +14,11 @@ import com.sencha.gxt.dnd.core.client.DragSource;
 import com.sencha.gxt.widget.core.client.container.SimpleContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 
-import org.iplantc.core.uiapps.widgets.client.models.Argument;
-import org.iplantc.core.uiapps.widgets.client.models.util.AppTemplateUtils;
-import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm;
-import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm.ArgumentEditorFactory;
-import org.iplantc.core.uiapps.widgets.client.view.HasLabelOnlyEditMode;
+import org.iplantc.de.apps.widgets.client.models.Argument;
+import org.iplantc.de.apps.widgets.client.models.util.AppTemplateUtils;
+import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
+import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentEditorFactory;
+import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
 
 public final class ArgListEditorDragSource extends DragSource {
 

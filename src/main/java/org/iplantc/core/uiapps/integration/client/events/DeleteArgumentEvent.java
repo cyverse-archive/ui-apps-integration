@@ -5,7 +5,7 @@ import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 import org.iplantc.core.uiapps.integration.client.events.DeleteArgumentEvent.DeleteArgumentEventHandler;
-import org.iplantc.core.uiapps.widgets.client.models.Argument;
+import org.iplantc.de.apps.widgets.client.models.Argument;
 
 public class DeleteArgumentEvent extends GwtEvent<DeleteArgumentEventHandler> {
 
