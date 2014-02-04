@@ -6,7 +6,7 @@ import com.google.gwt.editor.client.EditorVisitor;
 
 import org.iplantc.core.uiapps.widgets.client.events.ArgumentSelectedEvent.ArgumentSelectedEventHandler;
 import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm.ArgumentEditor;
-import org.iplantc.core.uidiskresource.client.views.widgets.DiskResourceSelector.HasDisableBrowseButtons;
+import org.iplantc.de.diskResource.client.views.widgets.DiskResourceSelector.HasDisableBrowseButtons;
 
 /**
  * 

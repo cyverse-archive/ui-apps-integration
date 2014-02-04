@@ -23,7 +23,7 @@ import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm.HasDisableVal
 import org.iplantc.core.uiapps.widgets.client.view.AppTemplateForm.HasDisabledOnNotVisible;
 import org.iplantc.core.uiapps.widgets.client.view.HasLabelOnlyEditMode;
 import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
-import org.iplantc.core.uidiskresource.client.views.widgets.DiskResourceSelector.HasDisableBrowseButtons;
+import org.iplantc.de.diskResource.client.views.widgets.DiskResourceSelector.HasDisableBrowseButtons;
 
 import java.util.List;
 import java.util.Map;
