@@ -28,7 +28,7 @@ import org.iplantc.de.resources.client.messages.IplantDisplayStrings;
 import org.iplantc.de.resources.client.messages.IplantErrorStrings;
 import org.iplantc.de.resources.client.uiapps.integration.AppIntegrationErrorMessages;
 import org.iplantc.de.resources.client.uiapps.integration.AppIntegrationMessages;
-import org.iplantc.core.uiapps.client.events.AppUpdatedEvent;
+import org.iplantc.de.apps.client.events.AppUpdatedEvent;
 import org.iplantc.de.apps.integration.client.dialogs.CommandLineOrderingPanel;
 import org.iplantc.de.apps.integration.client.events.DeleteArgumentEvent;
 import org.iplantc.de.apps.integration.client.events.DeleteArgumentEvent.DeleteArgumentEventHandler;
