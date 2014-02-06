@@ -4,7 +4,7 @@
 	         xmlns:con="urn:import:com.sencha.gxt.widget.core.client.container"
 	         xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client"
 	         xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button"
-	         xmlns:comWidgets="urn:import:org.iplantc.core.uicommons.client.widgets">
+	         xmlns:comWidgets="urn:import:org.iplantc.de.commons.client.widgets">
 	<ui:with field="res"
 	         type="org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance"/>
     <ui:with field="icons"
