@@ -1,5 +1,24 @@
 package org.iplantc.de.apps.integration.client.view.widgets;
 
+import org.iplantc.de.apps.integration.client.events.UpdateCommandLinePreviewEvent;
+import org.iplantc.de.apps.integration.client.events.UpdateCommandLinePreviewEvent.HasUpdateCommandLinePreviewEventHandlers;
+import org.iplantc.de.apps.integration.client.events.UpdateCommandLinePreviewEvent.UpdateCommandLinePreviewEventHandler;
+import org.iplantc.de.apps.widgets.client.dialog.DCListingDialog;
+import org.iplantc.de.apps.widgets.client.events.AppTemplateSelectedEvent.AppTemplateSelectedEventHandler;
+import org.iplantc.de.apps.widgets.client.events.AppTemplateSelectedEvent.HasAppTemplateSelectedEventHandlers;
+import org.iplantc.de.apps.widgets.client.events.ArgumentGroupSelectedEvent;
+import org.iplantc.de.apps.widgets.client.events.ArgumentGroupSelectedEvent.ArgumentGroupSelectedEventHandler;
+import org.iplantc.de.apps.widgets.client.events.ArgumentSelectedEvent;
+import org.iplantc.de.apps.widgets.client.events.ArgumentSelectedEvent.ArgumentSelectedEventHandler;
+import org.iplantc.de.apps.widgets.client.models.AppTemplate;
+import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
+import org.iplantc.de.apps.widgets.client.view.deployedComponents.DCSearchField;
+import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.de.client.models.deployedComps.DeployedComponent;
+import org.iplantc.de.commons.client.validators.AppNameValidator;
+import org.iplantc.de.commons.client.widgets.PreventEntryAfterLimitHandler;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.EditorDelegate;
 import com.google.gwt.editor.client.ValueAwareEditor;
@@ -22,25 +41,6 @@ import com.sencha.gxt.widget.core.client.form.TextArea;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.form.validator.MaxLengthValidator;
 import com.sencha.gxt.widget.core.client.tips.QuickTip;
-
-import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
-import org.iplantc.de.apps.integration.client.events.UpdateCommandLinePreviewEvent;
-import org.iplantc.de.apps.integration.client.events.UpdateCommandLinePreviewEvent.HasUpdateCommandLinePreviewEventHandlers;
-import org.iplantc.de.apps.integration.client.events.UpdateCommandLinePreviewEvent.UpdateCommandLinePreviewEventHandler;
-import org.iplantc.de.apps.widgets.client.dialog.DCListingDialog;
-import org.iplantc.de.apps.widgets.client.events.AppTemplateSelectedEvent.AppTemplateSelectedEventHandler;
-import org.iplantc.de.apps.widgets.client.events.AppTemplateSelectedEvent.HasAppTemplateSelectedEventHandlers;
-import org.iplantc.de.apps.widgets.client.events.ArgumentGroupSelectedEvent;
-import org.iplantc.de.apps.widgets.client.events.ArgumentGroupSelectedEvent.ArgumentGroupSelectedEventHandler;
-import org.iplantc.de.apps.widgets.client.events.ArgumentSelectedEvent;
-import org.iplantc.de.apps.widgets.client.events.ArgumentSelectedEvent.ArgumentSelectedEventHandler;
-import org.iplantc.de.apps.widgets.client.models.AppTemplate;
-import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
-import org.iplantc.de.apps.widgets.client.view.deployedComponents.DCSearchField;
-import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
-import org.iplantc.de.commons.client.models.deployedcomps.DeployedComponent;
-import org.iplantc.de.commons.client.validators.AppNameValidator;
-import org.iplantc.de.commons.client.widgets.PreventEntryAfterLimitHandler;
 
 /**
  * @author jstroot

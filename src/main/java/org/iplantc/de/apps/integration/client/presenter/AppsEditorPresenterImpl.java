@@ -1,33 +1,5 @@
 package org.iplantc.de.apps.integration.client.presenter;
 
-import com.google.common.base.Strings;
-import com.google.common.collect.Lists;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.HasOneWidget;
-import com.google.inject.Inject;
-import com.google.web.bindery.autobean.shared.AutoBean;
-import com.google.web.bindery.autobean.shared.AutoBeanCodex;
-import com.google.web.bindery.autobean.shared.AutoBeanUtils;
-import com.google.web.bindery.autobean.shared.Splittable;
-import com.google.web.bindery.autobean.shared.impl.StringQuoter;
-
-import com.sencha.gxt.core.client.dom.XElement;
-import com.sencha.gxt.widget.core.client.Component;
-import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
-import com.sencha.gxt.widget.core.client.box.MessageBox;
-import com.sencha.gxt.widget.core.client.button.TextButton;
-import com.sencha.gxt.widget.core.client.event.BeforeHideEvent;
-
-import org.iplantc.de.commons.client.util.JsonUtil;
-import org.iplantc.de.resources.client.messages.I18N;
-import org.iplantc.de.resources.client.messages.IplantDisplayStrings;
-import org.iplantc.de.resources.client.messages.IplantErrorStrings;
-import org.iplantc.de.resources.client.uiapps.integration.AppIntegrationErrorMessages;
-import org.iplantc.de.resources.client.uiapps.integration.AppIntegrationMessages;
 import org.iplantc.de.apps.client.events.AppUpdatedEvent;
 import org.iplantc.de.apps.integration.client.dialogs.CommandLineOrderingPanel;
 import org.iplantc.de.apps.integration.client.events.DeleteArgumentEvent;
@@ -58,15 +30,43 @@ import org.iplantc.de.apps.widgets.client.services.AppTemplateServices;
 import org.iplantc.de.apps.widgets.client.view.AppLaunchPreviewViewImpl;
 import org.iplantc.de.apps.widgets.client.view.AppLaunchView.RenameWindowHeaderCommand;
 import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.de.client.UUIDServiceAsync;
 import org.iplantc.de.commons.client.ErrorHandler;
 import org.iplantc.de.commons.client.events.EventBus;
 import org.iplantc.de.commons.client.info.ErrorAnnouncementConfig;
 import org.iplantc.de.commons.client.info.IplantAnnouncer;
 import org.iplantc.de.commons.client.info.SuccessAnnouncementConfig;
+import org.iplantc.de.commons.client.util.JsonUtil;
 import org.iplantc.de.commons.client.views.IsMinimizable;
 import org.iplantc.de.commons.client.views.gxt3.dialogs.IPlantDialog;
 import org.iplantc.de.commons.client.views.gxt3.dialogs.IplantInfoBox;
-import org.iplantc.de.client.UUIDServiceAsync;
+import org.iplantc.de.resources.client.messages.I18N;
+import org.iplantc.de.resources.client.messages.IplantDisplayStrings;
+import org.iplantc.de.resources.client.messages.IplantErrorStrings;
+import org.iplantc.de.resources.client.uiapps.integration.AppIntegrationErrorMessages;
+import org.iplantc.de.resources.client.uiapps.integration.AppIntegrationMessages;
+
+import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.HasOneWidget;
+import com.google.inject.Inject;
+import com.google.web.bindery.autobean.shared.AutoBean;
+import com.google.web.bindery.autobean.shared.AutoBeanCodex;
+import com.google.web.bindery.autobean.shared.AutoBeanUtils;
+import com.google.web.bindery.autobean.shared.Splittable;
+import com.google.web.bindery.autobean.shared.impl.StringQuoter;
+
+import com.sencha.gxt.core.client.dom.XElement;
+import com.sencha.gxt.widget.core.client.Component;
+import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
+import com.sencha.gxt.widget.core.client.box.MessageBox;
+import com.sencha.gxt.widget.core.client.button.TextButton;
+import com.sencha.gxt.widget.core.client.event.BeforeHideEvent;
 
 import java.util.Collections;
 import java.util.Date;

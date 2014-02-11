@@ -1,5 +1,24 @@
 package org.iplantc.de.apps.integration.client.view.propertyEditors;
 
+import org.iplantc.de.apps.integration.client.view.propertyEditors.widgets.SelectionItemPropertyEditor;
+import org.iplantc.de.apps.widgets.client.models.Argument;
+import org.iplantc.de.apps.widgets.client.models.selection.SelectionItem;
+import org.iplantc.de.apps.widgets.client.models.selection.SelectionItemProperties;
+import org.iplantc.de.apps.widgets.client.view.editors.arguments.ClearComboBoxSelectionKeyDownHandler;
+import org.iplantc.de.apps.widgets.client.view.editors.arguments.converters.ArgumentEditorConverter;
+import org.iplantc.de.apps.widgets.client.view.editors.arguments.converters.SplittableToSelectionArgConverter;
+import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.de.apps.widgets.client.view.editors.widgets.CheckBoxAdapter;
+import org.iplantc.de.client.UUIDServiceAsync;
+import org.iplantc.de.commons.client.views.gxt3.dialogs.IPlantDialog;
+import org.iplantc.de.commons.client.widgets.ContextualHelpPopup;
+import org.iplantc.de.resources.client.IplantResources;
+import org.iplantc.de.resources.client.messages.I18N;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsDisplayMessages;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
+import org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.IntegerSelectionLabels;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.LeafValueEditor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
@@ -25,25 +44,6 @@ import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 import com.sencha.gxt.widget.core.client.form.ComboBox;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
 import com.sencha.gxt.widget.core.client.form.TextField;
-
-import org.iplantc.de.resources.client.IplantResources;
-import org.iplantc.de.resources.client.messages.I18N;
-import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
-import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsDisplayMessages;
-import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
-import org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.IntegerSelectionLabels;
-import org.iplantc.de.apps.integration.client.view.propertyEditors.widgets.SelectionItemPropertyEditor;
-import org.iplantc.de.apps.widgets.client.models.Argument;
-import org.iplantc.de.apps.widgets.client.models.selection.SelectionItem;
-import org.iplantc.de.apps.widgets.client.models.selection.SelectionItemProperties;
-import org.iplantc.de.apps.widgets.client.view.editors.arguments.ClearComboBoxSelectionKeyDownHandler;
-import org.iplantc.de.apps.widgets.client.view.editors.arguments.converters.ArgumentEditorConverter;
-import org.iplantc.de.apps.widgets.client.view.editors.arguments.converters.SplittableToSelectionArgConverter;
-import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
-import org.iplantc.de.apps.widgets.client.view.editors.widgets.CheckBoxAdapter;
-import org.iplantc.de.commons.client.views.gxt3.dialogs.IPlantDialog;
-import org.iplantc.de.commons.client.widgets.ContextualHelpPopup;
-import org.iplantc.de.client.UUIDServiceAsync;
 
 import java.util.Collection;
 

@@ -1,10 +1,5 @@
 package org.iplantc.de.apps.integration.client.view;
 
-import java.util.Map;
-
-import org.iplantc.de.resources.client.IplantContextualHelpAccessStyle;
-import org.iplantc.de.resources.client.IplantResources;
-import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsDefaultLabels;
 import org.iplantc.de.apps.widgets.client.models.AppTemplateAutoBeanFactory;
 import org.iplantc.de.apps.widgets.client.models.Argument;
 import org.iplantc.de.apps.widgets.client.models.ArgumentGroup;
@@ -17,6 +12,9 @@ import org.iplantc.de.apps.widgets.client.models.selection.SelectionItemGroup;
 import org.iplantc.de.apps.widgets.client.models.util.AppTemplateUtils;
 import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 import org.iplantc.de.commons.client.widgets.ContextualHelpPopup;
+import org.iplantc.de.resources.client.IplantContextualHelpAccessStyle;
+import org.iplantc.de.resources.client.IplantResources;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsDefaultLabels;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -34,6 +32,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.web.bindery.autobean.shared.AutoBean;
+
 import com.sencha.gxt.core.client.GXT;
 import com.sencha.gxt.dnd.core.client.DndDragStartEvent;
 import com.sencha.gxt.dnd.core.client.DndDragStartEvent.DndDragStartHandler;
@@ -42,6 +41,8 @@ import com.sencha.gxt.widget.core.client.Composite;
 import com.sencha.gxt.widget.core.client.button.ToolButton;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.tree.Tree.CheckCascade;
+
+import java.util.Map;
 
 /**
  * This is a ui component which contains draggable images of the different supported argument types in

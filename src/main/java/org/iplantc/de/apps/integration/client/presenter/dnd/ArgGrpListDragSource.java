@@ -1,5 +1,9 @@
 package org.iplantc.de.apps.integration.client.presenter.dnd;
 
+import org.iplantc.de.apps.widgets.client.models.ArgumentGroup;
+import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
+import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
+
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.editor.client.adapters.ListEditor;
@@ -11,10 +15,6 @@ import com.sencha.gxt.dnd.core.client.DndDropEvent;
 import com.sencha.gxt.dnd.core.client.DragSource;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.container.AccordionLayoutContainer;
-
-import org.iplantc.de.apps.widgets.client.models.ArgumentGroup;
-import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
-import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
 
 import java.util.List;
 

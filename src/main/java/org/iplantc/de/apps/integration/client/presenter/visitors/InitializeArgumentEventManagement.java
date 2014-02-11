@@ -1,12 +1,12 @@
 package org.iplantc.de.apps.integration.client.presenter.visitors;
 
-import com.google.gwt.editor.client.Editor;
-import com.google.gwt.editor.client.EditorContext;
-import com.google.gwt.editor.client.EditorVisitor;
-
 import org.iplantc.de.apps.widgets.client.events.ArgumentSelectedEvent.ArgumentSelectedEventHandler;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentEditor;
 import org.iplantc.de.diskResource.client.views.widgets.DiskResourceSelector.HasDisableBrowseButtons;
+
+import com.google.gwt.editor.client.Editor;
+import com.google.gwt.editor.client.EditorContext;
+import com.google.gwt.editor.client.EditorVisitor;
 
 /**
  * 

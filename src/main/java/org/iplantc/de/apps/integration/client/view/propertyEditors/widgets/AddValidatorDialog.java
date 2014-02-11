@@ -1,5 +1,12 @@
 package org.iplantc.de.apps.integration.client.view.propertyEditors.widgets;
 
+import org.iplantc.de.apps.widgets.client.models.AppTemplateAutoBeanFactory;
+import org.iplantc.de.apps.widgets.client.models.ArgumentValidator;
+import org.iplantc.de.apps.widgets.client.models.ArgumentValidatorType;
+import org.iplantc.de.apps.widgets.client.view.editors.arguments.AbstractArgumentEditor;
+import org.iplantc.de.commons.client.views.gxt3.dialogs.IPlantDialog;
+import org.iplantc.de.resources.client.uiapps.widgets.ArgumentValidatorMessages;
+
 import com.google.common.collect.Maps;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -35,13 +42,6 @@ import com.sencha.gxt.widget.core.client.form.NumberField;
 import com.sencha.gxt.widget.core.client.form.NumberPropertyEditor;
 import com.sencha.gxt.widget.core.client.form.SpinnerField;
 import com.sencha.gxt.widget.core.client.form.TextField;
-
-import org.iplantc.de.resources.client.uiapps.widgets.ArgumentValidatorMessages;
-import org.iplantc.de.apps.widgets.client.models.AppTemplateAutoBeanFactory;
-import org.iplantc.de.apps.widgets.client.models.ArgumentValidator;
-import org.iplantc.de.apps.widgets.client.models.ArgumentValidatorType;
-import org.iplantc.de.apps.widgets.client.view.editors.arguments.AbstractArgumentEditor;
-import org.iplantc.de.commons.client.views.gxt3.dialogs.IPlantDialog;
 
 import java.util.Map;
 import java.util.Set;

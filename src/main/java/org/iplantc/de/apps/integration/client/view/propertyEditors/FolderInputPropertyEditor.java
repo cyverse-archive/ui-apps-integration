@@ -1,5 +1,14 @@
 package org.iplantc.de.apps.integration.client.view.propertyEditors;
 
+import org.iplantc.de.apps.widgets.client.models.Argument;
+import org.iplantc.de.apps.widgets.client.models.metadata.FileInfoType;
+import org.iplantc.de.apps.widgets.client.services.AppMetadataServiceFacade;
+import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.de.apps.widgets.client.view.editors.widgets.CheckBoxAdapter;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
+import org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.FolderInputTypeLabels;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
@@ -11,15 +20,6 @@ import com.google.inject.Inject;
 import com.sencha.gxt.widget.core.client.form.ComboBox;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
 import com.sencha.gxt.widget.core.client.form.TextField;
-
-import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
-import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
-import org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.FolderInputTypeLabels;
-import org.iplantc.de.apps.widgets.client.models.Argument;
-import org.iplantc.de.apps.widgets.client.models.metadata.FileInfoType;
-import org.iplantc.de.apps.widgets.client.services.AppMetadataServiceFacade;
-import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
-import org.iplantc.de.apps.widgets.client.view.editors.widgets.CheckBoxAdapter;
 
 public class FolderInputPropertyEditor extends AbstractArgumentPropertyEditor {
 

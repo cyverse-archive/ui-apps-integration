@@ -1,5 +1,12 @@
 package org.iplantc.de.apps.integration.client.presenter.dnd;
 
+import org.iplantc.de.apps.widgets.client.models.Argument;
+import org.iplantc.de.apps.widgets.client.models.ArgumentType;
+import org.iplantc.de.apps.widgets.client.models.util.AppTemplateUtils;
+import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
+import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
+import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+
 import com.google.common.base.Strings;
 import com.google.gwt.editor.client.adapters.ListEditor;
 import com.google.web.bindery.autobean.shared.AutoBean;
@@ -8,13 +15,6 @@ import com.google.web.bindery.autobean.shared.AutoBeanUtils;
 import com.sencha.gxt.core.client.dom.XElement;
 import com.sencha.gxt.dnd.core.client.DndDropEvent;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
-
-import org.iplantc.de.apps.widgets.client.models.Argument;
-import org.iplantc.de.apps.widgets.client.models.ArgumentType;
-import org.iplantc.de.apps.widgets.client.models.util.AppTemplateUtils;
-import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
-import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
-import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 
 import java.util.List;
 

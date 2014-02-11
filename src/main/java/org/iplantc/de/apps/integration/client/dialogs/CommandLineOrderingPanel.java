@@ -1,5 +1,10 @@
 package org.iplantc.de.apps.integration.client.dialogs;
 
+import org.iplantc.de.apps.integration.client.view.AppsEditorView;
+import org.iplantc.de.apps.widgets.client.models.Argument;
+import org.iplantc.de.apps.widgets.client.models.ArgumentProperties;
+import org.iplantc.de.resources.client.uiapps.integration.AppIntegrationMessages;
+
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.gwt.core.client.GWT;
@@ -20,11 +25,6 @@ import com.sencha.gxt.widget.core.client.Composite;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
-
-import org.iplantc.de.resources.client.uiapps.integration.AppIntegrationMessages;
-import org.iplantc.de.apps.integration.client.view.AppsEditorView;
-import org.iplantc.de.apps.widgets.client.models.Argument;
-import org.iplantc.de.apps.widgets.client.models.ArgumentProperties;
 
 import java.util.List;
 

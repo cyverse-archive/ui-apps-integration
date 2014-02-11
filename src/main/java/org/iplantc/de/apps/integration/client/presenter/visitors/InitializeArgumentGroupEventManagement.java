@@ -1,15 +1,5 @@
 package org.iplantc.de.apps.integration.client.presenter.visitors;
 
-import com.google.common.collect.Lists;
-import com.google.gwt.editor.client.Editor;
-import com.google.gwt.editor.client.EditorContext;
-import com.google.gwt.editor.client.EditorVisitor;
-import com.google.gwt.editor.client.adapters.ListEditor;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.web.bindery.autobean.shared.AutoBean;
-
-import static com.sencha.gxt.dnd.core.client.DND.Feedback.BOTH;
-
 import static org.iplantc.de.apps.integration.client.view.AppsEditorView.Presenter.HANDLERS;
 
 import org.iplantc.de.apps.integration.client.presenter.dnd.ArgListEditorDragSource;
@@ -24,6 +14,16 @@ import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentEditorFactory;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentGroupEditor;
 import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
+
+import com.google.common.collect.Lists;
+import com.google.gwt.editor.client.Editor;
+import com.google.gwt.editor.client.EditorContext;
+import com.google.gwt.editor.client.EditorVisitor;
+import com.google.gwt.editor.client.adapters.ListEditor;
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.web.bindery.autobean.shared.AutoBean;
+
+import static com.sencha.gxt.dnd.core.client.DND.Feedback.BOTH;
 
 import java.util.List;
 

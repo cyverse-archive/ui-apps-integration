@@ -1,11 +1,5 @@
 package org.iplantc.de.apps.integration.client.gin;
 
-import com.google.gwt.inject.client.AbstractGinModule;
-import com.google.inject.Provides;
-import com.google.inject.Singleton;
-
-import org.iplantc.de.resources.client.messages.IplantErrorStrings;
-import org.iplantc.de.resources.client.uiapps.integration.AppIntegrationErrorMessages;
 import org.iplantc.de.apps.integration.client.presenter.AppsEditorPresenterImpl;
 import org.iplantc.de.apps.integration.client.view.AppEditorToolbar;
 import org.iplantc.de.apps.integration.client.view.AppEditorToolbarImpl;
@@ -43,8 +37,14 @@ import org.iplantc.de.apps.widgets.client.view.editors.AppTemplateFormImpl;
 import org.iplantc.de.apps.widgets.client.view.editors.ArgumentEditorFactoryImpl;
 import org.iplantc.de.apps.widgets.client.view.editors.LaunchAnalysisViewImpl;
 import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.de.client.models.UserSettings;
 import org.iplantc.de.commons.client.events.EventBus;
-import org.iplantc.de.commons.client.models.UserSettings;
+import org.iplantc.de.resources.client.messages.IplantErrorStrings;
+import org.iplantc.de.resources.client.uiapps.integration.AppIntegrationErrorMessages;
+
+import com.google.gwt.inject.client.AbstractGinModule;
+import com.google.inject.Provides;
+import com.google.inject.Singleton;
 
 /**
  * @author jstroot

@@ -1,6 +1,7 @@
 package org.iplantc.de.apps.integration.client.view.propertyEditors.style;
 
 import com.google.gwt.core.client.GWT;
+
 import com.sencha.gxt.theme.base.client.panel.ContentPanelBaseAppearance;
 import com.sencha.gxt.theme.base.client.widget.HeaderDefaultAppearance;
 import com.sencha.gxt.theme.gray.client.panel.GrayHeaderAppearance;

@@ -1,5 +1,18 @@
 package org.iplantc.de.apps.integration.client.presenter.dnd;
 
+import org.iplantc.de.apps.integration.client.events.DeleteArgumentEvent;
+import org.iplantc.de.apps.integration.client.events.DeleteArgumentEvent.DeleteArgumentEventHandler;
+import org.iplantc.de.apps.integration.client.events.DeleteArgumentEvent.HasDeleteArgumentEventHandlers;
+import org.iplantc.de.apps.widgets.client.events.ArgumentSelectedEvent;
+import org.iplantc.de.apps.widgets.client.events.ArgumentSelectedEvent.ArgumentSelectedEventHandler;
+import org.iplantc.de.apps.widgets.client.events.ArgumentSelectedEvent.HasArgumentSelectedEventHandlers;
+import org.iplantc.de.apps.widgets.client.models.Argument;
+import org.iplantc.de.apps.widgets.client.models.ArgumentType;
+import org.iplantc.de.apps.widgets.client.models.util.AppTemplateUtils;
+import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
+import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
+import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+
 import com.google.common.base.Strings;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
@@ -14,19 +27,6 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.sencha.gxt.widget.core.client.button.IconButton;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
-
-import org.iplantc.de.apps.integration.client.events.DeleteArgumentEvent;
-import org.iplantc.de.apps.integration.client.events.DeleteArgumentEvent.DeleteArgumentEventHandler;
-import org.iplantc.de.apps.integration.client.events.DeleteArgumentEvent.HasDeleteArgumentEventHandlers;
-import org.iplantc.de.apps.widgets.client.events.ArgumentSelectedEvent;
-import org.iplantc.de.apps.widgets.client.events.ArgumentSelectedEvent.ArgumentSelectedEventHandler;
-import org.iplantc.de.apps.widgets.client.events.ArgumentSelectedEvent.HasArgumentSelectedEventHandlers;
-import org.iplantc.de.apps.widgets.client.models.Argument;
-import org.iplantc.de.apps.widgets.client.models.ArgumentType;
-import org.iplantc.de.apps.widgets.client.models.util.AppTemplateUtils;
-import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
-import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
-import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 
 /**
  * A handler which controls the visibility, placement, and selection of a delete button over the

@@ -1,5 +1,23 @@
 package org.iplantc.de.apps.integration.client.view.propertyEditors;
 
+import org.iplantc.de.apps.integration.client.events.UpdateCommandLinePreviewEvent;
+import org.iplantc.de.apps.integration.client.events.UpdateCommandLinePreviewEvent.UpdateCommandLinePreviewEventHandler;
+import org.iplantc.de.apps.integration.client.view.propertyEditors.style.AppTemplateWizardPropertyContentPanelAppearance;
+import org.iplantc.de.apps.integration.client.view.propertyEditors.util.FinishEditing;
+import org.iplantc.de.apps.integration.client.view.propertyEditors.util.PrefixedHasTextEditor;
+import org.iplantc.de.apps.widgets.client.models.Argument;
+import org.iplantc.de.apps.widgets.client.models.metadata.DataSource;
+import org.iplantc.de.apps.widgets.client.models.metadata.DataSourceProperties;
+import org.iplantc.de.apps.widgets.client.models.metadata.FileInfoType;
+import org.iplantc.de.apps.widgets.client.models.metadata.FileInfoTypeProperties;
+import org.iplantc.de.apps.widgets.client.models.metadata.ReferenceGenome;
+import org.iplantc.de.apps.widgets.client.models.metadata.ReferenceGenomeProperties;
+import org.iplantc.de.apps.widgets.client.services.AppMetadataServiceFacade;
+import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentEditor;
+import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.IArgumentEditorConverter;
+import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.de.commons.client.ErrorHandler;
+
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.EditorContext;
 import com.google.gwt.editor.client.EditorVisitor;
@@ -28,24 +46,6 @@ import com.sencha.gxt.data.shared.event.StoreAddEvent.StoreAddHandler;
 import com.sencha.gxt.widget.core.client.Composite;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.form.ComboBox;
-
-import org.iplantc.de.apps.integration.client.events.UpdateCommandLinePreviewEvent;
-import org.iplantc.de.apps.integration.client.events.UpdateCommandLinePreviewEvent.UpdateCommandLinePreviewEventHandler;
-import org.iplantc.de.apps.integration.client.view.propertyEditors.style.AppTemplateWizardPropertyContentPanelAppearance;
-import org.iplantc.de.apps.integration.client.view.propertyEditors.util.FinishEditing;
-import org.iplantc.de.apps.integration.client.view.propertyEditors.util.PrefixedHasTextEditor;
-import org.iplantc.de.apps.widgets.client.models.Argument;
-import org.iplantc.de.apps.widgets.client.models.metadata.DataSource;
-import org.iplantc.de.apps.widgets.client.models.metadata.DataSourceProperties;
-import org.iplantc.de.apps.widgets.client.models.metadata.FileInfoType;
-import org.iplantc.de.apps.widgets.client.models.metadata.FileInfoTypeProperties;
-import org.iplantc.de.apps.widgets.client.models.metadata.ReferenceGenome;
-import org.iplantc.de.apps.widgets.client.models.metadata.ReferenceGenomeProperties;
-import org.iplantc.de.apps.widgets.client.services.AppMetadataServiceFacade;
-import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentEditor;
-import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.IArgumentEditorConverter;
-import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
-import org.iplantc.de.commons.client.ErrorHandler;
 
 import java.util.List;
 public abstract class AbstractArgumentPropertyEditor extends Composite implements ArgumentPropertyEditor {

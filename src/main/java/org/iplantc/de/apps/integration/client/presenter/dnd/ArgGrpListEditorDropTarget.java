@@ -1,5 +1,14 @@
 package org.iplantc.de.apps.integration.client.presenter.dnd;
 
+import org.iplantc.de.apps.widgets.client.models.Argument;
+import org.iplantc.de.apps.widgets.client.models.ArgumentGroup;
+import org.iplantc.de.apps.widgets.client.models.util.AppTemplateUtils;
+import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
+import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
+import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.de.resources.client.messages.I18N;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
+
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.editor.client.adapters.ListEditor;
@@ -12,15 +21,6 @@ import com.sencha.gxt.dnd.core.client.DndDropEvent;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.Header;
 import com.sencha.gxt.widget.core.client.container.AccordionLayoutContainer;
-
-import org.iplantc.de.resources.client.messages.I18N;
-import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
-import org.iplantc.de.apps.widgets.client.models.Argument;
-import org.iplantc.de.apps.widgets.client.models.ArgumentGroup;
-import org.iplantc.de.apps.widgets.client.models.util.AppTemplateUtils;
-import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
-import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
-import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 
 import java.util.List;
 

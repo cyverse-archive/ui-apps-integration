@@ -1,5 +1,12 @@
 package org.iplantc.de.apps.integration.client.view.propertyEditors.widgets;
 
+import org.iplantc.de.apps.widgets.client.models.Argument;
+import org.iplantc.de.apps.widgets.client.models.ArgumentValidator;
+import org.iplantc.de.apps.widgets.client.models.ArgumentValidatorType;
+import org.iplantc.de.apps.widgets.client.models.util.AppTemplateUtils;
+import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.de.resources.client.uiapps.widgets.ArgumentValidatorMessages;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.gwt.core.client.GWT;
@@ -33,13 +40,6 @@ import com.sencha.gxt.widget.core.client.grid.Grid;
 import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent;
 import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent.SelectionChangedHandler;
 import com.sencha.gxt.widget.core.client.tips.QuickTip;
-
-import org.iplantc.de.resources.client.uiapps.widgets.ArgumentValidatorMessages;
-import org.iplantc.de.apps.widgets.client.models.Argument;
-import org.iplantc.de.apps.widgets.client.models.ArgumentValidator;
-import org.iplantc.de.apps.widgets.client.models.ArgumentValidatorType;
-import org.iplantc.de.apps.widgets.client.models.util.AppTemplateUtils;
-import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 
 import java.util.List;
 import java.util.Set;

@@ -1,5 +1,17 @@
 package org.iplantc.de.apps.integration.client.view.propertyEditors;
 
+import org.iplantc.de.apps.integration.client.view.propertyEditors.widgets.ArgumentValidatorEditor;
+import org.iplantc.de.apps.widgets.client.models.Argument;
+import org.iplantc.de.apps.widgets.client.models.ArgumentValidator;
+import org.iplantc.de.apps.widgets.client.view.editors.arguments.converters.ArgumentEditorConverter;
+import org.iplantc.de.apps.widgets.client.view.editors.arguments.converters.SplittableToIntegerConverter;
+import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.de.apps.widgets.client.view.editors.widgets.CheckBoxAdapter;
+import org.iplantc.de.commons.client.widgets.IPlantSideErrorHandler;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
+import org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.IntegerInputLabels;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.LeafValueEditor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
@@ -17,18 +29,6 @@ import com.sencha.gxt.widget.core.client.form.FieldLabel;
 import com.sencha.gxt.widget.core.client.form.NumberPropertyEditor;
 import com.sencha.gxt.widget.core.client.form.SpinnerField;
 import com.sencha.gxt.widget.core.client.form.TextField;
-
-import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
-import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
-import org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.IntegerInputLabels;
-import org.iplantc.de.apps.integration.client.view.propertyEditors.widgets.ArgumentValidatorEditor;
-import org.iplantc.de.apps.widgets.client.models.Argument;
-import org.iplantc.de.apps.widgets.client.models.ArgumentValidator;
-import org.iplantc.de.apps.widgets.client.view.editors.arguments.converters.ArgumentEditorConverter;
-import org.iplantc.de.apps.widgets.client.view.editors.arguments.converters.SplittableToIntegerConverter;
-import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
-import org.iplantc.de.apps.widgets.client.view.editors.widgets.CheckBoxAdapter;
-import org.iplantc.de.commons.client.widgets.IPlantSideErrorHandler;
 
 import java.util.List;
 

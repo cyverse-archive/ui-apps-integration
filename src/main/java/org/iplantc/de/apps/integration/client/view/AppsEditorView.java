@@ -1,13 +1,5 @@
 package org.iplantc.de.apps.integration.client.view;
 
-import com.google.gwt.editor.client.Editor;
-import com.google.gwt.editor.client.SimpleBeanEditorDriver;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.ui.HasOneWidget;
-import com.google.gwt.user.client.ui.IsWidget;
-
-import com.sencha.gxt.widget.core.client.event.BeforeHideEvent.BeforeHideHandler;
-
 import org.iplantc.de.apps.integration.client.events.DeleteArgumentGroupEvent.DeleteArgumentGroupEventHandler;
 import org.iplantc.de.apps.integration.client.events.UpdateCommandLinePreviewEvent.UpdateCommandLinePreviewEventHandler;
 import org.iplantc.de.apps.integration.client.view.widgets.AppTemplatePropertyEditor;
@@ -19,6 +11,14 @@ import org.iplantc.de.apps.widgets.client.models.Argument;
 import org.iplantc.de.apps.widgets.client.view.AppLaunchView.RenameWindowHeaderCommand;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
 import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
+
+import com.google.gwt.editor.client.Editor;
+import com.google.gwt.editor.client.SimpleBeanEditorDriver;
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.ui.HasOneWidget;
+import com.google.gwt.user.client.ui.IsWidget;
+
+import com.sencha.gxt.widget.core.client.event.BeforeHideEvent.BeforeHideHandler;
 
 /**
  * @author jstroot

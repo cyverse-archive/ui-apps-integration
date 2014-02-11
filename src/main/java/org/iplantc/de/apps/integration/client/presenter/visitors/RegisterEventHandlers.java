@@ -1,17 +1,5 @@
 package org.iplantc.de.apps.integration.client.presenter.visitors;
 
-import com.google.common.collect.Lists;
-import com.google.gwt.editor.client.Editor;
-import com.google.gwt.editor.client.EditorContext;
-import com.google.gwt.editor.client.EditorVisitor;
-import com.google.gwt.editor.client.LeafValueEditor;
-import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.web.bindery.autobean.shared.AutoBean;
-import com.google.web.bindery.autobean.shared.AutoBeanUtils;
-
 import org.iplantc.de.apps.integration.client.events.DeleteArgumentEvent.DeleteArgumentEventHandler;
 import org.iplantc.de.apps.integration.client.events.DeleteArgumentEvent.HasDeleteArgumentEventHandlers;
 import org.iplantc.de.apps.integration.client.view.AppsEditorView;
@@ -25,6 +13,18 @@ import org.iplantc.de.apps.widgets.client.events.ArgumentGroupSelectedEvent.Argu
 import org.iplantc.de.apps.widgets.client.events.ArgumentGroupSelectedEvent.HasArgumentGroupSelectedHandlers;
 import org.iplantc.de.apps.widgets.client.events.ArgumentSelectedEvent.ArgumentSelectedEventHandler;
 import org.iplantc.de.apps.widgets.client.events.ArgumentSelectedEvent.HasArgumentSelectedEventHandlers;
+
+import com.google.common.collect.Lists;
+import com.google.gwt.editor.client.Editor;
+import com.google.gwt.editor.client.EditorContext;
+import com.google.gwt.editor.client.EditorVisitor;
+import com.google.gwt.editor.client.LeafValueEditor;
+import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.web.bindery.autobean.shared.AutoBean;
+import com.google.web.bindery.autobean.shared.AutoBeanUtils;
 
 import java.util.List;
 import java.util.Map;

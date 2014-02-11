@@ -1,9 +1,9 @@
 package org.iplantc.de.apps.integration.client.view.propertyEditors.util;
 
+import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+
 import com.google.gwt.editor.client.LeafValueEditor;
 import com.google.gwt.user.client.ui.HasHTML;
-
-import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 
 public class PrefixedHasTextEditor implements LeafValueEditor<String> {
 

@@ -1,9 +1,9 @@
 package org.iplantc.de.apps.integration.client.presenter.visitors;
 
+import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
+
 import com.google.gwt.editor.client.EditorContext;
 import com.google.gwt.editor.client.EditorVisitor;
-
-import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
 
 public class InitLabelOnlyEditMode extends EditorVisitor {
 

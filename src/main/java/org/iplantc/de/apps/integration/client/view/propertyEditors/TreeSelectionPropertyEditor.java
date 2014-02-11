@@ -1,5 +1,19 @@
 package org.iplantc.de.apps.integration.client.view.propertyEditors;
 
+import org.iplantc.de.apps.integration.client.view.propertyEditors.widgets.SelectionItemTreePropertyEditor;
+import org.iplantc.de.apps.widgets.client.models.Argument;
+import org.iplantc.de.apps.widgets.client.models.selection.SelectionItem;
+import org.iplantc.de.apps.widgets.client.models.selection.SelectionItemGroup;
+import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.de.apps.widgets.client.view.editors.widgets.CheckBoxAdapter;
+import org.iplantc.de.commons.client.views.gxt3.dialogs.IPlantDialog;
+import org.iplantc.de.commons.client.widgets.ContextualHelpPopup;
+import org.iplantc.de.resources.client.IplantResources;
+import org.iplantc.de.resources.client.messages.I18N;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
+import org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.TreeSelectionLabels;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -23,20 +37,6 @@ import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
 import com.sencha.gxt.widget.core.client.form.TextField;
-
-import org.iplantc.de.resources.client.IplantResources;
-import org.iplantc.de.resources.client.messages.I18N;
-import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
-import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
-import org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.TreeSelectionLabels;
-import org.iplantc.de.apps.integration.client.view.propertyEditors.widgets.SelectionItemTreePropertyEditor;
-import org.iplantc.de.apps.widgets.client.models.Argument;
-import org.iplantc.de.apps.widgets.client.models.selection.SelectionItem;
-import org.iplantc.de.apps.widgets.client.models.selection.SelectionItemGroup;
-import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
-import org.iplantc.de.apps.widgets.client.view.editors.widgets.CheckBoxAdapter;
-import org.iplantc.de.commons.client.views.gxt3.dialogs.IPlantDialog;
-import org.iplantc.de.commons.client.widgets.ContextualHelpPopup;
 
 public class TreeSelectionPropertyEditor extends AbstractArgumentPropertyEditor {
 

@@ -1,32 +1,5 @@
 package org.iplantc.de.apps.integration.client.view;
 
-import com.google.common.collect.Maps;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiFactory;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiTemplate;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.IsWidget;
-import com.google.gwt.user.client.ui.Widget;
-import com.google.inject.Inject;
-import com.google.inject.Provider;
-
-import com.sencha.gxt.dnd.core.client.DndDragStartEvent;
-import com.sencha.gxt.dnd.core.client.DndDragStartEvent.DndDragStartHandler;
-import com.sencha.gxt.widget.core.client.Composite;
-import com.sencha.gxt.widget.core.client.ContentPanel;
-import com.sencha.gxt.widget.core.client.button.ToolButton;
-import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
-import com.sencha.gxt.widget.core.client.container.CardLayoutContainer;
-import com.sencha.gxt.widget.core.client.event.SelectEvent;
-import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
-import com.sencha.gxt.widget.core.client.form.TextArea;
-
-import org.iplantc.de.resources.client.IplantContextualHelpAccessStyle;
-import org.iplantc.de.resources.client.IplantResources;
-import org.iplantc.de.resources.client.messages.I18N;
-import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
 import org.iplantc.de.apps.integration.client.view.propertyEditors.ArgumentGroupPropertyEditor;
 import org.iplantc.de.apps.integration.client.view.propertyEditors.ArgumentPropertyEditor;
 import org.iplantc.de.apps.integration.client.view.propertyEditors.DecimalInputPropertyEditor;
@@ -62,6 +35,33 @@ import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentEditor;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentGroupEditor;
 import org.iplantc.de.commons.client.widgets.ContextualHelpPopup;
+import org.iplantc.de.resources.client.IplantContextualHelpAccessStyle;
+import org.iplantc.de.resources.client.IplantResources;
+import org.iplantc.de.resources.client.messages.I18N;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
+
+import com.google.common.collect.Maps;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiFactory;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.IsWidget;
+import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
+import com.google.inject.Provider;
+
+import com.sencha.gxt.dnd.core.client.DndDragStartEvent;
+import com.sencha.gxt.dnd.core.client.DndDragStartEvent.DndDragStartHandler;
+import com.sencha.gxt.widget.core.client.Composite;
+import com.sencha.gxt.widget.core.client.ContentPanel;
+import com.sencha.gxt.widget.core.client.button.ToolButton;
+import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
+import com.sencha.gxt.widget.core.client.container.CardLayoutContainer;
+import com.sencha.gxt.widget.core.client.event.SelectEvent;
+import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
+import com.sencha.gxt.widget.core.client.form.TextArea;
 
 import java.util.Map;
 

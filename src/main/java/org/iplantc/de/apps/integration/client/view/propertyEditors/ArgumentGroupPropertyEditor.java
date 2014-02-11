@@ -1,6 +1,17 @@
 package org.iplantc.de.apps.integration.client.view.propertyEditors;
 
 
+import org.iplantc.de.apps.integration.client.events.DeleteArgumentGroupEvent;
+import org.iplantc.de.apps.integration.client.events.DeleteArgumentGroupEvent.DeleteArgumentGroupEventHandler;
+import org.iplantc.de.apps.integration.client.events.DeleteArgumentGroupEvent.HasDeleteArgumentGroupEventHandlers;
+import org.iplantc.de.apps.integration.client.view.propertyEditors.style.AppTemplateWizardPropertyContentPanelAppearance;
+import org.iplantc.de.apps.integration.client.view.propertyEditors.util.FinishEditing;
+import org.iplantc.de.apps.integration.client.view.propertyEditors.util.PrefixedHasTextEditor;
+import org.iplantc.de.apps.widgets.client.models.ArgumentGroup;
+import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentGroupEditor;
+import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
+import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
@@ -18,17 +29,6 @@ import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.form.TextField;
-
-import org.iplantc.de.apps.integration.client.events.DeleteArgumentGroupEvent;
-import org.iplantc.de.apps.integration.client.events.DeleteArgumentGroupEvent.DeleteArgumentGroupEventHandler;
-import org.iplantc.de.apps.integration.client.events.DeleteArgumentGroupEvent.HasDeleteArgumentGroupEventHandlers;
-import org.iplantc.de.apps.integration.client.view.propertyEditors.style.AppTemplateWizardPropertyContentPanelAppearance;
-import org.iplantc.de.apps.integration.client.view.propertyEditors.util.FinishEditing;
-import org.iplantc.de.apps.integration.client.view.propertyEditors.util.PrefixedHasTextEditor;
-import org.iplantc.de.apps.widgets.client.models.ArgumentGroup;
-import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentGroupEditor;
-import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
-import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 
 public class ArgumentGroupPropertyEditor extends Composite implements Editor<ArgumentGroup>, HasDeleteArgumentGroupEventHandlers, HasLabelOnlyEditMode {
 

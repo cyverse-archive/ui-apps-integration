@@ -1,5 +1,17 @@
 package org.iplantc.de.apps.integration.client.view.propertyEditors.widgets;
 
+import org.iplantc.de.apps.widgets.client.models.AppTemplateAutoBeanFactory;
+import org.iplantc.de.apps.widgets.client.models.selection.SelectionItem;
+import org.iplantc.de.apps.widgets.client.models.selection.SelectionItemGroup;
+import org.iplantc.de.apps.widgets.client.models.selection.SelectionItemProperties;
+import org.iplantc.de.apps.widgets.client.view.util.SelectionItemTreeStoreEditor;
+import org.iplantc.de.client.UUIDService;
+import org.iplantc.de.client.UUIDServiceAsync;
+import org.iplantc.de.commons.client.ErrorHandler;
+import org.iplantc.de.commons.client.validators.CmdLineArgCharacterValidator;
+import org.iplantc.de.resources.client.messages.I18N;
+import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
+
 import com.google.common.collect.Lists;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -46,18 +58,6 @@ import com.sencha.gxt.widget.core.client.tips.ToolTip;
 import com.sencha.gxt.widget.core.client.tips.ToolTipConfig;
 import com.sencha.gxt.widget.core.client.tree.Tree.CheckCascade;
 import com.sencha.gxt.widget.core.client.treegrid.TreeGrid;
-
-import org.iplantc.de.resources.client.messages.I18N;
-import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
-import org.iplantc.de.apps.widgets.client.models.AppTemplateAutoBeanFactory;
-import org.iplantc.de.apps.widgets.client.models.selection.SelectionItem;
-import org.iplantc.de.apps.widgets.client.models.selection.SelectionItemGroup;
-import org.iplantc.de.apps.widgets.client.models.selection.SelectionItemProperties;
-import org.iplantc.de.apps.widgets.client.view.util.SelectionItemTreeStoreEditor;
-import org.iplantc.de.commons.client.ErrorHandler;
-import org.iplantc.de.commons.client.validators.CmdLineArgCharacterValidator;
-import org.iplantc.de.client.UUIDService;
-import org.iplantc.de.client.UUIDServiceAsync;
 
 import java.util.ArrayList;
 import java.util.List;

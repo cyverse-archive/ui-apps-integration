@@ -1,16 +1,5 @@
 package org.iplantc.de.apps.integration.client.presenter.visitors;
 
-import com.google.gwt.editor.client.Editor;
-import com.google.gwt.editor.client.EditorContext;
-import com.google.gwt.editor.client.EditorVisitor;
-import com.google.gwt.editor.client.adapters.ListEditor;
-import com.google.web.bindery.autobean.shared.AutoBean;
-import com.google.web.bindery.autobean.shared.AutoBeanUtils;
-
-import static com.sencha.gxt.dnd.core.client.DND.Feedback.BOTH;
-
-import com.sencha.gxt.core.client.dom.XElement;
-
 import org.iplantc.de.apps.integration.client.presenter.dnd.ArgGrpListDragSource;
 import org.iplantc.de.apps.integration.client.presenter.dnd.ArgGrpListEditorDropTarget;
 import org.iplantc.de.apps.integration.client.presenter.dnd.ArgListEditorDragSource;
@@ -22,6 +11,17 @@ import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentEditorFactory;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentGroupEditor;
 import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
+
+import com.google.gwt.editor.client.Editor;
+import com.google.gwt.editor.client.EditorContext;
+import com.google.gwt.editor.client.EditorVisitor;
+import com.google.gwt.editor.client.adapters.ListEditor;
+import com.google.web.bindery.autobean.shared.AutoBean;
+import com.google.web.bindery.autobean.shared.AutoBeanUtils;
+
+import static com.sencha.gxt.dnd.core.client.DND.Feedback.BOTH;
+
+import com.sencha.gxt.core.client.dom.XElement;
 
 
 /**

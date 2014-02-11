@@ -1,13 +1,13 @@
 package org.iplantc.de.apps.integration.client.view.propertyEditors.widgets;
 
+import org.iplantc.de.apps.widgets.client.models.selection.SelectionItem;
+import org.iplantc.de.apps.widgets.client.models.selection.SelectionItemGroup;
+
 import com.sencha.gxt.data.shared.TreeStore;
 import com.sencha.gxt.dnd.core.client.DndDragStartEvent;
 import com.sencha.gxt.dnd.core.client.DndDragStartEvent.DndDragStartHandler;
 import com.sencha.gxt.dnd.core.client.DndDropEvent;
 import com.sencha.gxt.dnd.core.client.DndDropEvent.DndDropHandler;
-
-import org.iplantc.de.apps.widgets.client.models.selection.SelectionItem;
-import org.iplantc.de.apps.widgets.client.models.selection.SelectionItemGroup;
 
 import java.util.ArrayList;
 import java.util.List;
