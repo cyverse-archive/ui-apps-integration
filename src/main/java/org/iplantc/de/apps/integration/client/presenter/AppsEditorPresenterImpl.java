@@ -30,7 +30,7 @@ import org.iplantc.de.apps.widgets.client.services.AppTemplateServices;
 import org.iplantc.de.apps.widgets.client.view.AppLaunchPreviewViewImpl;
 import org.iplantc.de.apps.widgets.client.view.AppLaunchView.RenameWindowHeaderCommand;
 import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
-import org.iplantc.de.client.UUIDServiceAsync;
+import org.iplantc.de.client.services.UUIDServiceAsync;
 import org.iplantc.de.commons.client.ErrorHandler;
 import org.iplantc.de.commons.client.events.EventBus;
 import org.iplantc.de.commons.client.info.ErrorAnnouncementConfig;
