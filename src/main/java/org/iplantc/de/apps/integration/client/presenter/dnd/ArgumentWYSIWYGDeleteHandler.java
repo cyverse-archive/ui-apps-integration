@@ -6,12 +6,12 @@ import org.iplantc.de.apps.integration.client.events.DeleteArgumentEvent.HasDele
 import org.iplantc.de.apps.widgets.client.events.ArgumentSelectedEvent;
 import org.iplantc.de.apps.widgets.client.events.ArgumentSelectedEvent.ArgumentSelectedEventHandler;
 import org.iplantc.de.apps.widgets.client.events.ArgumentSelectedEvent.HasArgumentSelectedEventHandlers;
-import org.iplantc.de.apps.widgets.client.models.Argument;
-import org.iplantc.de.apps.widgets.client.models.ArgumentType;
-import org.iplantc.de.apps.widgets.client.models.util.AppTemplateUtils;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
 import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
 import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.de.client.models.apps.Argument;
+import org.iplantc.de.client.models.apps.ArgumentType;
+import org.iplantc.de.client.util.AppTemplateUtils;
 
 import com.google.common.base.Strings;
 import com.google.gwt.dom.client.Element;

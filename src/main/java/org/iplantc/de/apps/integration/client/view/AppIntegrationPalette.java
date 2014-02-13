@@ -1,16 +1,16 @@
 package org.iplantc.de.apps.integration.client.view;
 
-import org.iplantc.de.apps.widgets.client.models.AppTemplateAutoBeanFactory;
-import org.iplantc.de.apps.widgets.client.models.Argument;
-import org.iplantc.de.apps.widgets.client.models.ArgumentGroup;
-import org.iplantc.de.apps.widgets.client.models.ArgumentType;
-import org.iplantc.de.apps.widgets.client.models.metadata.DataObject;
-import org.iplantc.de.apps.widgets.client.models.metadata.DataSourceEnum;
-import org.iplantc.de.apps.widgets.client.models.metadata.FileInfoTypeEnum;
-import org.iplantc.de.apps.widgets.client.models.selection.SelectionItem;
-import org.iplantc.de.apps.widgets.client.models.selection.SelectionItemGroup;
-import org.iplantc.de.apps.widgets.client.models.util.AppTemplateUtils;
 import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.de.client.models.apps.AppTemplateAutoBeanFactory;
+import org.iplantc.de.client.models.apps.Argument;
+import org.iplantc.de.client.models.apps.ArgumentGroup;
+import org.iplantc.de.client.models.apps.ArgumentType;
+import org.iplantc.de.client.models.apps.DataObject;
+import org.iplantc.de.client.models.apps.DataSourceEnum;
+import org.iplantc.de.client.models.apps.FileInfoTypeEnum;
+import org.iplantc.de.client.models.apps.SelectionItem;
+import org.iplantc.de.client.models.apps.SelectionItemGroup;
+import org.iplantc.de.client.util.AppTemplateUtils;
 import org.iplantc.de.commons.client.widgets.ContextualHelpPopup;
 import org.iplantc.de.resources.client.IplantContextualHelpAccessStyle;
 import org.iplantc.de.resources.client.IplantResources;

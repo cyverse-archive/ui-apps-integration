@@ -8,12 +8,12 @@ import org.iplantc.de.apps.widgets.client.events.AppTemplateSelectedEvent.HasApp
 import org.iplantc.de.apps.widgets.client.events.ArgumentGroupSelectedEvent.ArgumentGroupSelectedEventHandler;
 import org.iplantc.de.apps.widgets.client.events.ArgumentGroupSelectedEvent.HasArgumentGroupSelectedHandlers;
 import org.iplantc.de.apps.widgets.client.events.ArgumentSelectedEvent.HasArgumentSelectedEventHandlers;
-import org.iplantc.de.apps.widgets.client.models.Argument;
-import org.iplantc.de.apps.widgets.client.models.ArgumentGroup;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentEditorFactory;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentGroupEditor;
 import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
+import org.iplantc.de.client.models.apps.Argument;
+import org.iplantc.de.client.models.apps.ArgumentGroup;
 
 import com.google.common.collect.Lists;
 import com.google.gwt.editor.client.Editor;

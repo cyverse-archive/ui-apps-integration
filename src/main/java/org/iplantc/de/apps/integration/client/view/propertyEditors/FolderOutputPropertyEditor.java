@@ -1,12 +1,12 @@
 package org.iplantc.de.apps.integration.client.view.propertyEditors;
 
-import org.iplantc.de.apps.widgets.client.models.Argument;
-import org.iplantc.de.apps.widgets.client.models.metadata.FileInfoType;
-import org.iplantc.de.apps.widgets.client.services.AppMetadataServiceFacade;
 import org.iplantc.de.apps.widgets.client.view.editors.arguments.converters.ArgumentEditorConverter;
 import org.iplantc.de.apps.widgets.client.view.editors.arguments.converters.SplittableToStringConverter;
 import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 import org.iplantc.de.apps.widgets.client.view.editors.widgets.CheckBoxAdapter;
+import org.iplantc.de.client.models.apps.Argument;
+import org.iplantc.de.client.models.apps.FileInfoType;
+import org.iplantc.de.client.services.AppMetadataServiceFacade;
 import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
 import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
 import org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.FolderOutputLabels;

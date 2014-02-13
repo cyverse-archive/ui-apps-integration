@@ -7,10 +7,10 @@ import org.iplantc.de.apps.integration.client.events.DeleteArgumentGroupEvent.Ha
 import org.iplantc.de.apps.integration.client.view.propertyEditors.style.AppTemplateWizardPropertyContentPanelAppearance;
 import org.iplantc.de.apps.integration.client.view.propertyEditors.util.FinishEditing;
 import org.iplantc.de.apps.integration.client.view.propertyEditors.util.PrefixedHasTextEditor;
-import org.iplantc.de.apps.widgets.client.models.ArgumentGroup;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentGroupEditor;
 import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
 import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.de.client.models.apps.ArgumentGroup;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;

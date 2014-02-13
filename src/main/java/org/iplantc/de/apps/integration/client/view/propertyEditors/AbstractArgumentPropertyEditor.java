@@ -5,19 +5,18 @@ import org.iplantc.de.apps.integration.client.events.UpdateCommandLinePreviewEve
 import org.iplantc.de.apps.integration.client.view.propertyEditors.style.AppTemplateWizardPropertyContentPanelAppearance;
 import org.iplantc.de.apps.integration.client.view.propertyEditors.util.FinishEditing;
 import org.iplantc.de.apps.integration.client.view.propertyEditors.util.PrefixedHasTextEditor;
-import org.iplantc.de.apps.widgets.client.models.Argument;
-import org.iplantc.de.apps.widgets.client.models.metadata.DataSource;
-import org.iplantc.de.apps.widgets.client.models.metadata.DataSourceProperties;
-import org.iplantc.de.apps.widgets.client.models.metadata.FileInfoType;
-import org.iplantc.de.apps.widgets.client.models.metadata.FileInfoTypeProperties;
-import org.iplantc.de.apps.widgets.client.models.metadata.ReferenceGenome;
-import org.iplantc.de.apps.widgets.client.models.metadata.ReferenceGenomeProperties;
-import org.iplantc.de.apps.widgets.client.services.AppMetadataServiceFacade;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentEditor;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.IArgumentEditorConverter;
+import org.iplantc.de.apps.widgets.client.view.editors.ReferenceGenomeProperties;
 import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
+import org.iplantc.de.client.models.apps.Argument;
+import org.iplantc.de.client.models.apps.DataSource;
+import org.iplantc.de.client.models.apps.FileInfoType;
+import org.iplantc.de.client.models.apps.ReferenceGenome;
+import org.iplantc.de.client.services.AppMetadataServiceFacade;
 import org.iplantc.de.commons.client.ErrorHandler;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.EditorContext;
 import com.google.gwt.editor.client.EditorVisitor;
@@ -134,10 +133,19 @@ public abstract class AbstractArgumentPropertyEditor extends Composite implement
 
     private boolean labelOnlyEditMode = false;
 
+    private final DataSourceProperties props;
+
+    private final FileInfoTypeProperties props2;
+
+    private final ReferenceGenomeProperties referenceGenomeProperties;
+
     public AbstractArgumentPropertyEditor(AppTemplateWizardAppearance appearance) {
         this.appearance = appearance;
         contentPanel = new ContentPanel(new AppTemplateWizardPropertyContentPanelAppearance());
         labelEditor = new PrefixedHasTextEditor(contentPanel.getHeader(), appearance);
+        props = GWT.create(DataSourceProperties.class);
+        props2 = GWT.create(FileInfoTypeProperties.class);
+        referenceGenomeProperties = GWT.create(ReferenceGenomeProperties.class);
     }
 
     @Override
@@ -200,7 +208,6 @@ public abstract class AbstractArgumentPropertyEditor extends Composite implement
     }
 
     protected ComboBox<DataSource> createDataSourceComboBox(AppMetadataServiceFacade appMetadataService) {
-        final DataSourceProperties props = appMetadataService.getDataSourceProperties();
         final ListStore<DataSource> store = new ListStore<DataSource>(props.id());
         dataSourceStoreAddHandlerReg = store.addStoreAddHandler(new StoreAddHandler<DataSource>() {
             @Override
@@ -240,9 +247,7 @@ public abstract class AbstractArgumentPropertyEditor extends Composite implement
     }
 
     protected ComboBox<FileInfoType> createFileInfoTypeComboBox(AppMetadataServiceFacade appMetadataService) {
-        final FileInfoTypeProperties props = appMetadataService.getFileInfoTypeProperties();
-    
-        final ListStore<FileInfoType> store = new ListStore<FileInfoType>(props.id());
+        final ListStore<FileInfoType> store = new ListStore<FileInfoType>(props2.id());
         fileInfoTypeStoreAddHandlerReg = store.addStoreAddHandler(new StoreAddHandler<FileInfoType>() {
             @Override
             public void onAdd(StoreAddEvent<FileInfoType> event) {
@@ -260,11 +265,11 @@ public abstract class AbstractArgumentPropertyEditor extends Composite implement
             public void onSuccess(List<FileInfoType> result) {
                 if (store.getAll().isEmpty()) {
                     store.addAll(result);
-                    store.addSortInfo(new StoreSortInfo<FileInfoType>(props.labelValue(), SortDir.ASC));
+                    store.addSortInfo(new StoreSortInfo<FileInfoType>(props2.labelValue(), SortDir.ASC));
                 }
             }
         });
-        ComboBox<FileInfoType> comboBox = new ComboBox<FileInfoType>(store, props.label());
+        ComboBox<FileInfoType> comboBox = new ComboBox<FileInfoType>(store, props2.label());
         comboBox.setTriggerAction(TriggerAction.ALL);
         // JDS Add valueChangeHandler manually since there are errors if you try to do it with UIBinder
         comboBox.addValueChangeHandler(new ValueChangeHandler<FileInfoType>() {
@@ -277,7 +282,6 @@ public abstract class AbstractArgumentPropertyEditor extends Composite implement
     }
 
     protected ComboBox<ReferenceGenome> createReferenceGenomeStore(AppMetadataServiceFacade appMetadataService) {
-        final ReferenceGenomeProperties referenceGenomeProperties = appMetadataService.getReferenceGenomeProperties();
         final ListStore<ReferenceGenome> refGenomeListStore = new ListStore<ReferenceGenome>(referenceGenomeProperties.id());
 
         appMetadataService.getReferenceGenomes(new AsyncCallback<List<ReferenceGenome>>() {

@@ -1,7 +1,7 @@
 package org.iplantc.de.apps.integration.client.events;
 
 import org.iplantc.de.apps.integration.client.events.DeleteArgumentGroupEvent.DeleteArgumentGroupEventHandler;
-import org.iplantc.de.apps.widgets.client.models.ArgumentGroup;
+import org.iplantc.de.client.models.apps.ArgumentGroup;
 
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;

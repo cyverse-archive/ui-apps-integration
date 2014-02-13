@@ -1,9 +1,9 @@
 package org.iplantc.de.apps.integration.client.view.propertyEditors;
 
 import org.iplantc.de.apps.integration.client.events.UpdateCommandLinePreviewEvent.HasUpdateCommandLinePreviewEventHandlers;
-import org.iplantc.de.apps.widgets.client.models.Argument;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentEditor;
 import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
+import org.iplantc.de.client.models.apps.Argument;
 
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.EditorDriver;

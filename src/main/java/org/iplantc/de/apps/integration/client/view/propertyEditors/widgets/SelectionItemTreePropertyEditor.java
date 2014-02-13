@@ -1,10 +1,10 @@
 package org.iplantc.de.apps.integration.client.view.propertyEditors.widgets;
 
-import org.iplantc.de.apps.widgets.client.models.AppTemplateAutoBeanFactory;
-import org.iplantc.de.apps.widgets.client.models.selection.SelectionItem;
-import org.iplantc.de.apps.widgets.client.models.selection.SelectionItemGroup;
-import org.iplantc.de.apps.widgets.client.models.selection.SelectionItemProperties;
+import org.iplantc.de.apps.widgets.client.view.editors.SelectionItemProperties;
 import org.iplantc.de.apps.widgets.client.view.util.SelectionItemTreeStoreEditor;
+import org.iplantc.de.client.models.apps.AppTemplateAutoBeanFactory;
+import org.iplantc.de.client.models.apps.SelectionItem;
+import org.iplantc.de.client.models.apps.SelectionItemGroup;
 import org.iplantc.de.client.services.UUIDService;
 import org.iplantc.de.client.services.UUIDServiceAsync;
 import org.iplantc.de.commons.client.ErrorHandler;

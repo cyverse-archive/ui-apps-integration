@@ -27,13 +27,13 @@ import org.iplantc.de.apps.integration.client.view.widgets.AppTemplatePropertyEd
 import org.iplantc.de.apps.widgets.client.events.AppTemplateSelectedEvent;
 import org.iplantc.de.apps.widgets.client.events.ArgumentGroupSelectedEvent;
 import org.iplantc.de.apps.widgets.client.events.ArgumentSelectedEvent;
-import org.iplantc.de.apps.widgets.client.models.AppTemplate;
-import org.iplantc.de.apps.widgets.client.models.Argument;
-import org.iplantc.de.apps.widgets.client.models.ArgumentGroup;
-import org.iplantc.de.apps.widgets.client.models.ArgumentType;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentEditor;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentGroupEditor;
+import org.iplantc.de.client.models.apps.AppTemplate;
+import org.iplantc.de.client.models.apps.Argument;
+import org.iplantc.de.client.models.apps.ArgumentGroup;
+import org.iplantc.de.client.models.apps.ArgumentType;
 import org.iplantc.de.commons.client.widgets.ContextualHelpPopup;
 import org.iplantc.de.resources.client.IplantContextualHelpAccessStyle;
 import org.iplantc.de.resources.client.IplantResources;
