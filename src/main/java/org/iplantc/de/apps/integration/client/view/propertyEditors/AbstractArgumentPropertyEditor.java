@@ -9,10 +9,10 @@ import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentEditor;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.IArgumentEditorConverter;
 import org.iplantc.de.apps.widgets.client.view.editors.ReferenceGenomeProperties;
 import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
-import org.iplantc.de.client.models.apps.Argument;
-import org.iplantc.de.client.models.apps.DataSource;
-import org.iplantc.de.client.models.apps.FileInfoType;
-import org.iplantc.de.client.models.apps.ReferenceGenome;
+import org.iplantc.de.client.models.apps.integration.Argument;
+import org.iplantc.de.client.models.apps.integration.DataSource;
+import org.iplantc.de.client.models.apps.integration.FileInfoType;
+import org.iplantc.de.client.models.apps.integration.ReferenceGenome;
 import org.iplantc.de.client.services.AppMetadataServiceFacade;
 import org.iplantc.de.commons.client.ErrorHandler;
 

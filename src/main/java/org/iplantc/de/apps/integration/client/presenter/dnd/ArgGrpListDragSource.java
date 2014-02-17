@@ -2,7 +2,7 @@ package org.iplantc.de.apps.integration.client.presenter.dnd;
 
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
 import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
-import org.iplantc.de.client.models.apps.ArgumentGroup;
+import org.iplantc.de.client.models.apps.integration.ArgumentGroup;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;

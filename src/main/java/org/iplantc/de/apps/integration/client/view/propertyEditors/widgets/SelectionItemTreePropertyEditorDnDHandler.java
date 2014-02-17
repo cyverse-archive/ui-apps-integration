@@ -1,7 +1,7 @@
 package org.iplantc.de.apps.integration.client.view.propertyEditors.widgets;
 
-import org.iplantc.de.client.models.apps.SelectionItem;
-import org.iplantc.de.client.models.apps.SelectionItemGroup;
+import org.iplantc.de.client.models.apps.integration.SelectionItem;
+import org.iplantc.de.client.models.apps.integration.SelectionItemGroup;
 
 import com.sencha.gxt.data.shared.TreeStore;
 import com.sencha.gxt.dnd.core.client.DndDragStartEvent;

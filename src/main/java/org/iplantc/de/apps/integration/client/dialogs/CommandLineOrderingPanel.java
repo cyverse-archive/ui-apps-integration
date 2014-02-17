@@ -1,7 +1,7 @@
 package org.iplantc.de.apps.integration.client.dialogs;
 
 import org.iplantc.de.apps.integration.client.view.AppsEditorView;
-import org.iplantc.de.client.models.apps.Argument;
+import org.iplantc.de.client.models.apps.integration.Argument;
 import org.iplantc.de.resources.client.uiapps.integration.AppIntegrationMessages;
 
 import com.google.common.base.Strings;

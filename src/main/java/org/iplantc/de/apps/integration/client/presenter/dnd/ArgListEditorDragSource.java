@@ -3,7 +3,7 @@ package org.iplantc.de.apps.integration.client.presenter.dnd;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentEditorFactory;
 import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
-import org.iplantc.de.client.models.apps.Argument;
+import org.iplantc.de.client.models.apps.integration.Argument;
 import org.iplantc.de.client.util.AppTemplateUtils;
 
 import com.google.common.base.Strings;

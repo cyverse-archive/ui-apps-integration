@@ -1,9 +1,9 @@
 package org.iplantc.de.apps.integration.client.view.propertyEditors.widgets;
 
 import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
-import org.iplantc.de.client.models.apps.Argument;
-import org.iplantc.de.client.models.apps.ArgumentValidator;
-import org.iplantc.de.client.models.apps.ArgumentValidatorType;
+import org.iplantc.de.client.models.apps.integration.Argument;
+import org.iplantc.de.client.models.apps.integration.ArgumentValidator;
+import org.iplantc.de.client.models.apps.integration.ArgumentValidatorType;
 import org.iplantc.de.client.util.AppTemplateUtils;
 import org.iplantc.de.resources.client.uiapps.widgets.ArgumentValidatorMessages;
 

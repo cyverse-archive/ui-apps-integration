@@ -1,15 +1,15 @@
 package org.iplantc.de.apps.integration.client.view;
 
 import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
-import org.iplantc.de.client.models.apps.AppTemplateAutoBeanFactory;
-import org.iplantc.de.client.models.apps.Argument;
-import org.iplantc.de.client.models.apps.ArgumentGroup;
-import org.iplantc.de.client.models.apps.ArgumentType;
-import org.iplantc.de.client.models.apps.DataObject;
-import org.iplantc.de.client.models.apps.DataSourceEnum;
-import org.iplantc.de.client.models.apps.FileInfoTypeEnum;
-import org.iplantc.de.client.models.apps.SelectionItem;
-import org.iplantc.de.client.models.apps.SelectionItemGroup;
+import org.iplantc.de.client.models.apps.integration.AppTemplateAutoBeanFactory;
+import org.iplantc.de.client.models.apps.integration.Argument;
+import org.iplantc.de.client.models.apps.integration.ArgumentGroup;
+import org.iplantc.de.client.models.apps.integration.ArgumentType;
+import org.iplantc.de.client.models.apps.integration.DataObject;
+import org.iplantc.de.client.models.apps.integration.DataSourceEnum;
+import org.iplantc.de.client.models.apps.integration.FileInfoTypeEnum;
+import org.iplantc.de.client.models.apps.integration.SelectionItem;
+import org.iplantc.de.client.models.apps.integration.SelectionItemGroup;
 import org.iplantc.de.client.util.AppTemplateUtils;
 import org.iplantc.de.commons.client.widgets.ContextualHelpPopup;
 import org.iplantc.de.resources.client.IplantContextualHelpAccessStyle;

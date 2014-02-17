@@ -4,7 +4,7 @@ import org.iplantc.de.apps.widgets.client.events.ArgumentGroupSelectedEvent;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentGroupEditor;
 import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
-import org.iplantc.de.client.models.apps.ArgumentGroup;
+import org.iplantc.de.client.models.apps.integration.ArgumentGroup;
 
 import com.google.gwt.editor.client.EditorContext;
 import com.google.gwt.editor.client.EditorVisitor;

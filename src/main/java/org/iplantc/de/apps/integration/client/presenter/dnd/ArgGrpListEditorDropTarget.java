@@ -3,8 +3,8 @@ package org.iplantc.de.apps.integration.client.presenter.dnd;
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm;
 import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
 import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
-import org.iplantc.de.client.models.apps.Argument;
-import org.iplantc.de.client.models.apps.ArgumentGroup;
+import org.iplantc.de.client.models.apps.integration.Argument;
+import org.iplantc.de.client.models.apps.integration.ArgumentGroup;
 import org.iplantc.de.client.util.AppTemplateUtils;
 import org.iplantc.de.resources.client.messages.I18N;
 import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
@@ -26,10 +26,10 @@ import java.util.List;
 
 /**
  * This <code>DropTarget</code> is responsible for handling
- * {@link org.iplantc.de.client.models.apps.ArgumentGroup} additions to the
+ * {@link org.iplantc.de.client.models.apps.integration.ArgumentGroup} additions to the
  * given {@link com.google.gwt.editor.client.adapters.ListEditor}, as well as handling the auto-expansion
  * of a child <code>ContentPanel</code>s when a drag move containing an
- * {@link org.iplantc.de.client.models.apps.Argument} is detected over a
+ * {@link org.iplantc.de.client.models.apps.integration.Argument} is detected over a
  * <code>ContentPanel</code>'s header.
  * 
  * TODO JDS Handle DnD Argument additions when drop occurs on a ContentPanel header.

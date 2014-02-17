@@ -10,7 +10,7 @@ import org.iplantc.de.apps.integration.client.view.propertyEditors.util.Prefixed
 import org.iplantc.de.apps.widgets.client.view.AppTemplateForm.ArgumentGroupEditor;
 import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
 import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
-import org.iplantc.de.client.models.apps.ArgumentGroup;
+import org.iplantc.de.client.models.apps.integration.ArgumentGroup;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;

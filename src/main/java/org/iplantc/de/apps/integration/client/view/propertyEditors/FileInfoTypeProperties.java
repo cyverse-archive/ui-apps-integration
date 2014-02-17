@@ -1,6 +1,6 @@
 package org.iplantc.de.apps.integration.client.view.propertyEditors;
 
-import org.iplantc.de.client.models.apps.FileInfoType;
+import org.iplantc.de.client.models.apps.integration.FileInfoType;
 
 import com.google.gwt.editor.client.Editor.Path;
 

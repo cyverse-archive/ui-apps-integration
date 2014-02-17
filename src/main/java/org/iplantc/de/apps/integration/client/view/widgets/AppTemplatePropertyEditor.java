@@ -13,7 +13,7 @@ import org.iplantc.de.apps.widgets.client.events.ArgumentSelectedEvent.ArgumentS
 import org.iplantc.de.apps.widgets.client.view.HasLabelOnlyEditMode;
 import org.iplantc.de.apps.widgets.client.view.deployedComponents.DCSearchField;
 import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
-import org.iplantc.de.client.models.apps.AppTemplate;
+import org.iplantc.de.client.models.apps.integration.AppTemplate;
 import org.iplantc.de.client.models.deployedComps.DeployedComponent;
 import org.iplantc.de.commons.client.validators.AppNameValidator;
 import org.iplantc.de.commons.client.widgets.PreventEntryAfterLimitHandler;

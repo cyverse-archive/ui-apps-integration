@@ -2,9 +2,9 @@ package org.iplantc.de.apps.integration.client.view.propertyEditors.widgets;
 
 import org.iplantc.de.apps.widgets.client.view.editors.SelectionItemProperties;
 import org.iplantc.de.apps.widgets.client.view.util.SelectionItemValueChangeStoreHandler.HasEventSuppression;
-import org.iplantc.de.client.models.apps.AppTemplateAutoBeanFactory;
-import org.iplantc.de.client.models.apps.ArgumentType;
-import org.iplantc.de.client.models.apps.SelectionItem;
+import org.iplantc.de.client.models.apps.integration.AppTemplateAutoBeanFactory;
+import org.iplantc.de.client.models.apps.integration.ArgumentType;
+import org.iplantc.de.client.models.apps.integration.SelectionItem;
 import org.iplantc.de.client.services.UUIDServiceAsync;
 import org.iplantc.de.commons.client.ErrorHandler;
 import org.iplantc.de.commons.client.validators.CmdLineArgCharacterValidator;
