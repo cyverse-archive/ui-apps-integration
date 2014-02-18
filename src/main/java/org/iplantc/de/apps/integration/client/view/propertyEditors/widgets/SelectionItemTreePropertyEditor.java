@@ -2,10 +2,10 @@ package org.iplantc.de.apps.integration.client.view.propertyEditors.widgets;
 
 import org.iplantc.de.apps.widgets.client.view.editors.SelectionItemProperties;
 import org.iplantc.de.apps.widgets.client.view.util.SelectionItemTreeStoreEditor;
+import org.iplantc.de.client.gin.ServicesInjector;
 import org.iplantc.de.client.models.apps.integration.AppTemplateAutoBeanFactory;
 import org.iplantc.de.client.models.apps.integration.SelectionItem;
 import org.iplantc.de.client.models.apps.integration.SelectionItemGroup;
-import org.iplantc.de.client.services.UUIDService;
 import org.iplantc.de.client.services.UUIDServiceAsync;
 import org.iplantc.de.commons.client.ErrorHandler;
 import org.iplantc.de.commons.client.validators.CmdLineArgCharacterValidator;
@@ -186,7 +186,7 @@ public class SelectionItemTreePropertyEditor extends Composite implements HasVal
 
     private final List<SelectionItem> toBeRemoved = Lists.newArrayList();
     
-    private final UUIDServiceAsync uuidService = GWT.create(UUIDService.class);
+    private final UUIDServiceAsync uuidService = ServicesInjector.INSTANCE.getUUIDService();
 
     public SelectionItemTreePropertyEditor(List<SelectionItem> selectionItems) {
         buildTreeGrid();
