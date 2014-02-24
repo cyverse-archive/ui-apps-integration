@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.iplantc.core</groupId>
+  <groupId>org.iplantc.de</groupId>
   <artifactId>ui-apps-integration</artifactId>
   <version>dev-SNAPSHOT</version>
   <name>The iPlant Collaborative Discovery Environment Apps Integration module</name>
@@ -39,6 +39,13 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>ui-apps-widgets</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <!-- GWT deps (from central repo) -->
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>${gwt.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
   <build>
@@ -89,8 +96,8 @@
                       <module>${gwt.module}</module>
                       <!-- These config options are only relevant if the i18n goal is executed. -->
                       <i18nMessagesBundles>
-                        <i18nMessagesBundle>org.iplantc.core.appsIntegration.client.AppIntDisplayStrings</i18nMessagesBundle>
-                        <i18nMessagesBundle>org.iplantc.core.appsIntegration.client.AppIntErrorStrings</i18nMessagesBundle>
+                        <i18nMessagesBundle>org.iplantc.de.apps.integration.client.AppIntDisplayStrings</i18nMessagesBundle>
+                        <i18nMessagesBundle>org.iplantc.de.apps.integration.client.AppIntErrorStrings</i18nMessagesBundle>
                       </i18nMessagesBundles>
                   </configuration>
               </execution>
