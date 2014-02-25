@@ -56,13 +56,13 @@
         <directory>src/main/java</directory>
             <includes>
                 <include>**/client/**</include>
+                <include>**/*.gwt.xml</include>
             </includes>
       </resource>
       <resource>
         <directory>src/main/resources</directory>
             <includes>
                 <include>**</include>
-                <include>**/*.gwt.xml</include>
             </includes>
       </resource>
       <resource>
@@ -158,6 +158,11 @@
     </pluginManagement>
   </build>
   <repositories>
+        <repository>
+            <id>iplantCollaborative</id>
+            <name>The iPlant Collaborative local repository</name>
+            <url>http://projects.iplantcollaborative.org/archiva/repository/internal/</url>
+        </repository>
         <repository>
             <id>sencha-commercial-release</id>
             <name>Commercially licensed Sencha artifacts</name>
