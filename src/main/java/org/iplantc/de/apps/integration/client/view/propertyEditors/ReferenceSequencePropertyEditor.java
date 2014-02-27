@@ -47,10 +47,6 @@ public class ReferenceSequencePropertyEditor extends AbstractArgumentPropertyEdi
     ArgumentEditorConverter<ReferenceGenome> defaultValueEditor;
 
     @UiField
-    @Path("visible")
-    CheckBoxAdapter doNotDisplay;
-
-    @UiField
     TextField label;
 
     @UiField
@@ -88,7 +84,6 @@ public class ReferenceSequencePropertyEditor extends AbstractArgumentPropertyEdi
 
         toolTipLabel.setHTML(appearance.createContextualHelpLabel(appLabels.toolTipText(), help.toolTip()));
         argumentOptionLabel.setHTML(appearance.createContextualHelpLabel(appLabels.argumentOption(), help.argumentOption()));
-        doNotDisplay.setHTML(new SafeHtmlBuilder().appendHtmlConstant("&nbsp;").append(appLabels.doNotDisplay()).toSafeHtml());
 
         requiredEditor.setHTML(new SafeHtmlBuilder().appendHtmlConstant("&nbsp;").append(appLabels.isRequired()).toSafeHtml());
 
@@ -120,7 +115,6 @@ public class ReferenceSequencePropertyEditor extends AbstractArgumentPropertyEdi
     protected void initLabelOnlyEditMode(boolean isLabelOnlyEditMode) {
         argumentOptionEditor.setEnabled(!isLabelOnlyEditMode);
         defaultValueEditor.setEnabled(!isLabelOnlyEditMode);
-        doNotDisplay.setEnabled(!isLabelOnlyEditMode);
         omitIfBlank.setEnabled(!isLabelOnlyEditMode);
         requiredEditor.setEnabled(!isLabelOnlyEditMode);
     }

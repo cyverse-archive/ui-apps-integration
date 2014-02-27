@@ -63,10 +63,6 @@ public class DecimalSelectionPropertyEditor extends AbstractArgumentPropertyEdit
     @UiField(provided = true)
     ArgumentEditorConverter<SelectionItem> defaultValueEditor;
 
-    @UiField
-    @Path("visible")
-    CheckBoxAdapter doNotDisplay;
-
     @UiField(provided = true)
     DoubleSelectionLabels doubleSelectionLabels;
 
@@ -117,7 +113,6 @@ public class DecimalSelectionPropertyEditor extends AbstractArgumentPropertyEdit
         omitIfBlank.setHTML(new SafeHtmlBuilder().appendHtmlConstant("&nbsp;")
                 .append(appearance.createContextualHelpLabelNoFloat(appLabels.excludeWhenEmpty(), help.singleSelectExcludeArgument())).toSafeHtml());
         toolTipLabel.setHTML(appearance.createContextualHelpLabel(appLabels.toolTipText(), help.toolTip()));
-        doNotDisplay.setHTML(new SafeHtmlBuilder().appendHtmlConstant("&nbsp;").append(appLabels.doNotDisplay()).toSafeHtml());
 
         requiredEditor.setHTML(new SafeHtmlBuilder().appendHtmlConstant("&nbsp;").append(appLabels.isRequired()).toSafeHtml());
         editorDriver.initialize(this);
@@ -144,7 +139,6 @@ public class DecimalSelectionPropertyEditor extends AbstractArgumentPropertyEdit
     @Override
     protected void initLabelOnlyEditMode(boolean isLabelOnlyEditMode) {
         defaultValueEditor.setEnabled(!isLabelOnlyEditMode);
-        doNotDisplay.setEnabled(!isLabelOnlyEditMode);
         omitIfBlank.setEnabled(!isLabelOnlyEditMode);
         requiredEditor.setEnabled(!isLabelOnlyEditMode);
         selectionItemsComboBox.setEnabled(!isLabelOnlyEditMode);
