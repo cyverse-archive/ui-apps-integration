@@ -64,10 +64,6 @@ public class IntegerSelectionPropertyEditor extends AbstractArgumentPropertyEdit
     @UiField(provided = true)
     ArgumentEditorConverter<SelectionItem> defaultValueEditor;
 
-    @UiField
-    @Path("visible")
-    CheckBoxAdapter doNotDisplay;
-
     @Ignore
     @UiField
     TextButton editSimpleListBtn;
@@ -115,7 +111,6 @@ public class IntegerSelectionPropertyEditor extends AbstractArgumentPropertyEdit
         initWidget(uiBinder.createAndBindUi(this));
 
         toolTipLabel.setHTML(appearance.createContextualHelpLabel(appLabels.toolTipText(), help.toolTip()));
-        doNotDisplay.setHTML(new SafeHtmlBuilder().appendHtmlConstant("&nbsp;").append(appLabels.doNotDisplay()).toSafeHtml());
 
         requiredEditor.setHTML(new SafeHtmlBuilder().appendHtmlConstant("&nbsp;").append(appLabels.isRequired()).toSafeHtml());
 
@@ -146,7 +141,6 @@ public class IntegerSelectionPropertyEditor extends AbstractArgumentPropertyEdit
     @Override
     protected void initLabelOnlyEditMode(boolean isLabelOnlyEditMode) {
         defaultValueEditor.setEnabled(!isLabelOnlyEditMode);
-        doNotDisplay.setEnabled(!isLabelOnlyEditMode);
         omitIfBlank.setEnabled(!isLabelOnlyEditMode);
         requiredEditor.setEnabled(!isLabelOnlyEditMode);
         selectionItemsComboBox.setEnabled(!isLabelOnlyEditMode);
