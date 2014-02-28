@@ -316,6 +316,10 @@ public class FlagArgumentPropertyEditor extends AbstractArgumentPropertyEditor {
     protected void initLabelOnlyEditMode(boolean isLabelOnlyEditMode) {
         defaultValueEditor.setEnabled(!isLabelOnlyEditMode);
         doNotDisplay.setEnabled(!isLabelOnlyEditMode);
+        checkedArgOption.setEnabled(!isLabelOnlyEditMode);
+        checkedValue.setEnabled(!isLabelOnlyEditMode);
+        unCheckedArgOption.setEnabled(!isLabelOnlyEditMode);
+        unCheckedValue.setEnabled(!isLabelOnlyEditMode);
     }
 
     @UiHandler("defaultValueEditor")
