@@ -5,6 +5,8 @@ import org.iplantc.de.apps.widgets.client.view.editors.arguments.converters.Spli
 import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 import org.iplantc.de.apps.widgets.client.view.editors.widgets.CheckBoxAdapter;
 import org.iplantc.de.client.models.apps.integration.Argument;
+import org.iplantc.de.commons.client.validators.CmdLineArgCharacterValidator;
+import org.iplantc.de.resources.client.messages.I18N;
 import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
 import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
 import org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.MultiLineTextLabels;
@@ -69,8 +71,13 @@ public class MultiLineTextInputPropertyEditor extends AbstractArgumentPropertyEd
 
         TextArea textArea = new TextArea();
         textArea.setEmptyText(appLabels.textInputWidgetEmptyEditText());
+        textArea.addValidator(new CmdLineArgCharacterValidator(true));
         defaultValueEditor = new ArgumentEditorConverter<String>(textArea, new SplittableToStringConverter());
+
         initWidget(uiBinder.createAndBindUi(this));
+
+        argumentOptionEditor.addValidator(new CmdLineArgCharacterValidator(I18N.V_CONSTANTS
+                .restrictedCmdLineChars()));
 
         defaultValueLabel.setHTML(appearance.createContextualHelpLabel(appLabels.textInputDefaultLabel(), help.textInputDefaultText()));
 
@@ -103,7 +110,7 @@ public class MultiLineTextInputPropertyEditor extends AbstractArgumentPropertyEd
     protected LeafValueEditor<Splittable> getDefaultValueEditor() {
         return defaultValueEditor;
     }
-    
+
     @Override
     protected void initLabelOnlyEditMode(boolean isLabelOnlyEditMode) {
         argumentOptionEditor.setEnabled(!isLabelOnlyEditMode);
@@ -111,6 +118,14 @@ public class MultiLineTextInputPropertyEditor extends AbstractArgumentPropertyEd
         doNotDisplay.setEnabled(!isLabelOnlyEditMode);
         omitIfBlank.setEnabled(!isLabelOnlyEditMode);
         requiredEditor.setEnabled(!isLabelOnlyEditMode);
+
+        if (isLabelOnlyEditMode) {
+            argumentOptionEditor.getValidators().clear();
+            defaultValueEditor.getValidators().clear();
+            doNotDisplay.getValidators().clear();
+            omitIfBlank.getValidators().clear();
+            requiredEditor.getValidators().clear();
+        }
     }
 
     @UiHandler("defaultValueEditor")
