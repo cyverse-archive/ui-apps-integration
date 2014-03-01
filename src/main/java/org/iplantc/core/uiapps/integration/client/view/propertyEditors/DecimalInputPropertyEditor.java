@@ -18,6 +18,7 @@ import com.sencha.gxt.widget.core.client.form.NumberPropertyEditor;
 import com.sencha.gxt.widget.core.client.form.SpinnerField;
 import com.sencha.gxt.widget.core.client.form.TextField;
 
+import org.iplantc.core.resources.client.messages.I18N;
 import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
 import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
 import org.iplantc.core.resources.client.uiapps.widgets.argumentTypes.DoubleInputLabels;
@@ -28,6 +29,7 @@ import org.iplantc.core.uiapps.widgets.client.view.editors.arguments.converters.
 import org.iplantc.core.uiapps.widgets.client.view.editors.arguments.converters.SplittableToDoubleConverter;
 import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 import org.iplantc.core.uiapps.widgets.client.view.editors.widgets.CheckBoxAdapter;
+import org.iplantc.core.uicommons.client.validators.CmdLineArgCharacterValidator;
 import org.iplantc.core.uicommons.client.widgets.IPlantSideErrorHandler;
 
 import java.util.List;
@@ -85,6 +87,9 @@ public class DecimalInputPropertyEditor extends AbstractArgumentPropertyEditor {
 
         initWidget(uiBinder.createAndBindUi(this));
 
+        argumentOptionEditor.addValidator(new CmdLineArgCharacterValidator(I18N.V_CONSTANTS
+                .restrictedCmdLineChars()));
+
         defaultValueLabel.setHTML(appearance.createContextualHelpLabel(appLabels.integerInputDefaultLabel(), help.integerInputDefaultValue()));
         omitIfBlank.setHTML(new SafeHtmlBuilder().appendHtmlConstant("&nbsp;")
                 .append(appearance.createContextualHelpLabelNoFloat(appLabels.excludeWhenEmpty(), help.integerInputExcludeArgument())).toSafeHtml());
@@ -116,11 +121,20 @@ public class DecimalInputPropertyEditor extends AbstractArgumentPropertyEditor {
 
     @Override
     protected void initLabelOnlyEditMode(boolean isLabelOnlyEditMode) {
+        argumentOptionEditor.setEnabled(!isLabelOnlyEditMode);
         defaultValueEditor.setEnabled(!isLabelOnlyEditMode);
         doNotDisplay.setEnabled(!isLabelOnlyEditMode);
         omitIfBlank.setEnabled(!isLabelOnlyEditMode);
         requiredEditor.setEnabled(!isLabelOnlyEditMode);
         validatorsEditor.setEnabled(!isLabelOnlyEditMode);
+
+        if (isLabelOnlyEditMode) {
+            argumentOptionEditor.getValidators().clear();
+            defaultValueEditor.getValidators().clear();
+            doNotDisplay.getValidators().clear();
+            omitIfBlank.getValidators().clear();
+            requiredEditor.getValidators().clear();
+        }
     }
 
     @UiHandler("defaultValueEditor")
