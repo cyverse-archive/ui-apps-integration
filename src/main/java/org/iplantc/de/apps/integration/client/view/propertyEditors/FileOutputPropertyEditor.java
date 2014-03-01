@@ -8,6 +8,9 @@ import org.iplantc.de.client.models.apps.integration.Argument;
 import org.iplantc.de.client.models.apps.integration.DataSource;
 import org.iplantc.de.client.models.apps.integration.FileInfoType;
 import org.iplantc.de.client.services.AppMetadataServiceFacade;
+import org.iplantc.de.commons.client.validators.CmdLineArgCharacterValidator;
+import org.iplantc.de.commons.client.validators.DiskResourceNameValidator;
+import org.iplantc.de.resources.client.messages.I18N;
 import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
 import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
 import org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.FileOutputLabels;
@@ -86,11 +89,15 @@ public class FileOutputPropertyEditor extends AbstractArgumentPropertyEditor {
         this.fileOutputLabels = appLabels;
 
         TextField textField = new TextField();
-
+        textField.addValidator(new DiskResourceNameValidator());
         defaultValueEditor = new ArgumentEditorConverter<String>(textField, new SplittableToStringConverter());
         fileInfoTypeComboBox = createFileInfoTypeComboBox(appMetadataService);
         dataSourceComboBox = createDataSourceComboBox(appMetadataService);
+
         initWidget(uiBinder.createAndBindUi(this));
+
+        argumentOption.addValidator(new CmdLineArgCharacterValidator(I18N.V_CONSTANTS
+                .restrictedCmdLineChars()));
 
         toolTipLabel.setHTML(appearance.createContextualHelpLabel(appLabels.toolTipText(), help.toolTip()));
         argumentOptionLabel.setHTML(appearance.createContextualHelpLabel(appLabels.argumentOption(), help.argumentOption()));
@@ -148,6 +155,17 @@ public class FileOutputPropertyEditor extends AbstractArgumentPropertyEditor {
         argumentOption.setEnabled(!isLabelOnlyEditMode);
         omitIfBlank.setEnabled(!isLabelOnlyEditMode);
         requiredEditor.setEnabled(!isLabelOnlyEditMode);
+
+        if (isLabelOnlyEditMode) {
+            dataSourceComboBox.getValidators().clear();
+            defaultValueEditor.getValidators().clear();
+            doNotDisplay.getValidators().clear();
+            fileInfoTypeComboBox.getValidators().clear();
+            isImplicit.getValidators().clear();
+            argumentOption.getValidators().clear();
+            omitIfBlank.getValidators().clear();
+            requiredEditor.getValidators().clear();
+        }
     }
 
     @UiHandler("defaultValueEditor")
