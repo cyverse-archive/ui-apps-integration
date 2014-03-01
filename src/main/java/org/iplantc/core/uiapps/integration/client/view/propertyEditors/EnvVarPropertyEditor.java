@@ -26,6 +26,7 @@ import org.iplantc.core.uiapps.widgets.client.view.editors.arguments.converters.
 import org.iplantc.core.uiapps.widgets.client.view.editors.arguments.converters.SplittableToStringConverter;
 import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 import org.iplantc.core.uiapps.widgets.client.view.editors.widgets.CheckBoxAdapter;
+import org.iplantc.core.uicommons.client.validators.CmdLineArgCharacterValidator;
 
 public class EnvVarPropertyEditor extends AbstractArgumentPropertyEditor {
 
@@ -72,10 +73,12 @@ public class EnvVarPropertyEditor extends AbstractArgumentPropertyEditor {
 
         TextField textField = new TextField();
         textField.setEmptyText(envVarLabels.envVarWidgetEmptyEditText());
-        textField.addValidator(new EnvironmentVariableNameValidator());
+        textField.addValidator(new CmdLineArgCharacterValidator());
         defaultValueEditor = new ArgumentEditorConverter<String>(textField, new SplittableToStringConverter());
 
         initWidget(uiBinder.createAndBindUi(this));
+
+        name.addValidator(new EnvironmentVariableNameValidator());
 
         defaultValueLabel.setHTML(appearance.createContextualHelpLabel(envVarLabels.envVarDefaultLabel(), help.envVarDefaultValue()));
         toolTipLabel.setHTML(appearance.createContextualHelpLabel(appLabels.toolTipText(), help.toolTip()));
@@ -115,6 +118,13 @@ public class EnvVarPropertyEditor extends AbstractArgumentPropertyEditor {
         doNotDisplay.setEnabled(!isLabelOnlyEditMode);
         name.setEnabled(!isLabelOnlyEditMode);
         requiredEditor.setEnabled(!isLabelOnlyEditMode);
+
+        if (isLabelOnlyEditMode) {
+            defaultValueEditor.getValidators().clear();
+            doNotDisplay.getValidators().clear();
+            name.getValidators().clear();
+            requiredEditor.getValidators().clear();
+        }
     }
 
     @UiHandler("defaultValueEditor")
