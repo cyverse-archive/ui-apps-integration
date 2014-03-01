@@ -7,6 +7,7 @@ import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAp
 import org.iplantc.de.apps.widgets.client.view.editors.widgets.CheckBoxAdapter;
 import org.iplantc.de.client.models.apps.integration.Argument;
 import org.iplantc.de.client.util.AppTemplateUtils;
+import org.iplantc.de.commons.client.validators.CmdLineArgCharacterValidator;
 import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
 import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
 import org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.EnvironmentVariableLabels;
@@ -72,10 +73,12 @@ public class EnvVarPropertyEditor extends AbstractArgumentPropertyEditor {
 
         TextField textField = new TextField();
         textField.setEmptyText(envVarLabels.envVarWidgetEmptyEditText());
-        textField.addValidator(new EnvironmentVariableNameValidator());
+        textField.addValidator(new CmdLineArgCharacterValidator());
         defaultValueEditor = new ArgumentEditorConverter<String>(textField, new SplittableToStringConverter());
 
         initWidget(uiBinder.createAndBindUi(this));
+
+        name.addValidator(new EnvironmentVariableNameValidator());
 
         defaultValueLabel.setHTML(appearance.createContextualHelpLabel(envVarLabels.envVarDefaultLabel(), help.envVarDefaultValue()));
         toolTipLabel.setHTML(appearance.createContextualHelpLabel(appLabels.toolTipText(), help.toolTip()));
@@ -115,6 +118,13 @@ public class EnvVarPropertyEditor extends AbstractArgumentPropertyEditor {
         doNotDisplay.setEnabled(!isLabelOnlyEditMode);
         name.setEnabled(!isLabelOnlyEditMode);
         requiredEditor.setEnabled(!isLabelOnlyEditMode);
+
+        if (isLabelOnlyEditMode) {
+            defaultValueEditor.getValidators().clear();
+            doNotDisplay.getValidators().clear();
+            name.getValidators().clear();
+            requiredEditor.getValidators().clear();
+        }
     }
 
     @UiHandler("defaultValueEditor")
