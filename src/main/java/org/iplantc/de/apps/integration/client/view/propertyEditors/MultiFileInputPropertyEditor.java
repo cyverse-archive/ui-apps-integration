@@ -5,6 +5,8 @@ import org.iplantc.de.apps.widgets.client.view.editors.widgets.CheckBoxAdapter;
 import org.iplantc.de.client.models.apps.integration.Argument;
 import org.iplantc.de.client.models.apps.integration.FileInfoType;
 import org.iplantc.de.client.services.AppMetadataServiceFacade;
+import org.iplantc.de.commons.client.validators.CmdLineArgCharacterValidator;
+import org.iplantc.de.resources.client.messages.I18N;
 import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
 import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
 import org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.MultiFileInputLabels;
@@ -63,7 +65,11 @@ public class MultiFileInputPropertyEditor extends AbstractArgumentPropertyEditor
         this.appLabels = appLabels;
         this.multiFileInputLabels = appLabels;
         this.fileInfoTypeComboBox = createFileInfoTypeComboBox(appMetadataService);
+
         initWidget(uiBinder.createAndBindUi(this));
+
+        argumentOption.addValidator(new CmdLineArgCharacterValidator(I18N.V_CONSTANTS
+                .restrictedCmdLineChars()));
 
         omitIfBlank.setHTML(new SafeHtmlBuilder().appendHtmlConstant("&nbsp;").append(appearance.createContextualHelpLabelNoFloat(appLabels.excludeWhenEmpty(), help.folderInputExcludeArgument())).toSafeHtml());
         argumentOptionLabel.setHTML(appearance.createContextualHelpLabel(appLabels.argumentOption(), help.argumentOption()));
@@ -97,6 +103,13 @@ public class MultiFileInputPropertyEditor extends AbstractArgumentPropertyEditor
         fileInfoTypeComboBox.setEnabled(!isLabelOnlyEditMode);
         requiredEditor.setEnabled(!isLabelOnlyEditMode);
         omitIfBlank.setEnabled(!isLabelOnlyEditMode);
+
+        if (isLabelOnlyEditMode) {
+            argumentOption.getValidators().clear();
+            fileInfoTypeComboBox.getValidators().clear();
+            requiredEditor.getValidators().clear();
+            omitIfBlank.getValidators().clear();
+        }
     }
 
 }
