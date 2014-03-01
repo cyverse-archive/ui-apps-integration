@@ -7,7 +7,9 @@ import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAp
 import org.iplantc.de.apps.widgets.client.view.editors.widgets.CheckBoxAdapter;
 import org.iplantc.de.client.models.apps.integration.Argument;
 import org.iplantc.de.client.models.apps.integration.ArgumentValidator;
+import org.iplantc.de.commons.client.validators.CmdLineArgCharacterValidator;
 import org.iplantc.de.commons.client.widgets.IPlantSideErrorHandler;
+import org.iplantc.de.resources.client.messages.I18N;
 import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
 import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
 import org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.DoubleInputLabels;
@@ -85,6 +87,9 @@ public class DecimalInputPropertyEditor extends AbstractArgumentPropertyEditor {
 
         initWidget(uiBinder.createAndBindUi(this));
 
+        argumentOptionEditor.addValidator(new CmdLineArgCharacterValidator(I18N.V_CONSTANTS
+                .restrictedCmdLineChars()));
+
         defaultValueLabel.setHTML(appearance.createContextualHelpLabel(appLabels.integerInputDefaultLabel(), help.integerInputDefaultValue()));
         omitIfBlank.setHTML(new SafeHtmlBuilder().appendHtmlConstant("&nbsp;")
                 .append(appearance.createContextualHelpLabelNoFloat(appLabels.excludeWhenEmpty(), help.integerInputExcludeArgument())).toSafeHtml());
@@ -116,11 +121,20 @@ public class DecimalInputPropertyEditor extends AbstractArgumentPropertyEditor {
 
     @Override
     protected void initLabelOnlyEditMode(boolean isLabelOnlyEditMode) {
+        argumentOptionEditor.setEnabled(!isLabelOnlyEditMode);
         defaultValueEditor.setEnabled(!isLabelOnlyEditMode);
         doNotDisplay.setEnabled(!isLabelOnlyEditMode);
         omitIfBlank.setEnabled(!isLabelOnlyEditMode);
         requiredEditor.setEnabled(!isLabelOnlyEditMode);
         validatorsEditor.setEnabled(!isLabelOnlyEditMode);
+
+        if (isLabelOnlyEditMode) {
+            argumentOptionEditor.getValidators().clear();
+            defaultValueEditor.getValidators().clear();
+            doNotDisplay.getValidators().clear();
+            omitIfBlank.getValidators().clear();
+            requiredEditor.getValidators().clear();
+        }
     }
 
     @UiHandler("defaultValueEditor")
