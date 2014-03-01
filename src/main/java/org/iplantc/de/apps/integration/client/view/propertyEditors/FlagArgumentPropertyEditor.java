@@ -6,6 +6,7 @@ import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAp
 import org.iplantc.de.apps.widgets.client.view.editors.widgets.CheckBoxAdapter;
 import org.iplantc.de.client.models.apps.integration.Argument;
 import org.iplantc.de.commons.client.validators.CmdLineArgCharacterValidator;
+import org.iplantc.de.resources.client.messages.I18N;
 import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
 import org.iplantc.de.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
 import org.iplantc.de.resources.client.uiapps.widgets.argumentTypes.CheckboxInputLabels;
@@ -286,6 +287,16 @@ public class FlagArgumentPropertyEditor extends AbstractArgumentPropertyEditor {
         defaultValueEditor = new ArgumentEditorConverter<Boolean>(checkBoxAdapter, new SplittableToBooleanConverter());
 
         initWidget(uiBinder.createAndBindUi(this));
+
+        CmdLineArgCharacterValidator argOptValidator = new CmdLineArgCharacterValidator(
+                I18N.V_CONSTANTS.restrictedCmdLineChars());
+        CmdLineArgCharacterValidator argValueValidator = new CmdLineArgCharacterValidator();
+
+        checkedArgOption.addValidator(argOptValidator);
+        checkedValue.addValidator(argValueValidator);
+        unCheckedArgOption.addValidator(argOptValidator);
+        unCheckedValue.addValidator(argValueValidator);
+
         toolTipLabel.setHTML(appearance.createContextualHelpLabel(appLabels.toolTipText(), help.toolTip()));
         doNotDisplay.setHTML(new SafeHtmlBuilder().appendHtmlConstant("&nbsp;").append(appLabels.doNotDisplay()).toSafeHtml());
 
@@ -320,6 +331,15 @@ public class FlagArgumentPropertyEditor extends AbstractArgumentPropertyEditor {
         checkedValue.setEnabled(!isLabelOnlyEditMode);
         unCheckedArgOption.setEnabled(!isLabelOnlyEditMode);
         unCheckedValue.setEnabled(!isLabelOnlyEditMode);
+
+        if (isLabelOnlyEditMode) {
+            defaultValueEditor.getValidators().clear();
+            doNotDisplay.getValidators().clear();
+            checkedArgOption.getValidators().clear();
+            checkedValue.getValidators().clear();
+            unCheckedArgOption.getValidators().clear();
+            unCheckedValue.getValidators().clear();
+        }
     }
 
     @UiHandler("defaultValueEditor")
