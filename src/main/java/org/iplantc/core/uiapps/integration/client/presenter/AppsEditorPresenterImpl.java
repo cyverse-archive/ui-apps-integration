@@ -1,27 +1,5 @@
 package org.iplantc.core.uiapps.integration.client.presenter;
 
-import com.google.common.base.Strings;
-import com.google.common.collect.Lists;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.HasOneWidget;
-import com.google.inject.Inject;
-import com.google.web.bindery.autobean.shared.AutoBean;
-import com.google.web.bindery.autobean.shared.AutoBeanCodex;
-import com.google.web.bindery.autobean.shared.AutoBeanUtils;
-import com.google.web.bindery.autobean.shared.Splittable;
-import com.google.web.bindery.autobean.shared.impl.StringQuoter;
-
-import com.sencha.gxt.core.client.dom.XElement;
-import com.sencha.gxt.widget.core.client.Component;
-import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
-import com.sencha.gxt.widget.core.client.box.MessageBox;
-import com.sencha.gxt.widget.core.client.button.TextButton;
-import com.sencha.gxt.widget.core.client.event.BeforeHideEvent;
-
 import org.iplantc.core.jsonutil.JsonUtil;
 import org.iplantc.core.resources.client.messages.I18N;
 import org.iplantc.core.resources.client.messages.IplantDisplayStrings;
@@ -67,6 +45,28 @@ import org.iplantc.core.uicommons.client.views.IsMinimizable;
 import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IPlantDialog;
 import org.iplantc.core.uicommons.client.views.gxt3.dialogs.IplantInfoBox;
 import org.iplantc.de.client.UUIDServiceAsync;
+
+import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.HasOneWidget;
+import com.google.inject.Inject;
+import com.google.web.bindery.autobean.shared.AutoBean;
+import com.google.web.bindery.autobean.shared.AutoBeanCodex;
+import com.google.web.bindery.autobean.shared.AutoBeanUtils;
+import com.google.web.bindery.autobean.shared.Splittable;
+import com.google.web.bindery.autobean.shared.impl.StringQuoter;
+
+import com.sencha.gxt.core.client.dom.XElement;
+import com.sencha.gxt.widget.core.client.Component;
+import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
+import com.sencha.gxt.widget.core.client.box.MessageBox;
+import com.sencha.gxt.widget.core.client.button.TextButton;
+import com.sencha.gxt.widget.core.client.event.BeforeHideEvent;
 
 import java.util.Collections;
 import java.util.Date;
@@ -607,7 +607,7 @@ public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, Delete
     
             @Override
             public void onSuccess(String result) {
-                if (Strings.isNullOrEmpty(appTemplate.getId())) {
+                if (Strings.isNullOrEmpty(appTemplate.getId()) || appTemplate.getId().equals("NEW_APP_TEMPLATE")) {
                     appTemplate.setId(result);
                 } else if (appTemplate.getId().equalsIgnoreCase(result)) {
                     // JDS There was an app ID, but now we are changing it. This is undesired.
