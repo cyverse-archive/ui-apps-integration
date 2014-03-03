@@ -45,6 +45,7 @@ import com.sencha.gxt.data.shared.event.StoreAddEvent.StoreAddHandler;
 import com.sencha.gxt.widget.core.client.Composite;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.form.ComboBox;
+import com.sencha.gxt.widget.core.client.tips.QuickTip;
 
 import java.util.List;
 public abstract class AbstractArgumentPropertyEditor extends Composite implements ArgumentPropertyEditor {
@@ -139,6 +140,8 @@ public abstract class AbstractArgumentPropertyEditor extends Composite implement
 
     private final ReferenceGenomeProperties referenceGenomeProperties;
 
+    private QuickTip quickTip = null;
+
     public AbstractArgumentPropertyEditor(AppTemplateWizardAppearance appearance) {
         this.appearance = appearance;
         contentPanel = new ContentPanel(new AppTemplateWizardPropertyContentPanelAppearance());
@@ -176,6 +179,9 @@ public abstract class AbstractArgumentPropertyEditor extends Composite implement
     public void edit(Argument argument) {
         clean();
         this.model = argument;
+        if (quickTip == null) {
+            quickTip = new QuickTip(getWidget());
+        }
     }
 
     @SuppressWarnings("unchecked")
