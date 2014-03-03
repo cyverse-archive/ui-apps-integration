@@ -28,6 +28,7 @@ import org.iplantc.core.uiapps.widgets.client.view.editors.arguments.converters.
 import org.iplantc.core.uiapps.widgets.client.view.editors.arguments.converters.SplittableToReferenceGenomeConverter;
 import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 import org.iplantc.core.uiapps.widgets.client.view.editors.widgets.CheckBoxAdapter;
+import org.iplantc.core.uicommons.client.validators.CmdLineArgCharacterValidator;
 
 public class ReferenceAnnotationPropertyEditor extends AbstractArgumentPropertyEditor {
 
@@ -83,6 +84,9 @@ public class ReferenceAnnotationPropertyEditor extends AbstractArgumentPropertyE
 
         initWidget(uiBinder.createAndBindUi(this));
 
+        argumentOptionEditor.addValidator(new CmdLineArgCharacterValidator(I18N.V_CONSTANTS
+                .restrictedCmdLineChars()));
+
         selectionItemDefaultValueLabel.setHTML(appearance.createContextualHelpLabel(appLabels.singleSelectionDefaultValue(), help.singleSelectDefaultItem()));
 
         toolTipLabel.setHTML(appearance.createContextualHelpLabel(appLabels.toolTipText(), help.toolTip()));
@@ -123,6 +127,14 @@ public class ReferenceAnnotationPropertyEditor extends AbstractArgumentPropertyE
         doNotDisplay.setEnabled(!isLabelOnlyEditMode);
         omitIfBlank.setEnabled(!isLabelOnlyEditMode);
         requiredEditor.setEnabled(!isLabelOnlyEditMode);
+
+        if (isLabelOnlyEditMode) {
+            argumentOptionEditor.getValidators().clear();
+            defaultValueEditor.getValidators().clear();
+            doNotDisplay.getValidators().clear();
+            omitIfBlank.getValidators().clear();
+            requiredEditor.getValidators().clear();
+        }
     }
 
     @UiHandler("defaultValueEditor")
