@@ -12,6 +12,7 @@ import com.sencha.gxt.widget.core.client.form.ComboBox;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
 import com.sencha.gxt.widget.core.client.form.TextField;
 
+import org.iplantc.core.resources.client.messages.I18N;
 import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsContextualHelpMessages;
 import org.iplantc.core.resources.client.uiapps.widgets.AppsWidgetsPropertyPanelLabels;
 import org.iplantc.core.resources.client.uiapps.widgets.argumentTypes.FolderInputTypeLabels;
@@ -20,6 +21,7 @@ import org.iplantc.core.uiapps.widgets.client.models.metadata.FileInfoType;
 import org.iplantc.core.uiapps.widgets.client.services.AppMetadataServiceFacade;
 import org.iplantc.core.uiapps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 import org.iplantc.core.uiapps.widgets.client.view.editors.widgets.CheckBoxAdapter;
+import org.iplantc.core.uicommons.client.validators.CmdLineArgCharacterValidator;
 
 public class FolderInputPropertyEditor extends AbstractArgumentPropertyEditor {
 
@@ -62,7 +64,11 @@ public class FolderInputPropertyEditor extends AbstractArgumentPropertyEditor {
         this.appLabels = appLabels;
         this.folderInputLabels = appLabels;
         this.fileInfoTypeComboBox = createFileInfoTypeComboBox(appMetadataService);
+
         initWidget(uiBinder.createAndBindUi(this));
+
+        argumentOption.addValidator(new CmdLineArgCharacterValidator(I18N.V_CONSTANTS
+                .restrictedCmdLineChars()));
 
         omitIfBlank.setHTML(new SafeHtmlBuilder().appendHtmlConstant("&nbsp;").append(appearance.createContextualHelpLabelNoFloat(appLabels.excludeWhenEmpty(), help.folderInputExcludeArgument())).toSafeHtml());
         argumentOptionLabel.setHTML(appearance.createContextualHelpLabel(appLabels.argumentOption(), help.argumentOption()));
@@ -95,6 +101,13 @@ public class FolderInputPropertyEditor extends AbstractArgumentPropertyEditor {
         argumentOption.setEnabled(!isLabelOnlyEditMode);
         requiredEditor.setEnabled(!isLabelOnlyEditMode);
         omitIfBlank.setEnabled(!isLabelOnlyEditMode);
+
+        if (isLabelOnlyEditMode) {
+            fileInfoTypeComboBox.getValidators().clear();
+            argumentOption.getValidators().clear();
+            requiredEditor.getValidators().clear();
+            omitIfBlank.getValidators().clear();
+        }
     }
 
 }
