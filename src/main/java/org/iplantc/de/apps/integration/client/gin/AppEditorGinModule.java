@@ -38,7 +38,10 @@ import org.iplantc.de.apps.widgets.client.view.editors.ArgumentEditorFactoryImpl
 import org.iplantc.de.apps.widgets.client.view.editors.LaunchAnalysisViewImpl;
 import org.iplantc.de.apps.widgets.client.view.editors.style.AppTemplateWizardAppearance;
 import org.iplantc.de.client.events.EventBus;
+import org.iplantc.de.client.gin.ServicesInjector;
 import org.iplantc.de.client.models.UserSettings;
+import org.iplantc.de.client.services.AppMetadataServiceFacade;
+import org.iplantc.de.client.services.AppTemplateServices;
 import org.iplantc.de.resources.client.messages.IplantErrorStrings;
 import org.iplantc.de.resources.client.uiapps.integration.AppIntegrationErrorMessages;
 
@@ -68,6 +71,16 @@ public class AppEditorGinModule extends AbstractGinModule {
     @Singleton
     public UserSettings createUserSettings() {
         return UserSettings.getInstance();
+    }
+
+    @Provides
+    public AppMetadataServiceFacade createAppMetadataService() {
+        return ServicesInjector.INSTANCE.getAppMetadataService();
+    }
+
+    @Provides
+    public AppTemplateServices createAppTemplateServices() {
+        return ServicesInjector.INSTANCE.getAppTemplateServices();
     }
 
     @Override
