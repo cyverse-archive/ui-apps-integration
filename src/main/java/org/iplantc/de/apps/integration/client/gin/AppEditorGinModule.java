@@ -42,6 +42,7 @@ import org.iplantc.de.client.gin.ServicesInjector;
 import org.iplantc.de.client.models.UserSettings;
 import org.iplantc.de.client.services.AppMetadataServiceFacade;
 import org.iplantc.de.client.services.AppTemplateServices;
+import org.iplantc.de.commons.client.info.IplantAnnouncer;
 import org.iplantc.de.resources.client.messages.IplantErrorStrings;
 import org.iplantc.de.resources.client.uiapps.integration.AppIntegrationErrorMessages;
 
@@ -81,6 +82,11 @@ public class AppEditorGinModule extends AbstractGinModule {
     @Provides
     public AppTemplateServices createAppTemplateServices() {
         return ServicesInjector.INSTANCE.getAppTemplateServices();
+    }
+
+    @Provides
+    public IplantAnnouncer createAnnouncer() {
+        return IplantAnnouncer.getInstance();
     }
 
     @Override

@@ -293,10 +293,11 @@ public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, Delete
     private final UUIDServiceAsync uuidService;
 
     private final AppsEditorView view;
+    private final IplantAnnouncer announcer;
 
     @Inject
     public AppsEditorPresenterImpl(final AppsEditorView view, final EventBus eventBus, final AppTemplateServices atService, final AppIntegrationErrorMessages errorMessages,
-            final IplantDisplayStrings messages, final UUIDServiceAsync uuidService, final AppTemplateWizardAppearance appearance) {
+            final IplantDisplayStrings messages, final UUIDServiceAsync uuidService, final AppTemplateWizardAppearance appearance, final IplantAnnouncer announcer) {
         this.view = view;
         this.eventBus = eventBus;
         this.atService = atService;
@@ -304,6 +305,7 @@ public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, Delete
         this.messages = messages;
         this.uuidService = uuidService;
         this.appearance = appearance;
+        this.announcer = announcer;
         view.setPresenter(this);
     }
 
@@ -322,6 +324,11 @@ public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, Delete
 
     @Override
     public void doArgumentGroupDelete(DeleteArgumentGroupEvent event) {
+        AppTemplate flush = view.flush();
+        if (flush.getArgumentGroups().size() == 1) {
+            announcer.schedule(new ErrorAnnouncementConfig(errorMessages.cannotDeleteLastArgumentGroup(), true, 3000));
+            return;
+        }
         AutoBean<ArgumentGroup> autoBean = AutoBeanUtils.getAutoBean(event.getArgumentGroupToBeDeleted());
 
         // Remove all handlers store in the autobean
@@ -399,7 +406,7 @@ public class AppsEditorPresenterImpl implements AppsEditorView.Presenter, Delete
             this.appTemplate = appTemplate;
             go(container);
             if (renameCmd != null) {
-                renameCmd.execute();                
+                renameCmd.execute();
             }
         }
     }
